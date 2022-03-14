@@ -7,13 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         URL fxmlFileUrl = getClass().getClassLoader().getResource("sample.fxml");
-        Parent root = FXMLLoader.load(fxmlFileUrl);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(fxmlFileUrl));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
