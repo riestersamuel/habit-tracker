@@ -38,13 +38,16 @@ We didn’t decide yet. Some advantages of using branches are:
 
 Some disadvantages are:
 
--
+- There can be a lot of merge conflicts when we want to unite some branch with the master branch, because our master/main branch gets (normally) more often updated.
 
 # Aufgabe 6
 
 With `push`. It’s reasonable to push quite often in order to avoid version conflicts. “Release often, release early”.
 
 # Aufgabe 7
+If our local repository has the same version as the remote repository we can easily push our local changes to gitlab and our remote repository gets updated.<br />
+If our local repository has an OTHER version as the remote repository we can't push our local changes to the remote repository. If we get into this conflict we have to pull from the remote repository and manually merge the differences. After that we can push it to the remote repository.<br />
+(remote repository is a gitlab repository in this case)
 
 # Aufgabe 8
 
