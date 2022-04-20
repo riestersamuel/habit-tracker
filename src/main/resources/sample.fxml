@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="mainpackage.Controller" alignment="CENTER">
-    <Label text="Add Habit"/>
-    <Button onAction="#sayHello"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainpackage.Controller">
+   <children>
+      <Button fx:id="btn" layoutX="87.0" layoutY="189.0" mnemonicParsing="false" onAction="#addHabit" text="Anfang" />
+      <Label fx:id="lOutput" layoutX="77.0" layoutY="240.0" text="Steffen stinkt" />
+      <TextArea fx:id="habitInput" layoutX="14.0" layoutY="1.0" prefHeight="165.0" prefWidth="200.0" />
+      <ListView fx:id="lvHabits" layoutX="400.0" layoutY="54.0" prefHeight="346.0" prefWidth="200.0" />
+      <Label layoutX="400.0" layoutY="27.0" text="Journal" />
+      <Button fx:id="addEntry" layoutX="516.0" layoutY="23.0" mnemonicParsing="false" text="+ New Entry" />
+      <TableView layoutX="7.0" layoutY="189.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
