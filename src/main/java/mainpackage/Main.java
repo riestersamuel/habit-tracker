@@ -18,6 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(fxmlFileUrl));
         primaryStage.setTitle("Habit Tracker");
         primaryStage.setScene(new Scene(root/*, 1366, 1024*/));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
