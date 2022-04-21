@@ -13,10 +13,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        URL fxmlFileUrl = getClass().getClassLoader().getResource("sample.fxml");
+        URL fxmlFileUrl = getClass().getClassLoader().getResource("main.fxml");
         Parent root = FXMLLoader.load(Objects.requireNonNull(fxmlFileUrl));
         primaryStage.setTitle("Habit Tracker");
-        primaryStage.setScene(new Scene(root, 1366, 1024));
+        primaryStage.setScene(new Scene(root/*, 1366, 1024*/));
         primaryStage.show();
     }
 

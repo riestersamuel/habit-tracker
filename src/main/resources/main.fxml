@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainpackage.Controller">
+   <children>
+      <ListView fx:id="lvJournal" layoutX="432.0" layoutY="155.0" prefHeight="241.0" prefWidth="160.0" />
+      <TextArea fx:id="taNewJournal" layoutX="433.0" layoutY="65.0" prefHeight="81.0" prefWidth="120.0" />
+      <Button layoutX="562.0" layoutY="66.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="30.0" text="+" />
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TableView layoutY="153.0" prefHeight="247.0" prefWidth="416.0">
+        <columns>
+          <TableColumn prefWidth="64.0" />
+            <TableColumn prefWidth="35.0" text="Mon" />
+            <TableColumn prefWidth="35.0" text="Tue" />
+            <TableColumn prefWidth="35.0" text="Wen" />
+            <TableColumn prefWidth="35.0" text="Thu" />
+            <TableColumn prefWidth="35.0" text="Fri" />
+            <TableColumn prefWidth="35.0" text="Sat" />
+            <TableColumn prefWidth="35.0" text="Sun" />
+            <TableColumn prefWidth="26.0" />
+        </columns>
+      </TableView>
+      <Label fx:id="lWelcome" layoutX="20.0" layoutY="53.0" prefHeight="28.0" prefWidth="381.0" text="Hello, MUSTERNAME" />
+      <Button fx:id="btnAddHabit" layoutX="39.0" layoutY="102.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" text="Add Habit" />
+      <Button fx:id="btnRemoveHabit" layoutX="151.0" layoutY="103.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="127.0" text="Remove Habit" />
+      <Label fx:id="lMiniJournal" layoutX="433.0" layoutY="8.0" prefHeight="28.0" prefWidth="167.0" text="Your Mini Journal" />
+   </children>
+</AnchorPane>
