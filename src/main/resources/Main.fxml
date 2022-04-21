@@ -7,7 +7,7 @@
    <children>
       <ListView fx:id="lvJournal" layoutX="432.0" layoutY="155.0" prefHeight="241.0" prefWidth="160.0" />
       <TextArea fx:id="taNewJournal" layoutX="433.0" layoutY="65.0" prefHeight="81.0" prefWidth="120.0" />
-      <Button layoutX="562.0" layoutY="66.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="30.0" text="+" />
+      <Button fx:id="btnAddJournal" onAction="#addNewEntry" layoutX="562.0" layoutY="66.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="30.0" text="+" />
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
