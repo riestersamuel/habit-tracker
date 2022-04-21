@@ -7,7 +7,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 
 public class Controller {
-
     @FXML
     ListView lvJournal;
     @FXML
