@@ -49,7 +49,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>mainpackage.Main</mainClass>
+                    <mainClass>com.TeamPingui.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>

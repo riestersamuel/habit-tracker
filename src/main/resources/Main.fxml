@@ -3,65 +3,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainpackage.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPingui.controllers.Controller">
    <children>
-      <ListView fx:id="lvJournal" layoutX="432.0" layoutY="155.0" prefHeight="241.0" prefWidth="160.0" />
-      <TextArea fx:id="taNewJournal" layoutX="433.0" layoutY="65.0" prefHeight="81.0" prefWidth="120.0" />
-      <Button fx:id="btnAddJournal" onAction="#addNewEntry" layoutX="562.0" layoutY="66.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="30.0" text="+" />
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <TableView layoutY="153.0" prefHeight="247.0" prefWidth="416.0">
-        <columns>
-          <TableColumn prefWidth="64.0" />
-            <TableColumn prefWidth="35.0" text="Mon" />
-            <TableColumn prefWidth="35.0" text="Tue" />
-            <TableColumn prefWidth="35.0" text="Wen" />
-            <TableColumn prefWidth="35.0" text="Thu" />
-            <TableColumn prefWidth="35.0" text="Fri" />
-            <TableColumn prefWidth="35.0" text="Sat" />
-            <TableColumn prefWidth="35.0" text="Sun" />
-            <TableColumn prefWidth="26.0" />
-        </columns>
-      </TableView>
-      <Label fx:id="lWelcome" layoutX="20.0" layoutY="53.0" prefHeight="28.0" prefWidth="381.0" text="Hello, MUSTERNAME" />
-      <Button fx:id="btnAddHabit" layoutX="39.0" layoutY="102.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" text="Add Habit" />
-      <Button fx:id="btnRemoveHabit" layoutX="151.0" layoutY="103.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="127.0" text="Remove Habit" />
-      <Label fx:id="lMiniJournal" layoutX="433.0" layoutY="8.0" prefHeight="28.0" prefWidth="167.0" text="Your Mini Journal" />
+      <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="355.0" text="Habits" />
+       <Button fx:id="btnChallenge" layoutX="355" onAction="#switchScenes" prefHeight="52.0" prefWidth="355.0" text="Challenge" />
+       <Button fx:id="btnSettings" layoutX="710" onAction="#switchScenes" prefHeight="52.0" prefWidth="356.0" text="Settings" />
+
+       <Label fx:id="lWelcome" layoutX="40.0" layoutY="92.0" prefHeight="50.0" prefWidth="540.0" text="Hello, MUSTERNAME" />
+       <Label fx:id="lMiniJournal" layoutX="739.0" layoutY="109.0" prefHeight="42.0" prefWidth="167.0" text="Mini - Journal" />
+
+       <TextArea fx:id="taNewJournal" layoutX="739.0" layoutY="185.0" prefHeight="129.0" prefWidth="224.0" promptText="How was your day?" wrapText="true" />
+       <Button fx:id="btnAddJournal" layoutX="975.0" layoutY="185.0" mnemonicParsing="false" onAction="#addNewEntry" prefHeight="129.0" prefWidth="51.0" text="+" />
+       <ListView fx:id="lvJournal" layoutX="739.0" layoutY="326.0" prefHeight="435.0" prefWidth="287.0" />
+
+       <Button fx:id="btnRemoveHabit" layoutX="32.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="Remove Habit" />
+       <Button fx:id="btnAddHabit" layoutX="388.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="Add Habit" />
+       <Button fx:id="btnLastWeek" layoutX="40.0" layoutY="274.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="L" />
+       <Button fx:id="btnNextWeek" layoutX="95.0" layoutY="274.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="N" />
+       <ProgressBar fx:id="habitsProgress" layoutX="40.0" layoutY="335.0" prefHeight="16.0" prefWidth="665" progress="0.69" />
+       <Label fx:id="progressDisplay" layoutX="623.0" layoutY="356.0" text="69%" />
+       <Label fx:id="achieved" alignment="BASELINE_RIGHT" layoutX="656.0" layoutY="356.0" text="achieved" />
+       <TableView fx:id="tvHabits" layoutX="40.0" layoutY="400.0" prefHeight="360.0" prefWidth="665.0">
+           <columns>
+               <TableColumn prefWidth="160.0" resizable="false" text="Habit" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Mon" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Tue" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Wed" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Thu" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Fri" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Sat" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Sun" />
+               <TableColumn prefWidth="85.0" resizable="false" text="Done" />
+           </columns>
+       </TableView>
    </children>
 </AnchorPane>

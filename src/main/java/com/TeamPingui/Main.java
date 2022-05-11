@@ -1,7 +1,6 @@
-package mainpackage;
+package com.TeamPingui;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,7 +16,7 @@ public class Main extends Application {
         URL fxmlFileUrl = getClass().getClassLoader().getResource("Main.fxml");
         Parent root = FXMLLoader.load(Objects.requireNonNull(fxmlFileUrl));
         primaryStage.setTitle("Habit Tracker");
-        primaryStage.setScene(new Scene(root/*, 1366, 1024*/));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
