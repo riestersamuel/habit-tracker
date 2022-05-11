@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntry;
@@ -127,14 +128,14 @@ public class Controller implements Initializable {
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
 
         // Habits
-       /*TableColumn tcName = tvHabits.getColumns().get(0);
+       TableColumn tcName = tvHabits.getColumns().get(0);
        tcName.setCellValueFactory(new PropertyValueFactory<Habit, String>("name"));
 
         for (int i = 1; i <= 7; i++) {
             TableColumn tcDay = tvHabits.getColumns().get(i);
             tcDay.setCellValueFactory(new PropertyValueFactory<Habit, String>("done"));
             tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
-        }*/
+        }
 
         // TableColumn tcReps = tvHabits.getColumns().get(8);
         // tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
