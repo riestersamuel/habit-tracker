@@ -1,4 +1,4 @@
-package com.TeamPingui;
+package com.teampingui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

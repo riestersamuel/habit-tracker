@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.TeamPingui</groupId>
+    <groupId>com.teampingui</groupId>
     <artifactId>SE2StartupProject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -49,7 +49,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.TeamPingui.Main</mainClass>
+                    <mainClass>com.teampingui.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>

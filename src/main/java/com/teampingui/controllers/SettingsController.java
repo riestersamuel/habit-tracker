@@ -1,4 +1,4 @@
-package com.TeamPingui.controllers;
+package com.teampingui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package com.TeamPingui.Models;
+package com.teampingui.models;
 
 import javafx.beans.property.*;
 

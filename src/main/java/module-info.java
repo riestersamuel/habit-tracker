@@ -5,11 +5,11 @@ module com.TeamPingui {
     requires javafx.graphics;
     requires org.apache.logging.log4j;
 
-    opens com.TeamPingui.controllers to javafx.fxml;
-    opens com.TeamPingui.Models to javafx.fxml;
-    opens com.TeamPingui to org.apache.logging.log4j;
+    opens com.teampingui.controllers to javafx.fxml;
+    opens com.teampingui.models to javafx.fxml;
+    opens com.teampingui to org.apache.logging.log4j;
     //opens com.TeamPingui.exceptions to javafx.fxml;
     //opens com.TeamPingui.interfaces to javafx.fxml;
-    exports com.TeamPingui.controllers to javafx.fxml, org.apache.logging.log4j;
-    exports com.TeamPingui;
+    exports com.teampingui.controllers to javafx.fxml, org.apache.logging.log4j;
+    exports com.teampingui;
 }

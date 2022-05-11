@@ -1,4 +1,4 @@
-package com.TeamPingui.Models;
+package com.teampingui.models;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
-public class JournalEntryListViewCell extends ListCell<com.TeamPingui.Models.JournalEntry> {
+public class JournalEntryListViewCell extends ListCell<com.teampingui.models.JournalEntry> {
     @FXML
     private Label dateLabel;
 

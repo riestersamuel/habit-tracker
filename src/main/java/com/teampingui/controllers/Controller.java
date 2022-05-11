@@ -1,7 +1,5 @@
-package com.TeamPingui.controllers;
+package com.teampingui.controllers;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,11 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import com.TeamPingui.Models.Habit;
-import com.TeamPingui.Models.JournalEntry;
-import com.TeamPingui.Models.JournalEntryListViewCell;
+import com.teampingui.models.Habit;
+import com.teampingui.models.JournalEntry;
+import com.teampingui.models.JournalEntryListViewCell;
 
 import java.io.IOException;
 import java.net.URL;
@@ -127,7 +124,6 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Journal
         lvJournal.setItems(journalObservableList);
-        // Lambda Method: Defining an implementation of a functional Interface
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
 
         // Habits
