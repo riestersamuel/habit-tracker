@@ -1,28 +1,23 @@
 package com.teampingui.controllers;
 
+import com.teampingui.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntry;
 import com.teampingui.models.JournalEntryListViewCell;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class MainController implements Initializable {
 
     //General Layout
     @FXML
@@ -56,32 +51,24 @@ public class Controller implements Initializable {
 
     private ObservableList<Habit> habitObservableList;
 
-
     private LocalDate date;
 
-    //Switch Scenes
     @FXML
     Button btnHabits, btnChallenge, btnSettings;
-    private Stage stage;
-    private Scene scene;
 
-    Parent root;
-
-    public void switchScenes(ActionEvent e) throws IOException {
-       if (e.getSource() == btnHabits) {
-           root = FXMLLoader.load(getClass().getResource("com.TeamPingui.Main.fxml"));
-           stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-       } else if (e.getSource() == btnChallenge) {
-           root = FXMLLoader.load(getClass().getResource("Challenge.fxml"));
-           stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-       } else {
-           root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
-           stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-       }
-
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    @FXML
+    public void switchScenes(ActionEvent e) { // TODO: dont put this in every Controller => rework smarter
+        Main main = Main.getInstance();
+        Object source = e.getSource();
+        if (btnHabits.equals(source)) {
+            main.gotoMain();
+        } else if (btnChallenge.equals(source)) {
+            main.gotoChallenge();
+        } else if (btnSettings.equals(source)) {
+            main.gotoSettings();
+        } else {
+            throw new IllegalStateException("Unexpected value: " + e.getSource());
+        }
     }
 
     //Journal
@@ -91,7 +78,7 @@ public class Controller implements Initializable {
             new JournalEntry("24.05.2022","Baba Tag heute!"),
             new JournalEntry("24.05.2022","Baba Tag heute!")
     );
-    public Controller() {
+    public MainController() {
 
         // Habits
         habitObservableList = FXCollections.observableArrayList();
