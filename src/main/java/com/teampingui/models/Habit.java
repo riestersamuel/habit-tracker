@@ -20,7 +20,7 @@ public class Habit {
         return name;
     }
 
-    public  BooleanProperty deleteProperty() {
+    public  BooleanProperty doneProperty() {
         return done;
     }
 
