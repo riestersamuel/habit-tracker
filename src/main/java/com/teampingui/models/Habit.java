@@ -8,7 +8,7 @@ public class Habit {
 
     private final BooleanProperty done = new SimpleBooleanProperty();
 
-    private final IntegerProperty reps = new SimpleIntegerProperty();
+    private final IntegerProperty reps = new SimpleIntegerProperty();  
 
     public Habit(String name, boolean done, Integer reps) {
         this.name.set(name);

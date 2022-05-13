@@ -5,11 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.Objects;
 
 public class Main extends Application {
+
+    //Initializing the logger
+    private static Logger log = LogManager.getLogger(Main.class);
 
     private Stage stage;
 
@@ -31,7 +36,7 @@ public class Main extends Application {
             gotoMain();
             primaryStage.show();
         } catch (Exception ex) {
-            // TODO: Create log here
+            log.error("Failed to show the primary stage");
         }
     }
 
@@ -39,7 +44,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Main.fxml");
         } catch (Exception ex) {
-            // TODO: Create log here
+            log.error("Failed to replace the scene content with the main page.");
         }
     }
 
@@ -47,7 +52,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Challenge.fxml");
         } catch (Exception ex) {
-            // TODO: Create log here
+            log.error("Failed to replace the scene content with the challenge page.");
         }
     }
 
@@ -55,7 +60,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Settings.fxml");
         } catch (Exception ex) {
-            // TODO: Create log here
+            log.error("Failed to show the scene content with the settings.");
         }
     }
 
