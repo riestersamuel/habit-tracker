@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Text?>
-<VBox fx:id="vbox" prefWidth="337.0" prefHeight="204.0" maxWidth="337.0"  xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="vbox" prefWidth="337.0" prefHeight="204.0" maxWidth="337.0"  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <children>
         <Label fx:id="dateLabel" text="Date" wrapText="true" textAlignment="JUSTIFY"/>
         <Text fx:id="entryText" text="Content" wrappingWidth="300.0" textAlignment="JUSTIFY" />
