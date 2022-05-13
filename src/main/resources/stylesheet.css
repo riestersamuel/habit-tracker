@@ -9,10 +9,16 @@
 .button {
     -fx-background-color: #ffffff;
     -fx-border-color: #dadada;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
 }
 
 .button:hover {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: rgba(245, 245, 245, 80);
+}
+
+#apBackground {
+    -fx-background-color: #f8f8f8;
 }
 
 .text-area {
@@ -20,12 +26,23 @@
     -fx-border-color: #dadada;
 }
 
-#btnAddHabit {
-    -fx-background-color: #93E376;
+#btnAddHabit, #btnAddJournal {
+    -fx-background-color: #B1DF8A;
+    -fx-border-color: #B1DF8A;
     -fx-text-fill: #fff;
+}
+
+.progress-bar .bar {
+    -fx-background-color: #B1DF8A;
 }
 
 #btnRemoveHabit {
     -fx-border-color: #FF845E;
     -fx-text-fill: #FF845E;
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+#tvHabits {
+    -fx-background-color: transparent;
+    -fx-border-radius: 8px;
 }

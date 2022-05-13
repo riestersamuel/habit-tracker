@@ -73,10 +73,10 @@ public class MainController implements Initializable {
 
     //Journal
     private ObservableList<JournalEntry> journalObservableList= FXCollections.observableArrayList(
-            new JournalEntry("24.05.2022","Baba Tag heute! Ein ganz langer Eintrag"),
-            new JournalEntry("24.05.2022","Baba Tag heute!"),
-            new JournalEntry("24.05.2022","Baba Tag heute!"),
-            new JournalEntry("24.05.2022","Baba Tag heute!")
+            new JournalEntry("2022-05-13","Today was a nice day. I learned that sometimes, you just have to stay positive."),
+            new JournalEntry("2022-05-12","Insight: Coding isn't as hard as I thought it would be."),
+            new JournalEntry("2022-05-11","Very stressful day, waiting for the weekend."),
+            new JournalEntry("2022-05-10","Started a project today - I'm excited for what it turns out to become!")
     );
     public MainController() {
 
