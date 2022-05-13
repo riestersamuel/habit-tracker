@@ -66,13 +66,14 @@ public class Main extends Application {
 
     private Parent replaceSceneContent(String fxml) throws Exception {
         // Was ist Parent für ein Datentyp und was kann/soll er machen?
-        URL fxmlFileUrl = getClass().getClassLoader().getResource(fxml);
-        Parent page = FXMLLoader.load(Objects.requireNonNull(fxmlFileUrl));
+        FXMLLoader lloader = new FXMLLoader();
+        lloader.setLocation(getClass().getResource("/fxml/"+fxml));
+        Parent page = lloader.load();
         Scene scene = stage.getScene();
         if (scene == null) {
             scene = new Scene(page);
             //Importing our own css sheet
-            scene.getStylesheets().add(Main.class.getResource("/stylesheet.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
             stage.setScene(scene);
         } else {
             stage.getScene().setRoot(page);

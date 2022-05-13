@@ -35,7 +35,8 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
 
         } else {
             if (mLLoader == null) {
-                mLLoader = new FXMLLoader(getClass().getClassLoader().getResource("JournalCell.fxml"));
+                mLLoader = new FXMLLoader();
+                mLLoader.setLocation(getClass().getResource("/fxml/JournalCell.fxml"));
 
                 mLLoader.setController(this);
 
