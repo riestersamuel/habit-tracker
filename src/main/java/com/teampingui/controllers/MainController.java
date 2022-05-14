@@ -15,6 +15,8 @@ import com.teampingui.models.JournalEntryListViewCell;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -95,17 +97,19 @@ public class MainController implements Initializable {
 
     @FXML
     private void addNewEntry() throws Exception {
-        // taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-        //         change.getControlNewText().length() <= MAX_CHARS ? change : null));
-
-        if (taNewJournal.getLength() <= 200) {
-            lvJournal.getItems().add(0, new JournalEntry(date.now().toString(),taNewJournal.getText().trim()));
+        int length = taNewJournal.getText().trim().length();
+        if (length > 200 || length <= 0) {
+            // TODO: Display hint on textarea
+            // TODO: Display number of chars and max chars (e.g.: 33/200)
+            System.out.println(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
         } else {
-            throw new Exception("The entry is greater than 200 Characters");
+            String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            JournalEntry testEntry = new JournalEntry(
+                    currentDate,
+                    taNewJournal.getText().trim());
+            lvJournal.getItems().add(0, testEntry);
+            taNewJournal.clear();
         }
-
-
-        taNewJournal.clear();
     }
 
     @Override
@@ -113,6 +117,11 @@ public class MainController implements Initializable {
         // Journal
         lvJournal.setItems(journalObservableList);
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
+
+        // journal entry max length
+        final int MAX_CHARS = 200;
+        taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
+                change.getControlNewText().length() <= MAX_CHARS ? change : null));
 
         // Habits
        TableColumn tcName = tvHabits.getColumns().get(0);
