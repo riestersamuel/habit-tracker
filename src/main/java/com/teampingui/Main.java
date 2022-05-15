@@ -64,7 +64,7 @@ public class Main extends Application {
         }
     }
 
-    private Parent replaceSceneContent(String fxml) throws Exception {
+    private void replaceSceneContent(String fxml) throws Exception {
         // Was ist Parent für ein Datentyp und was kann/soll er machen?
         FXMLLoader lloader = new FXMLLoader();
         lloader.setLocation(getClass().getResource("/fxml/"+fxml));
@@ -79,7 +79,6 @@ public class Main extends Application {
             stage.getScene().setRoot(page);
         }
         stage.sizeToScene();
-        return page;
     }
 
     public static void main(String[] args) {
