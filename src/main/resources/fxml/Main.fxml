@@ -34,7 +34,7 @@
                <TableColumn prefWidth="60.0" resizable="false" text="Fri" />
                <TableColumn prefWidth="60.0" resizable="false" text="Sat" />
                <TableColumn prefWidth="60.0" resizable="false" text="Sun" />
-               <TableColumn prefWidth="85.0" resizable="false" text="Done" />
+               <TableColumn fx:id="reps" prefWidth="85.0" resizable="false" text="Done" />
            </columns>
        </TableView>
       <Label fx:id="lErrorMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="383.0" layoutY="766.0" prefWidth="300.0" text="Error Message!" textAlignment="CENTER" visible="false" />

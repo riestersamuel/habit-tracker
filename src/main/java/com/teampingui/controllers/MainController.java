@@ -1,6 +1,8 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
+import javafx.beans.Observable;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntry;
 import com.teampingui.models.JournalEntryListViewCell;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -131,14 +134,26 @@ public class MainController implements Initializable {
        TableColumn tcName = tvHabits.getColumns().get(0);
        tcName.setCellValueFactory(new PropertyValueFactory<Habit, String>("name"));
 
-        for (int i = 1; i <= 7; i++) {
-            TableColumn tcDay = tvHabits.getColumns().get(i);
-            tcDay.setCellValueFactory(new PropertyValueFactory<Habit, String>("done"));
+        TableColumn tcDay;
+       for (int i = 1; i <= 7; i++) {
+            tcDay = tvHabits.getColumns().get(i);
+            tcDay.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checked"));
             tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
+
+            /* Versuch eines Listeners für die Checkboxen....Betonung liegt auf VERSUCH!
+
+            CheckBoxTableCell.forTableColumn(new Callback<Integer, ObservableValue<Boolean>>() {
+
+                @Override
+                public ObservableValue<Boolean> call(Integer param) {
+                    System.out.println("Habit "+tcDay.get(param).getName()+" changed value to " +tcDay.get(param).isChecked());
+                    return tcDay.get(param).checkedProperty();
+                }
+            })); */
         }
 
-        //TableColumn tcReps = tvHabits.getColumns().get(8);
-        //tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
+        TableColumn tcReps = tvHabits.getColumns().get(8);
+        tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
