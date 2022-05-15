@@ -53,9 +53,9 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
             entryText.setText(jEntry.getEntry());
 
             // set the width's
-            vbox.setMinWidth(125);
-            vbox.setMaxWidth(125);
-            vbox.setPrefWidth(125);
+            vbox.setMinWidth(255);
+            vbox.setMaxWidth(255);
+            vbox.setPrefWidth(255);
 
             dateLabel.setText(jEntry.getDate().toString());
             entryText.setText(jEntry.getEntry());

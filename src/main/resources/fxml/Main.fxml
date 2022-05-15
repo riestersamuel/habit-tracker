@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="apBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.teampingui.controllers.MainController">
+<AnchorPane fx:id="apBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.MainController">
    <children>
       <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="355.0" text="Habits" />
        <Button fx:id="btnChallenge" layoutX="355" onAction="#switchScenes" prefHeight="52.0" prefWidth="355.0" text="Challenge" />
@@ -20,7 +14,8 @@
 
        <TextArea fx:id="taNewJournal" layoutX="739.0" layoutY="185.0" prefHeight="129.0" prefWidth="224.0" promptText="How was your day?" wrapText="true" />
        <Button fx:id="btnAddJournal" layoutX="975.0" layoutY="185.0" mnemonicParsing="false" onAction="#addNewEntry" prefHeight="129.0" prefWidth="51.0" text="+" />
-       <ListView fx:id="lvJournal" layoutX="739.0" layoutY="326.0" prefHeight="435.0" prefWidth="287.0" />
+       <Label fx:id="wordCount" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="911.0" layoutY="314.0" text="200/200" textAlignment="RIGHT" />
+       <ListView fx:id="lvJournal" layoutX="739.0" layoutY="336.0" prefHeight="425.0" prefWidth="287.0" />
 
        <Button fx:id="btnRemoveHabit" layoutX="32.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="X Remove a habit" />
        <Button fx:id="btnAddHabit" layoutX="388.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="+ Add a new habit" />

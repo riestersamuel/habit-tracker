@@ -33,6 +33,8 @@ public class MainController implements Initializable {
     @FXML
     Button btnAddJournal;
     @FXML
+    Label wordCount;
+    @FXML
     ListView<JournalEntry> lvJournal;
 
     //Habits
@@ -96,7 +98,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void addNewEntry() throws Exception {
+    private void addNewEntry() {
         int length = taNewJournal.getText().trim().length();
         if (length > 200 || length <= 0) {
             // TODO: Display hint on textarea
@@ -117,11 +119,12 @@ public class MainController implements Initializable {
         // Journal
         lvJournal.setItems(journalObservableList);
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
-
         // journal entry max length
         final int MAX_CHARS = 200;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
+        //journal wordCount
+        wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
         // Habits
        TableColumn tcName = tvHabits.getColumns().get(0);

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Text?>
-<VBox fx:id="vbox" prefWidth="337.0" prefHeight="204.0" maxWidth="337.0"  xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<VBox fx:id="vbox" maxWidth="255.0" prefHeight="150.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="dateLabel" text="Date" wrapText="true" textAlignment="JUSTIFY"/>
-        <Text fx:id="entryText" text="Content" wrappingWidth="300.0" textAlignment="JUSTIFY" />
+        <Label fx:id="dateLabel" text="Date" textAlignment="JUSTIFY" wrapText="true" />
+        <Text fx:id="entryText" text="Content" textAlignment="JUSTIFY" wrappingWidth="255.0">
+         <VBox.margin>
+            <Insets top="6.0" />
+         </VBox.margin></Text>
     </children>
 </VBox>
