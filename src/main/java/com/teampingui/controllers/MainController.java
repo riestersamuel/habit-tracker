@@ -26,6 +26,10 @@ public class MainController implements Initializable {
     Label lWelcome;
     @FXML
     Label lMiniJournal;
+    @FXML
+    Label lErrorMsg;
+    @FXML
+    Button btnHide;
 
     //Journal
     @FXML
@@ -75,6 +79,11 @@ public class MainController implements Initializable {
         }
     }
 
+    public void hideMsg(ActionEvent e){
+        lErrorMsg.setVisible(false);
+        btnHide.setVisible(false);
+    }
+
     //Journal
     private ObservableList<JournalEntry> journalObservableList= FXCollections.observableArrayList(
             new JournalEntry("2022-05-13","Today was a nice day. I learned that sometimes, you just have to stay positive."),
@@ -101,9 +110,9 @@ public class MainController implements Initializable {
     private void addNewEntry() {
         int length = taNewJournal.getText().trim().length();
         if (length > 200 || length <= 0) {
-            // TODO: Display hint on textarea
-            // TODO: Display number of chars and max chars (e.g.: 33/200)
-            System.out.println(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
+            lErrorMsg.setVisible(true);
+            btnHide.setVisible(true);
+            lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
         } else {
             String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             JournalEntry testEntry = new JournalEntry(
@@ -136,8 +145,8 @@ public class MainController implements Initializable {
             tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
         }
 
-        // TableColumn tcReps = tvHabits.getColumns().get(8);
-        // tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
+        //TableColumn tcReps = tvHabits.getColumns().get(8);
+        //tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
