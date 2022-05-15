@@ -19,6 +19,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+import static com.teampingui.models.changeScenes.sceneSwitch;
+
 public class MainController implements Initializable {
 
     //General Layout
@@ -26,12 +28,18 @@ public class MainController implements Initializable {
     Label lWelcome;
     @FXML
     Label lMiniJournal;
+    @FXML
+    Label lErrorMsg;
+    @FXML
+    Button btnHide;
 
     //Journal
     @FXML
     TextArea taNewJournal; // Hier auslesen
     @FXML
     Button btnAddJournal;
+    @FXML
+    Label wordCount;
     @FXML
     ListView<JournalEntry> lvJournal;
 
@@ -59,18 +67,13 @@ public class MainController implements Initializable {
     Button btnHabits, btnChallenge, btnSettings;
 
     @FXML
-    public void switchScenes(ActionEvent e) { // TODO: dont put this in every Controller => rework smarter
-        Main main = Main.getInstance();
-        Object source = e.getSource();
-        if (btnHabits.equals(source)) {
-            main.gotoMain();
-        } else if (btnChallenge.equals(source)) {
-            main.gotoChallenge();
-        } else if (btnSettings.equals(source)) {
-            main.gotoSettings();
-        } else {
-            throw new IllegalStateException("Unexpected value: " + e.getSource());
-        }
+    public void switchScenes(ActionEvent e) {
+        sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+    }
+
+    public void hideMsg(ActionEvent e){
+        lErrorMsg.setVisible(false);
+        btnHide.setVisible(false);
     }
 
     //Journal
@@ -96,12 +99,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void addNewEntry() throws Exception {
+    private void addNewEntry() {
         int length = taNewJournal.getText().trim().length();
         if (length > 200 || length <= 0) {
-            // TODO: Display hint on textarea
-            // TODO: Display number of chars and max chars (e.g.: 33/200)
-            System.out.println(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
+            lErrorMsg.setVisible(true);
+            btnHide.setVisible(true);
+            lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
         } else {
             String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             JournalEntry testEntry = new JournalEntry(
@@ -117,11 +120,12 @@ public class MainController implements Initializable {
         // Journal
         lvJournal.setItems(journalObservableList);
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
-
         // journal entry max length
         final int MAX_CHARS = 200;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
+        //journal wordCount
+        wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
         // Habits
        TableColumn tcName = tvHabits.getColumns().get(0);
@@ -133,8 +137,8 @@ public class MainController implements Initializable {
             tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
         }
 
-        // TableColumn tcReps = tvHabits.getColumns().get(8);
-        // tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
+        //TableColumn tcReps = tvHabits.getColumns().get(8);
+        //tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
