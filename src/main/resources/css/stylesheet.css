@@ -111,3 +111,7 @@
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
+
+#reps {
+    -fx-alignment: center;
+}
