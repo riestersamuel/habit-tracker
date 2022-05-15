@@ -9,8 +9,8 @@
        <Button fx:id="btnChallenge" layoutX="355" onAction="#switchScenes" prefHeight="52.0" prefWidth="355.0" text="Challenge" />
        <Button fx:id="btnSettings" layoutX="710" onAction="#switchScenes" prefHeight="52.0" prefWidth="356.0" text="Settings" />
 
-       <Label fx:id="lWelcome" layoutX="40.0" layoutY="92.0" prefHeight="50.0" prefWidth="540.0" text="Hello, MUSTERNAME" />
-       <Label fx:id="lMiniJournal" layoutX="739.0" layoutY="109.0" prefHeight="42.0" prefWidth="286.0" text="Mini - Journal" />
+       <Label fx:id="lWelcome" layoutX="40.0" layoutY="92.0" prefHeight="50.0" prefWidth="540.0" text="Hi Paul!" />
+       <Label fx:id="lMiniJournal" layoutX="739.0" layoutY="109.0" prefHeight="42.0" prefWidth="286.0" text="Your daily journal" />
 
        <TextArea fx:id="taNewJournal" layoutX="739.0" layoutY="185.0" prefHeight="129.0" prefWidth="224.0" promptText="How was your day?" wrapText="true" />
        <Button fx:id="btnAddJournal" layoutX="975.0" layoutY="185.0" mnemonicParsing="false" onAction="#addNewEntry" prefHeight="129.0" prefWidth="51.0" text="+" />
