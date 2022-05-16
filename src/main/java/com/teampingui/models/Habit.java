@@ -44,7 +44,7 @@ public class Habit {
         return name;
     }
 
-    public  BooleanProperty doneProperty() {
+    public  BooleanProperty checkedProperty() {
         return checked;
     }
 

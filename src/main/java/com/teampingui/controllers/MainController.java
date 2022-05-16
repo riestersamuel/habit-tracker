@@ -117,6 +117,11 @@ public class MainController implements Initializable {
             taNewJournal.clear();
         }
     }
+    //journal rowCount
+    private static int countLines(String str){
+        String[] lines = str.split("\r\n|\r|\n");
+        return  lines.length;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -125,8 +130,14 @@ public class MainController implements Initializable {
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
+        //journal entry max rows
+        final int MAX_LINES = 7;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
+        //journal rowCount
+        taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
+                countLines(change.getControlNewText()) <= MAX_LINES ? change : null));
+
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
