@@ -36,7 +36,7 @@ public class Main extends Application {
             gotoMain();
             primaryStage.show();
         } catch (Exception ex) {
-            log.error("Failed to show the primary stage");
+            log.error("Failed to show the primary stage (" + ex + ").");
         }
     }
 
@@ -44,7 +44,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Main.fxml");
         } catch (Exception ex) {
-            log.error("Failed to replace the scene content with the main page.");
+            log.error("Failed to replace the scene content with the main page (" + ex + ").");
         }
     }
 
@@ -52,7 +52,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Challenge.fxml");
         } catch (Exception ex) {
-            log.error("Failed to replace the scene content with the challenge page.");
+            log.error("Failed to replace the scene content with the challenge page (" + ex + ").");
         }
     }
 
@@ -60,7 +60,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Settings.fxml");
         } catch (Exception ex) {
-            log.error("Failed to show the scene content with the settings.");
+            log.error("Failed to show the scene content with the settings (" + ex + ").");
         }
     }
 
