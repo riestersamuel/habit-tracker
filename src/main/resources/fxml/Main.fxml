@@ -18,16 +18,16 @@
        <ListView fx:id="lvJournal" layoutX="739.0" layoutY="336.0" prefHeight="425.0" prefWidth="287.0" />
 
        <Button fx:id="btnRemoveHabit" layoutX="32.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="X Remove a habit" />
-       <Button fx:id="btnAddHabit" layoutX="388.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="+ Add a new habit" />
+       <Button fx:id="btnAddHabit" onAction="#openHabitDialog" layoutX="388.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="318.0" text="+ Add a new habit" />
        <Button fx:id="btnLastWeek" layoutX="40.0" layoutY="274.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="←" />
        <Button fx:id="btnNextWeek" layoutX="95.0" layoutY="274.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="→" />
        <ProgressBar fx:id="habitsProgress" layoutX="40.0" layoutY="335.0" prefHeight="16.0" prefWidth="665" progress="0.69" />
        <Label fx:id="progressDisplay" layoutX="623.0" layoutY="356.0" text="69%" />
-       <Label fx:id="achieved" alignment="BASELINE_RIGHT" layoutX="656.0" layoutY="356.0" text="achieved" />
+       <Label alignment="BASELINE_RIGHT" layoutX="656.0" layoutY="356.0" text="achieved" />
        <TableView fx:id="tvHabits" layoutX="40.0" layoutY="400.0" prefHeight="360.0" prefWidth="665.0">
            <columns>
-               <TableColumn prefWidth="150.0932388305664" resizable="false" text="Habit" />
-               <TableColumn prefWidth="69.90675354003906" resizable="false" text="Mon" />
+               <TableColumn prefWidth="158.0" resizable="false" text="Habit" />
+               <TableColumn prefWidth="60.0" resizable="false" text="Mon" />
                <TableColumn prefWidth="60.0" resizable="false" text="Tue" />
                <TableColumn prefWidth="60.0" resizable="false" text="Wed" />
                <TableColumn prefWidth="60.0" resizable="false" text="Thu" />
