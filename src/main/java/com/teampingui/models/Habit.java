@@ -60,13 +60,13 @@ public class Habit {
         return name;
     }
 
-    public  BooleanProperty checkedPropertyMon() {
+    public  BooleanProperty checkedMonProperty() {
         return checkedMon;
     }
-    public  BooleanProperty checkedPropertyTue() {
+    public  BooleanProperty checkedTueProperty() {
         return checkedTue;
     }
-    public  BooleanProperty checkedPropertyWed() {
+    public  BooleanProperty checkedWedProperty() {
         return checkedWed;
     }
 
