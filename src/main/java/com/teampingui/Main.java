@@ -48,14 +48,6 @@ public class Main extends Application {
         }
     }
 
-    public void gotoChallenge() {
-        try {
-            replaceSceneContent("Challenge.fxml");
-        } catch (Exception ex) {
-            log.error("Failed to replace the scene content with the challenge page (" + ex + ").");
-        }
-    }
-
     public void gotoSettings() {
         try {
             replaceSceneContent("Settings.fxml");
