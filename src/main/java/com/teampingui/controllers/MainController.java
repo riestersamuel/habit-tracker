@@ -16,7 +16,6 @@ import com.teampingui.models.JournalEntry;
 import com.teampingui.models.JournalEntryListViewCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -144,10 +143,8 @@ public class MainController implements Initializable {
         //journal entry max rows
         final int MAX_LINES = 7;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= MAX_CHARS ? change : null));
-        //journal rowCount
-        taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-                countLines(change.getControlNewText()) <= MAX_LINES ? change : null));
+                change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES  ? change : null));
+
 
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
