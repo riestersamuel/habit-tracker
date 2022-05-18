@@ -1,15 +1,13 @@
 package com.teampingui.controllers;
 
 import com.teampingui.models.Habit;
+import com.teampingui.models.JournalEntry;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -21,18 +19,22 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     Label lAddHabitHeading;
     @FXML
-    TextArea taNewHabitName;
-    @FXML
-    TableView<Habit> tvHabitFrequency;
-
-    @FXML
-    TableColumn colMon, colTue, colWed, colThu, colFri, colSat, colSun;
+    TextField tfNewHabitName;
 
     private ObservableList<Habit> tempHabitList;
 
     @FXML
     void addNewHabit(ActionEvent e) {
-        String name = taNewHabitName.getText().trim();
+        int length = tfNewHabitName.getText().trim().length();
+        String name = "";
+        if (length > 15 || length <= 0) {
+            //lErrorMsg.setVisible(true);
+            // btnHide.setVisible(true);
+            // lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
+        } else {
+            name = tfNewHabitName.getText().trim();
+            tfNewHabitName.clear();
+        }
 
         tempHabitList.add(new Habit(name, false, false, false, 7));
 
@@ -52,9 +54,9 @@ public class AddHabitDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Wie Checkboxen anzeigen lassen?
-        colMon.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checkedMon"));
-        colMon.setCellFactory(CheckBoxTableCell.forTableColumn(colMon));
+        //Textformater
+        int MAX_CHARS=15;
+        tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS  ? change : null));
 
 
 

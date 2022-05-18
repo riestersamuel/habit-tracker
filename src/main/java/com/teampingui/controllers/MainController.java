@@ -151,8 +151,8 @@ public class MainController implements Initializable {
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
         // Habits
-       TableColumn tcName = tvHabits.getColumns().get(0);
-       tcName.setCellValueFactory(new PropertyValueFactory<Habit, String>("name"));
+       TableColumn<Habit, String> tcName = (TableColumn<Habit, String>) tvHabits.getColumns().get(0);
+       tcName.setCellValueFactory (new PropertyValueFactory<Habit, String>("name"));
 
         TableColumn tcDay;
 
