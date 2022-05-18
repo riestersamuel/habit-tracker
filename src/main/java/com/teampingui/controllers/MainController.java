@@ -191,8 +191,4 @@ public class MainController implements Initializable {
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
     }
-
-    public void setName(String newName){
-        lWelcome.setText(newName);
-    }
 }

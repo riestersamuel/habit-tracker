@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.io.*;
+
 import static com.teampingui.models.changeScenes.sceneSwitch;
 
 public class SettingsController {
@@ -23,13 +25,19 @@ public class SettingsController {
         sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
     }
 
-     @FXML
-     void saveChanges(ActionEvent e){
-        //get new name
-        String newName= taName.getText();
-        //set new name
 
-        //get new date format
-        //Set new date format
+    //Das hier war um den Nutzernamen in einer lokalen Datei zu speichern
+    @FXML
+    void saveChanges(ActionEvent e) {
+        try {
+            String username = taName.getText();
+            FileWriter output = new FileWriter("properties.txt");
+            output.write(username);
+            output.close();
+            System.out.println(username);
+        }
+        catch (IOException exception){
+            System.out.println(exception);
+        }
     }
 }
