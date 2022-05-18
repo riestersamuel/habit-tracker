@@ -16,7 +16,6 @@ import com.teampingui.models.JournalEntry;
 import com.teampingui.models.JournalEntryListViewCell;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -78,10 +77,10 @@ public class MainController implements Initializable {
 
     //Journal
     private ObservableList<JournalEntry> journalObservableList= FXCollections.observableArrayList(
-            new JournalEntry("2022-05-13","Today was a nice day. I learned that sometimes, you just have to stay positive."),
-            new JournalEntry("2022-05-12","Insight: Coding isn't as hard as I thought it would be."),
-            new JournalEntry("2022-05-11","Very stressful day, waiting for the weekend."),
-            new JournalEntry("2022-05-10","Started a project today - I'm excited for what it turns out to become!")
+            new JournalEntry("13.05.2022","Today was a nice day. I learned that sometimes, you just have to stay positive."),
+            new JournalEntry("12.05.2022","Insight: Coding isn't as hard as I thought it would be."),
+            new JournalEntry("11.05.2022","Very stressful day, waiting for the weekend."),
+            new JournalEntry("10.05.2022","Started a project today - I'm excited for what it turns out to become!")
     );
     public MainController() {
 
@@ -128,6 +127,7 @@ public class MainController implements Initializable {
         dialogController.setMainHabitList(habitObservableList);
 
         Scene scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
         Stage stage = new Stage();
         //stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
@@ -144,10 +144,8 @@ public class MainController implements Initializable {
         //journal entry max rows
         final int MAX_LINES = 7;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= MAX_CHARS ? change : null));
-        //journal rowCount
-        taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-                countLines(change.getControlNewText()) <= MAX_LINES ? change : null));
+                change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES  ? change : null));
+
 
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
@@ -192,9 +190,5 @@ public class MainController implements Initializable {
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
-    }
-
-    public void setName(String newName){
-        lWelcome.setText(newName);
     }
 }
