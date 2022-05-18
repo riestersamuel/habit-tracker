@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="apBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.MainController">
    <children>
-      <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Habits" />
+      <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Home" />
        <Button fx:id="btnSettings" layoutX="533.0" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Settings" />
 
        <Label fx:id="lWelcome" layoutX="40.0" layoutY="92.0" prefHeight="50.0" prefWidth="540.0" text="Hi Paul!" />

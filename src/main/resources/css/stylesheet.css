@@ -13,13 +13,14 @@
     -fx-background-radius: 1000px;
 }
 
-#btnHabits, #btnChallenge, #btnSettings {
+#btnHabits, #btnSettings {
     -fx-border-radius: 0px;
     -fx-background-radius: 0px;
-    -fx-background-color: #000000CC;
-    -fx-border-color: #dadada;
+    -fx-background-color: #4B545E;
     -fx-text-fill: #fff;
 }
+
+
 
 .button:hover {
     -fx-background-color: rgba(245, 245, 245, 80);
@@ -57,6 +58,11 @@
 -fx-border-color: #006ee6;
 -fx-text-fill: #006ee6;
 -fx-background-color: #fff;
+}
+
+#btnAddHabit:hover{
+    -fx-background-color: #006ee6;
+    -fx-text-fill: #fff;
 }
 
 .progress-bar .bar {
