@@ -113,7 +113,7 @@ public class MainController implements Initializable {
             taNewJournal.clear();
         }
     }
-    //journal rowCount
+    //journal linesCount
     private static int countLines(String str){
         String[] lines = str.split("\r\n|\r|\n");
         return  lines.length;
@@ -141,18 +141,18 @@ public class MainController implements Initializable {
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
-        //journal entry max rows
+        //journal entry max lines
         final int MAX_LINES = 7;
+
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES  ? change : null));
-
 
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
         // Habits
-       TableColumn tcName = tvHabits.getColumns().get(0);
-       tcName.setCellValueFactory(new PropertyValueFactory<Habit, String>("name"));
+       TableColumn<Habit, String> tcName = (TableColumn<Habit, String>) tvHabits.getColumns().get(0);
+       tcName.setCellValueFactory (new PropertyValueFactory<Habit, String>("name"));
 
         TableColumn tcDay;
 

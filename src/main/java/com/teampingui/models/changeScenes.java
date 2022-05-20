@@ -12,8 +12,6 @@ public class changeScenes {
         Object source = e.getSource();
         if (btnHabits.equals(source)) {
             main.gotoMain();
-        } else if (btnChallenge.equals(source)) {
-            main.gotoChallenge();
         } else if (btnSettings.equals(source)) {
             main.gotoSettings();
         } else {
