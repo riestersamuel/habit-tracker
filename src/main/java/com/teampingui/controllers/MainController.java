@@ -1,5 +1,6 @@
 package com.teampingui.controllers;
 
+import com.teampingui.Main;
 import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.*;
 import javafx.collections.FXCollections;
@@ -21,7 +22,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static com.teampingui.models.changeScenes.sceneSwitch;
 
 public class MainController implements Initializable {
 
@@ -66,7 +66,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void switchScenes(ActionEvent e) {
-        sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
     }
 
     public void hideMsg(ActionEvent e){
@@ -201,6 +201,8 @@ public class MainController implements Initializable {
      * @param day (0=Monday 7=Sunday) shows wich checkbox is clicked
      */
     private void checkboxClicked(boolean isChecked, Habit habit, int day) {
+
+
         System.out.println("Checked: " + isChecked);
         System.out.println("Day: " + day);
         int reps = habit.repsProperty().getValue() + (isChecked ? 1 : -1);

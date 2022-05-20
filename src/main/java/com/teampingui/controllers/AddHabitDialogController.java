@@ -1,6 +1,5 @@
 package com.teampingui.controllers;
 
-import com.teampingui.models.CheckedDays;
 import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntry;
 import javafx.collections.ObservableList;

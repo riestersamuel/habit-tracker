@@ -1,25 +1,22 @@
 package com.teampingui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.net.URL;
-import java.util.Objects;
 
 public class Main extends Application {
 
     //Initializing the logger
     private static Logger log = LogManager.getLogger(Main.class);
-
-    private Stage stage;
-
     // Singleton
     private static Main instance;
+    private Stage stage;
 
     public Main() {
         instance = this;
@@ -27,6 +24,10 @@ public class Main extends Application {
 
     public static Main getInstance() {
         return instance;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class Main extends Application {
     private void replaceSceneContent(String fxml) throws Exception {
         // Was ist Parent für ein Datentyp und was kann/soll er machen?
         FXMLLoader lloader = new FXMLLoader();
-        lloader.setLocation(getClass().getResource("/fxml/"+fxml));
+        lloader.setLocation(getClass().getResource("/fxml/" + fxml));
         Parent page = lloader.load();
         Scene scene = stage.getScene();
         if (scene == null) {
@@ -73,7 +74,14 @@ public class Main extends Application {
         stage.sizeToScene();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public void sceneSwitch(ActionEvent e, Button btnHabits, Button btnChallenge, Button btnSettings) {
+        Object source = e.getSource();
+        if (btnHabits.equals(source)) {
+            gotoMain();
+        } else if (btnSettings.equals(source)) {
+            gotoSettings();
+        } else {
+            throw new IllegalStateException("Unexpected value: " + e.getSource());
+        }
     }
 }

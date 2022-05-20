@@ -9,7 +9,6 @@ import javafx.scene.control.TextArea;
 
 import java.io.*;
 
-import static com.teampingui.models.changeScenes.sceneSwitch;
 
 public class SettingsController {
 
@@ -22,7 +21,7 @@ public class SettingsController {
 
     @FXML
     public void switchScenes(ActionEvent e) {
-        sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
     }
 
 
