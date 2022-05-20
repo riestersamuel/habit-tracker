@@ -2,7 +2,10 @@ package com.teampingui.controllers;
 
 import com.teampingui.Main;
 import com.teampingui.interfaces.ICheckBoxClickListener;
-import com.teampingui.models.*;
+import com.teampingui.models.DayCell;
+import com.teampingui.models.Habit;
+import com.teampingui.models.JournalEntry;
+import com.teampingui.models.JournalEntryListViewCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

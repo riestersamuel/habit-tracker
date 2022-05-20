@@ -7,7 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class SettingsController {
