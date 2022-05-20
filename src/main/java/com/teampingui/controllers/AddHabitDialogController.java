@@ -41,7 +41,7 @@ public class AddHabitDialogController implements Initializable {
         tempHabitList.add(new Habit(
                 name,
                 new boolean[]{cbMonday.isSelected(), cbTuesday.isSelected(), cbWednesday.isSelected(), cbThursday.isSelected(), cbFriday.isSelected(), cbSaturday.isSelected(), cbSunday.isSelected()},
-                new boolean[]{false, false, false, false, false, false, false}));
+                new boolean[7]));
 
         closeStage(e);
     }

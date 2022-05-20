@@ -13,13 +13,14 @@ public class DayCell extends TableCell<Habit, Boolean> {
     public DayCell(ICheckBoxClickListener clickListener) {
         checkBox = new CheckBox();
         checkBox.setOnAction((evt) -> {
-            clickListener.onPositionClicked(checkBox.isSelected(),getTableView().getItems().get(getIndex()));
-        }
-    );
+                    clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()));
+                }
+        );
 
-    this.setGraphic(checkBox);
-    this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-    this.setEditable(true);
+        // TODO: add color for haveToDo Days
+        this.setGraphic(checkBox);
+        this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        this.setEditable(true);
     }
 
     @Override
