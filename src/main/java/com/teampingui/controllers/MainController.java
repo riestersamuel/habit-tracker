@@ -58,7 +58,8 @@ public class MainController implements Initializable {
     private ProgressBar habitsProgress;
     @FXML
     private Label progressDisplay;
-    private double progress;
+    private int haveTodoCounter = 0;
+    private int doneCounter = 0;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
     //Journal
@@ -77,16 +78,16 @@ public class MainController implements Initializable {
         habitObservableList.addAll(
                 new Habit(
                         "Könken",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false}),
+                        new boolean[]{true, true, true, true, true, true, true},
+                        new boolean[]{false, false, true, false, true, false, false}),
                 new Habit(
                         "Könken",
                         new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false}),
+                        new boolean[]{true, true, false, false, false, false, false}),
                 new Habit(
                         "saufen",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false}),
+                        new boolean[]{true, false, false, true, false, false, false},
+                        new boolean[]{true, false, false, true, false, false, false}),
                 new Habit(
                         "lesen",
                         new boolean[]{true, false, false, false, false, false, false},
@@ -167,6 +168,19 @@ public class MainController implements Initializable {
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
+
+        // Set ProgressBar // TODO: rework
+        for (Habit h: habitObservableList) {
+            haveTodoCounter += h.repsProperty().getValue();
+            for (int i = 0; i < 7; i++) {
+                if (h.checkedDays(i).getValue() && h.hasToBeDone(i)) {
+                    doneCounter++;
+                }
+            }
+        }
+        double percentage = (double)doneCounter / haveTodoCounter;
+        habitsProgress.setProgress(percentage);
+        progressDisplay.setText((int)(percentage*100)+"%");
     }
 
     private void dynamicallyAddTableCols() {
@@ -212,10 +226,15 @@ public class MainController implements Initializable {
      * @param day       (0=Monday 7=Sunday) shows wich checkbox is clicked
      */
     private void checkboxClicked(boolean isChecked, Habit habit, int day) {
-        System.out.println("Checked: " + isChecked);
-        System.out.println("Day: " + day);
-        //int reps = habit.repsProperty().getValue() + (isChecked ? 1 : -1);
-        //habit.repsProperty().setValue(reps);
-        System.out.println("Habit: " + habit.repsProperty().getValue());
+        // System.out.println("Checked: " + isChecked);
+        // System.out.println("Day: " + day);
+        // System.out.println("Habit: " + habit.repsProperty().getValue());
+
+        if (habit.hasToBeDone(day)) {
+            doneCounter += isChecked ? 1 : -1;
+            double percentage = (double)doneCounter / haveTodoCounter;
+            habitsProgress.setProgress(percentage);
+            progressDisplay.setText((int)(percentage*100)+"%");
+        }
     }
 }

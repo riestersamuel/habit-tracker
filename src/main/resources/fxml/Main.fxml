@@ -21,7 +21,6 @@
        <Button fx:id="btnNextWeek" layoutX="95.0" layoutY="274.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" text="→" />
        <ProgressBar fx:id="habitsProgress" layoutX="40.0" layoutY="335.0" prefHeight="16.0" prefWidth="665" progress="0.69" />
        <Label fx:id="progressDisplay" layoutX="623.0" layoutY="356.0" text="69%" />
-       <Label alignment="BASELINE_RIGHT" layoutX="656.0" layoutY="356.0" text="achieved" />
        <TableView fx:id="tvHabits" layoutX="40.0" layoutY="400.0" prefHeight="360.0" prefWidth="665.0">
            <!--columns>
                <TableColumn prefWidth="158.0" resizable="false" text="Habit" />
