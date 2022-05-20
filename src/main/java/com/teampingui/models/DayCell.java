@@ -12,9 +12,8 @@ public class DayCell extends TableCell<Habit, Boolean> {
 
     public DayCell(ICheckBoxClickListener clickListener) {
         checkBox = new CheckBox();
-        checkBox.setOnAction((evt) -> {
-                    clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()));
-                }
+        checkBox.setOnAction(evt ->
+                clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()))
         );
 
         // TODO: add color for haveToDo Days
