@@ -13,4 +13,6 @@ module com.TeamPingui {
     exports com.teampingui.controllers to javafx.fxml, org.apache.logging.log4j;
     exports com.teampingui.models;
     exports com.teampingui;
+    exports com.teampingui.interfaces;
+    opens com.teampingui.interfaces to javafx.fxml;
 }

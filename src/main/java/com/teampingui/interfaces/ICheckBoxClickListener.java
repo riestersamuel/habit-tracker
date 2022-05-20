@@ -1,4 +1,6 @@
-package com.teampingui.models;
+package com.teampingui.interfaces;
+
+import com.teampingui.models.Habit;
 
 public interface ICheckBoxClickListener {
 

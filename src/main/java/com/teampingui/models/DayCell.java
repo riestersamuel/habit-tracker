@@ -1,6 +1,6 @@
 package com.teampingui.models;
 
-import javafx.beans.property.SimpleBooleanProperty;
+import com.teampingui.interfaces.ICheckBoxClickListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
