@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    public ObservableList<Habit> habitObservableList;
     //General Layout
     @FXML
     Label lWelcome;
@@ -37,7 +38,6 @@ public class MainController implements Initializable {
     Label lErrorMsg;
     @FXML
     Button btnHide;
-
     //Journal
     @FXML
     TextArea taNewJournal; // Hier auslesen
@@ -47,56 +47,71 @@ public class MainController implements Initializable {
     Label wordCount;
     @FXML
     ListView<JournalEntry> lvJournal;
-
     //Habits
     @FXML
     Button btnAddHabit;
     @FXML
     Button btnRemoveHabit;
     @FXML
+    Button btnHabits, btnChallenge, btnSettings;
+    @FXML
     private ProgressBar habitsProgress;
     @FXML
     private Label progressDisplay;
-
     private double progress;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
-
-    public ObservableList<Habit> habitObservableList;
-
-    @FXML
-    Button btnHabits, btnChallenge, btnSettings;
-
-    @FXML
-    public void switchScenes(ActionEvent e) {
-        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
-    }
-
-    public void hideMsg(ActionEvent e){
-        lErrorMsg.setVisible(false);
-        btnHide.setVisible(false);
-    }
-
     //Journal
-    private ObservableList<JournalEntry> journalObservableList= FXCollections.observableArrayList(
-            new JournalEntry("13.05.2022","Today was a nice day. I learned that sometimes, you just have to stay positive."),
-            new JournalEntry("12.05.2022","Insight: Coding isn't as hard as I thought it would be."),
-            new JournalEntry("11.05.2022","Very stressful day, waiting for the weekend."),
-            new JournalEntry("10.05.2022","Started a project today - I'm excited for what it turns out to become!")
+    private ObservableList<JournalEntry> journalObservableList = FXCollections.observableArrayList(
+            new JournalEntry("13.05.2022", "Today was a nice day. I learned that sometimes, you just have to stay positive."),
+            new JournalEntry("12.05.2022", "Insight: Coding isn't as hard as I thought it would be."),
+            new JournalEntry("11.05.2022", "Very stressful day, waiting for the weekend."),
+            new JournalEntry("10.05.2022", "Started a project today - I'm excited for what it turns out to become!")
     );
+
     public MainController() {
 
         // Habits
         habitObservableList = FXCollections.observableArrayList();
 
         habitObservableList.addAll(
-                new Habit("Könken", new boolean[]{false, false, false, false, false, false, false}, 1),
-                new Habit("Lesen", new boolean[]{false, false, false, true, false, false, false},4),
-                new Habit("Lernen", new boolean[]{false, true, false, false, false, false, false}, 5),
-                new Habit("Sport", new boolean[]{false, false, false, false, false, false, false}, 7),
-                new Habit("Ordentlich abschießen", new boolean[]{false, false, false, true, true, false, false}, 4),
-                new Habit("Wasser trinken", new boolean[]{false, true, true, false, false, false, false}, 3)
+                new Habit(
+                        "Könken",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false}),
+                new Habit(
+                        "Könken",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false}),
+                new Habit(
+                        "saufen",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false}),
+                new Habit(
+                        "lesen",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false}),
+                new Habit(
+                        "lernen",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false})
         );
+    }
+
+    // journal lineCount
+    private static int countLines(String str) {
+        String[] lines = str.split("\r\n|\r|\n");
+        return lines.length;
+    }
+
+    @FXML
+    public void switchScenes(ActionEvent e) {
+        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+    }
+
+    public void hideMsg(ActionEvent e) {
+        lErrorMsg.setVisible(false);
+        btnHide.setVisible(false);
     }
 
     @FXML
@@ -114,12 +129,6 @@ public class MainController implements Initializable {
             lvJournal.getItems().add(0, testEntry);
             taNewJournal.clear();
         }
-    }
-
-    // journal lineCount
-    private static int countLines(String str){
-        String[] lines = str.split("\r\n|\r|\n");
-        return  lines.length;
     }
 
     @FXML
@@ -147,11 +156,11 @@ public class MainController implements Initializable {
         //journal entry max rows
         final int MAX_LINES = 7;
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
-                change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES  ? change : null));
+                change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES ? change : null));
 
 
         //journal wordCount
-        wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
+        wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/" + MAX_CHARS));
 
         // Habits
         dynamicallyAddTableCols();
@@ -189,7 +198,7 @@ public class MainController implements Initializable {
         tcReps.setPrefWidth(85);
 
         // Cols
-        ObservableList<TableColumn<Habit, ?>> cols =  tvHabits.getColumns();
+        ObservableList<TableColumn<Habit, ?>> cols = tvHabits.getColumns();
 
         // add cols to table
         cols.add(tcName);
@@ -198,18 +207,15 @@ public class MainController implements Initializable {
     }
 
     /**
-     *
      * @param isChecked if the checkbox is checked its true
-     * @param habit the habit which belongs to the clicked checkbox (same row)
-     * @param day (0=Monday 7=Sunday) shows wich checkbox is clicked
+     * @param habit     the habit which belongs to the clicked checkbox (same row)
+     * @param day       (0=Monday 7=Sunday) shows wich checkbox is clicked
      */
     private void checkboxClicked(boolean isChecked, Habit habit, int day) {
-
-
         System.out.println("Checked: " + isChecked);
         System.out.println("Day: " + day);
-        int reps = habit.repsProperty().getValue() + (isChecked ? 1 : -1);
-        habit.repsProperty().setValue(reps);
+        //int reps = habit.repsProperty().getValue() + (isChecked ? 1 : -1);
+        //habit.repsProperty().setValue(reps);
         System.out.println("Habit: " + habit.repsProperty().getValue());
     }
 }

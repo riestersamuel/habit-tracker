@@ -42,37 +42,37 @@
                   <Insets left="140.0" />
                </GridPane.margin>
             </Button>
-            <CheckBox fx:id="cbMon" mnemonicParsing="false" text="Monday" GridPane.rowIndex="2">
+            <CheckBox fx:id="cbMonday" mnemonicParsing="false" text="Monday" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Tuesday" GridPane.rowIndex="3">
+            <CheckBox fx:id="cbTuesday" mnemonicParsing="false" text="Tuesday" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Wednesday" GridPane.rowIndex="4">
+            <CheckBox fx:id="cbWednesday" mnemonicParsing="false" text="Wednesday" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Thursday" GridPane.rowIndex="5">
+            <CheckBox fx:id="cbThursday" mnemonicParsing="false" text="Thursday" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Friday" GridPane.rowIndex="6">
+            <CheckBox fx:id="cbFriday" mnemonicParsing="false" text="Friday" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Saturday" GridPane.rowIndex="7">
+            <CheckBox fx:id="cbSaturday"  mnemonicParsing="false" text="Saturday" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" text="Sunday" GridPane.rowIndex="8">
+            <CheckBox fx:id="cbSunday" mnemonicParsing="false" text="Sunday" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

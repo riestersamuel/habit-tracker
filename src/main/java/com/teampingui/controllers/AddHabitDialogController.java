@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -15,6 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
+    @FXML
+    CheckBox cbMonday,cbTuesday,cbWednesday,cbThursday,cbFriday,cbSaturday,cbSunday;
     @FXML
     Label lAddHabitHeading;
     @FXML
@@ -35,7 +38,10 @@ public class AddHabitDialogController implements Initializable {
             tfNewHabitName.clear();
         }
 
-        tempHabitList.add(new Habit(name, new boolean[]{false, true, true, false, false, false, false}, 7));
+        tempHabitList.add(new Habit(
+                name,
+                new boolean[]{false, true, false, true, false, true, false},
+                new boolean[]{cbMonday.isSelected(), cbTuesday.isSelected(), cbWednesday.isSelected(), cbThursday.isSelected(), cbFriday.isSelected(), cbSaturday.isSelected(), cbSunday.isSelected()}));
 
         closeStage(e);
     }
