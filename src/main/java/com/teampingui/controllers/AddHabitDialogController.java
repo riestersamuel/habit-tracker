@@ -1,5 +1,6 @@
 package com.teampingui.controllers;
 
+import com.teampingui.models.CheckedDays;
 import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntry;
 import javafx.collections.ObservableList;
@@ -36,7 +37,7 @@ public class AddHabitDialogController implements Initializable {
             tfNewHabitName.clear();
         }
 
-        tempHabitList.add(new Habit(name, false, false, false, 7));
+        tempHabitList.add(new Habit(name, new boolean[]{false, true, true, false, false, false, false}, 7));
 
         closeStage(e);
     }

@@ -30,7 +30,7 @@
        <Label fx:id="progressDisplay" layoutX="623.0" layoutY="356.0" text="69%" />
        <Label alignment="BASELINE_RIGHT" layoutX="656.0" layoutY="356.0" text="achieved" />
        <TableView fx:id="tvHabits" layoutX="40.0" layoutY="400.0" prefHeight="360.0" prefWidth="665.0">
-           <columns>
+           <!--columns>
                <TableColumn prefWidth="158.0" resizable="false" text="Habit" />
                <TableColumn prefWidth="60.0" resizable="false" text="Mon" />
                <TableColumn prefWidth="60.0" resizable="false" text="Tue" />
@@ -40,7 +40,7 @@
                <TableColumn prefWidth="60.0" resizable="false" text="Sat" />
                <TableColumn prefWidth="60.0" resizable="false" text="Sun" />
                <TableColumn fx:id="reps" prefWidth="85.0" resizable="false" text="Done" />
-           </columns>
+           </columns-->
        </TableView>
       <Label fx:id="lErrorMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="383.0" layoutY="766.0" prefWidth="300.0" text="Error Message!" textAlignment="CENTER" visible="false" />
        <Button fx:id="btnHide" layoutX="689.0" layoutY="766.0" onAction="#hideMsg" prefHeight="30.0" text="X" visible="false" />

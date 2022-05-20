@@ -1,25 +1,33 @@
 package com.teampingui.controllers;
 
+import com.teampingui.models.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import com.teampingui.models.Habit;
-import com.teampingui.models.JournalEntry;
-import com.teampingui.models.JournalEntryListViewCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static com.teampingui.models.changeScenes.sceneSwitch;
@@ -88,12 +96,12 @@ public class MainController implements Initializable {
         habitObservableList = FXCollections.observableArrayList();
 
         habitObservableList.addAll(
-                new Habit("Könken", true, false, false, 1),
-                new Habit("Lesen", true, true, true,4),
-                new Habit("Lernen", false, false, false, 5),
-                new Habit("Sport", true, true, true, 7),
-                new Habit("Ordentlich abschießen", false, false, true, 4),
-                new Habit("Wasser trinken", true, true, false, 3)
+                new Habit("Könken", new boolean[]{false, false, false, false, false, false, false}, 1),
+                new Habit("Lesen", new boolean[]{false, false, false, true, false, false, false},4),
+                new Habit("Lernen", new boolean[]{false, true, false, false, false, false, false}, 5),
+                new Habit("Sport", new boolean[]{false, false, false, false, false, false, false}, 7),
+                new Habit("Ordentlich abschießen", new boolean[]{false, false, false, true, true, false, false}, 4),
+                new Habit("Wasser trinken", new boolean[]{false, true, true, false, false, false, false}, 3)
         );
     }
 
@@ -113,7 +121,8 @@ public class MainController implements Initializable {
             taNewJournal.clear();
         }
     }
-    //journal linesCount
+
+    // journal lineCount
     private static int countLines(String str){
         String[] lines = str.split("\r\n|\r|\n");
         return  lines.length;
@@ -141,54 +150,70 @@ public class MainController implements Initializable {
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
-        //journal entry max lines
+        //journal entry max rows
         final int MAX_LINES = 7;
-
         taNewJournal.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS && countLines(change.getControlNewText()) <= MAX_LINES  ? change : null));
+
 
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/"+MAX_CHARS));
 
         // Habits
-       TableColumn<Habit, String> tcName = (TableColumn<Habit, String>) tvHabits.getColumns().get(0);
-       tcName.setCellValueFactory (new PropertyValueFactory<Habit, String>("name"));
-
-        TableColumn tcDay;
-
-        tcDay = tvHabits.getColumns().get(1);
-        tcDay.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checkedMon"));
-        tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
-
-        tcDay = tvHabits.getColumns().get(2);
-        tcDay.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checkedTue"));
-        tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
-
-        tcDay = tvHabits.getColumns().get(3);
-        tcDay.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checkedWed"));
-        tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
-
-      /* for (int i = 1; i <= 7; i++) {
-            tcDay = tvHabits.getColumns().get(i);
-            tcDay.setCellValueFactory(new PropertyValueFactory<Habit, Boolean>("checked"));
-            tcDay.setCellFactory(tc -> new CheckBoxTableCell<>());
-
-            /* Versuch eines Listeners für die Checkboxen....Betonung liegt auf VERSUCH!
-
-            CheckBoxTableCell.forTableColumn(new Callback<Integer, ObservableValue<Boolean>>() {
-
-                @Override
-                public ObservableValue<Boolean> call(Integer param) {
-                    System.out.println("Habit "+tcDay.get(param).getName()+" changed value to " +tcDay.get(param).isChecked());
-                    return tcDay.get(param).checkedProperty();
-                }
-            }));
-        } */
-
-        TableColumn tcReps = tvHabits.getColumns().get(8);
-        tcReps.setCellValueFactory(new PropertyValueFactory<Habit, Integer>("reps"));
+        dynamicallyAddTableCols();
 
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
+    }
+
+    private void dynamicallyAddTableCols() {
+        // Column: habit name
+        TableColumn<Habit, String> tcName = new TableColumn<>("Habit");
+        tcName.setPrefWidth(158);
+        tcName.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        // Columns: days checkboxes
+        ArrayList<TableColumn<Habit, Boolean>> alCheckboxes = new ArrayList<>();
+        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        for (int i = 0; i < days.length; i++) {
+            TableColumn<Habit, Boolean> tc = new TableColumn<>(days[i]);
+            tc.setPrefWidth(60);
+            final int day = i;
+            tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
+            tc.setCellFactory(checkbox -> new DayCell(new ICheckBoxClickListener() {
+                @Override
+                public void onPositionClicked(boolean isChecked, Habit habit) {
+                    checkboxClicked(isChecked, habit, day);
+                }
+            }));
+            alCheckboxes.add(tc);
+        }
+
+        // Columns: repetitions
+        TableColumn<Habit, Integer> tcReps = new TableColumn<>("Reps");
+        tcReps.setCellValueFactory(new PropertyValueFactory<>("reps"));
+        tcReps.setPrefWidth(85);
+
+        // Cols
+        ObservableList<TableColumn<Habit, ?>> cols =  tvHabits.getColumns();
+
+        // add cols to table
+        cols.add(tcName);
+        cols.addAll(alCheckboxes);
+        cols.add(tcReps);
+    }
+
+    /**
+     *
+     * @param isChecked if the checkbox is checked its true
+     * @param habit the habit which belongs to the clicked checkbox (same row)
+     * @param day (0=Monday 7=Sunday) shows wich checkbox is clicked
+     */
+    private void checkboxClicked(boolean isChecked, Habit habit, int day) {
+        System.out.println("Checked: " + isChecked);
+        System.out.println("Day: " + day);
+        int reps = habit.repsProperty().getValue() + (isChecked ? 1 : -1);
+        habit.repsProperty().setValue(reps);
+        System.out.println("Habit: " + habit.repsProperty().getValue());
     }
 }
