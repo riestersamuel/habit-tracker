@@ -12,10 +12,10 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
+
+import static com.teampingui.dao.Database.location;
 
 public class Main extends Application {
 
@@ -33,7 +33,23 @@ public class Main extends Application {
         return instance;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        //DB Test
+        String dbPrefix = "jdbc:sqlite:";
+        Connection con = DriverManager.getConnection(dbPrefix + location);
+        String query = "SELECT * FROM test";
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            System.out.print(rs.getInt("id") + ": ");
+            System.out.print(rs.getString("word") + " ");
+        }
+
+        rs.close();
+        stmt.close();
+        con.close();
+
         launch(args);
     }
 

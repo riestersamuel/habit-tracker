@@ -14,7 +14,7 @@ public class Database {
     /**
     * Location of database
     */
-  private static final String location = Main.class.getResource("/database/database.db").toExternalForm();
+  public static final String location = Main.class.getResource("/database/database.db").toExternalForm();
 
     /**
      * Current Table
