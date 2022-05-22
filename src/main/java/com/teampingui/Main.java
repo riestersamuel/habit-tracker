@@ -2,7 +2,6 @@ package com.teampingui;
 
 import com.teampingui.dao.Database;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.time.LocalDateTime;
 
+//Zu entfernen
 import static com.teampingui.dao.Database.location;
 
 public class Main extends Application {
@@ -34,7 +34,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-        //DB Test
+        //DB Test -> Später zu entfernen
         String dbPrefix = "jdbc:sqlite:";
         Connection con = DriverManager.getConnection(dbPrefix + location);
         String query = "SELECT * FROM test";

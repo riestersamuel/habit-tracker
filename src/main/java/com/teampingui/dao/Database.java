@@ -17,14 +17,14 @@ public class Database {
   public static final String location = Main.class.getResource("/database/database.db").toExternalForm();
 
     /**
-     * Current Table
+     * Reuired Table for Programm to work
      */
-    private static final String requiredTable ="Habits";
+    private static final String requiredTable ="test";
 
     public static boolean isOK() {
         if (!checkDrivers()) return false;
-        return checkConnection();
-        //    return checkTables();
+        if(!checkConnection()) return false;
+        return checkTables();
     }
 
     private static boolean checkDrivers() {
@@ -47,7 +47,7 @@ public class Database {
         }
     }
 
-   /* private static boolean checkTables() {
+   private static boolean checkTables() {
         String checkTables = "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + requiredTable + "'";
 
         try (Connection connection = Database.connect()) {
@@ -61,7 +61,7 @@ public class Database {
             return false;
         }
         return false;
-    } */
+    }
 
     protected static Connection connect() {
         String dbPrefix = "jdbc:sqlite:";

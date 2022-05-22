@@ -182,7 +182,7 @@ public class MainController implements Initializable {
         }
         double percentage = (double)doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
-        progressDisplay.setText((int)(percentage*100)+"%");
+        progressDisplay.setText((int)(percentage*100)+"% achieved");
     }
 
     private void dynamicallyAddTableCols() {
@@ -236,7 +236,7 @@ public class MainController implements Initializable {
             doneCounter += isChecked ? 1 : -1;
             double percentage = (double)doneCounter / haveTodoCounter;
             habitsProgress.setProgress(percentage);
-            progressDisplay.setText((int)(percentage*100)+"%");
+            progressDisplay.setText((int)(percentage*100)+"% achieved");
         }
     }
 }
