@@ -9,6 +9,9 @@ public class Habit {
     private final BooleanProperty[] checkedDays = new BooleanProperty[7];
     private final boolean[] haveTodoDays = new boolean[7];
 
+    //For database
+    private final int id = 1;
+
     public Habit(String name, boolean[] haveTodoDays,boolean[] checkedDays) {
         this.name = new SimpleStringProperty(name);
         int reps = 0;

@@ -1,6 +1,8 @@
 package com.teampingui;
 
+import com.teampingui.dao.Database;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +11,11 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class Main extends Application {
 
@@ -32,12 +39,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        try {
-            stage = primaryStage;
-            gotoMain();
-            primaryStage.show();
-        } catch (Exception ex) {
-            log.error("Failed to show the primary stage (" + ex + ").");
+        if (Database.isOK()) {
+            try {
+                stage = primaryStage;
+                gotoMain();
+                primaryStage.show();
+            } catch (Exception ex) {
+                log.error("Failed to show the primary stage (" + ex + ").");
+            }
+        } else {
+            log.error(LocalDateTime.now() + ": Database could not be loaded");
         }
     }
 

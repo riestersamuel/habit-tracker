@@ -1,6 +1,7 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
+import com.teampingui.dao.HabitDAO;
 import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.DayCell;
 import com.teampingui.models.Habit;
@@ -166,6 +167,7 @@ public class MainController implements Initializable {
         // Habits
         dynamicallyAddTableCols();
 
+        //tvHabits.setItems(HabitDAO.getHabits());
         tvHabits.setItems(habitObservableList);
         tvHabits.setEditable(true);
 

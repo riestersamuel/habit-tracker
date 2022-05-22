@@ -1,9 +1,11 @@
 module com.TeamPingui {
+    requires java.sql;
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.graphics;
     requires org.apache.logging.log4j;
+    requires org.xerial.sqlitejdbc;
 
     opens com.teampingui.controllers to javafx.fxml;
     opens com.teampingui.models to javafx.fxml;

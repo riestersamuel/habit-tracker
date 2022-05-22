@@ -1,5 +1,6 @@
 package com.teampingui.controllers;
 
+import com.teampingui.dao.HabitDAO;
 import com.teampingui.models.Habit;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
+import javafx.util.converter.PercentageStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +40,7 @@ public class AddHabitDialogController implements Initializable {
             tfNewHabitName.clear();
         }
 
-        tempHabitList.add(new Habit(
+      tempHabitList.add(new Habit(
                 name,
                 new boolean[]{cbMonday.isSelected(), cbTuesday.isSelected(), cbWednesday.isSelected(), cbThursday.isSelected(), cbFriday.isSelected(), cbSaturday.isSelected(), cbSunday.isSelected()},
                 new boolean[7]));
