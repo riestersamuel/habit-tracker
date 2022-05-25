@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class Database {
     //Initializing the logger
-    private static Logger log = LogManager.getLogger(Main.class);
+    private static Logger log = LogManager.getLogger(Database.class);
 
     /**
     * Location of database

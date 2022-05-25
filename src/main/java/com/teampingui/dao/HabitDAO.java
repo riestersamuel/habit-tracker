@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class HabitDAO {
     //Initializing the logger
-    private static Logger log = LogManager.getLogger(Main.class);
+    private static Logger log = LogManager.getLogger(Database.class);
     private static final String tableName = "Habits";
     private static final String colHabitName ="name";
     /*private static final String colMon = "Mon";
