@@ -9,6 +9,7 @@ import javafx.scene.control.TextArea;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
 
 
 public class SettingsController {
@@ -40,4 +41,7 @@ public class SettingsController {
             System.out.println(exception);
         }
     }
+
+    //TODO: Connect this with the database
+
 }
