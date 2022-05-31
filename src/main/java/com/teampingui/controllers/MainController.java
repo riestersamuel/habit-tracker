@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -203,12 +204,13 @@ public class MainController implements Initializable {
             tc.setPrefWidth(60);
             final int day = i;
             tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
-            tc.setCellFactory(checkbox -> new DayCell(new ICheckBoxClickListener() {
+            tc.setCellFactory(checkbox -> new DayCell(
+                    new ICheckBoxClickListener() {
                 @Override
                 public void onPositionClicked(boolean isChecked, Habit habit) {
                     checkboxClicked(isChecked, habit, day);
                 }
-            }));
+            }, day));
             alCheckboxes.add(tc);
         }
 
