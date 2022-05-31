@@ -9,7 +9,9 @@ import javafx.scene.control.TextArea;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
+import java.sql.*;
+
+import static com.teampingui.dao.Database.location;
 
 
 public class SettingsController {
@@ -27,21 +29,26 @@ public class SettingsController {
     }
 
 
-    //Das hier war um den Nutzernamen in einer lokalen Datei zu speichern
+    //This method is used to save the user's name to the database
     @FXML
     void saveChanges(ActionEvent e) {
         try {
             String username = taName.getText();
-            FileWriter output = new FileWriter("properties.txt");
-            output.write(username);
-            output.close();
-            System.out.println(username);
+            String dbPrefix = "jdbc:sqlite:";
+            Connection con = DriverManager.getConnection(dbPrefix + location);
+            String query = "INSERT INTO properties VALUES ('name', '" + username + "');";
+            System.out.println("You sent the following query to the database: " + query);
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.executeUpdate();
+
+            stmt.close();
+            con.close();
         }
-        catch (IOException exception){
-            System.out.println(exception);
+
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         }
+
     }
-
-    //TODO: Connect this with the database
-
 }
