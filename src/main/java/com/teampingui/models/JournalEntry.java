@@ -1,5 +1,6 @@
 package com.teampingui.models;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class JournalEntry {
@@ -8,7 +9,7 @@ public class JournalEntry {
 
     private String entry, date;
 
-    public JournalEntry (String date, String entry) {
+    public JournalEntry (String date, String  entry) {
         this.date = date;
         this.entry = entry;
     }

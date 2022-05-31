@@ -2,6 +2,7 @@ package com.teampingui.controllers;
 
 import com.teampingui.Main;
 import com.teampingui.dao.HabitDAO;
+import com.teampingui.dao.JournalDAO;
 import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.DayCell;
 import com.teampingui.models.Habit;
@@ -151,7 +152,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Journal
-        lvJournal.setItems(journalObservableList);
+        lvJournal.setItems(JournalDAO.getJournalEntrys());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
