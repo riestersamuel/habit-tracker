@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class HabitDAO {
     //Initializing the logger
-    private static Logger log = LogManager.getLogger(Database.class);
+    private static Logger log = LogManager.getLogger(HabitDAO.class);
     private static final String tableName = "Habits";
     private static final String colHabitName ="name";
     /*private static final String colMon = "Mon";
@@ -33,7 +33,7 @@ public class HabitDAO {
     }
 
     public static ObservableList<Habit> getHabits() {
-        return FXCollections.unmodifiableObservableList(habits);
+        return FXCollections.observableList(habits);
     }
 
     private static void updateHabitsFromDB() {
@@ -58,15 +58,15 @@ public class HabitDAO {
 
         }
 
-    public static void insertHabit(String name, boolean[] haveTodoDays, boolean[] checkedDays) {
+    public static void insertHabit(Habit habit) {
         //TODO
     }
 
-    public static void update(Habit newHabit) {
+    public static void updateHabit(int id, Habit habit) {
         //TODO
     }
 
-    public static void delete(int id) {
+    public static void deleteHabit(int id) {
         //TODO
     }
 
