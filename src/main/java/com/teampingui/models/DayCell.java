@@ -1,25 +1,44 @@
 package com.teampingui.models;
 
 import com.teampingui.interfaces.ICheckBoxClickListener;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 
-public class DayCell extends TableCell<Habit, Boolean> {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    private final CheckBox checkBox;
+public class DayCell extends TableCell<Habit, Boolean>
+{
 
-    public DayCell(ICheckBoxClickListener clickListener) {
-        checkBox = new CheckBox();
-        checkBox.setOnAction(evt ->
-                clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()))
-        );
+    private final CheckBox checkBox = new CheckBox();
+    private final int day;
 
-        // TODO: add color for haveToDo Days
+    public DayCell(ICheckBoxClickListener clickListener, final int day) {
+        this.day = day;
+
+        checkBox.setOnAction(evt -> {
+            clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()));
+            switchStyle();
+        });
+
         this.setGraphic(checkBox);
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         this.setEditable(true);
+    }
+
+    private void switchStyle() {
+        boolean hasTodo = getTableView().getItems().get(getIndex()).hasToBeDone(day);
+        checkBox.getStyleClass().removeAll("cb-haveto", "cb-done", "cb-donthaveto");
+        if (hasTodo && !checkBox.isSelected()) {
+            checkBox.getStyleClass().add("cb-haveto");
+        } else if (hasTodo && checkBox.isSelected()) {
+            checkBox.getStyleClass().add("cb-done");
+        } else {
+            checkBox.getStyleClass().add("cb-donthaveto");
+        }
     }
 
     @Override
@@ -34,6 +53,7 @@ public class DayCell extends TableCell<Habit, Boolean> {
             }
             setAlignment(Pos.CENTER);
             setGraphic(checkBox);
+            switchStyle();
         }
     }
 }

@@ -1,8 +1,6 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
-import com.teampingui.dao.HabitDAO;
-import com.teampingui.dao.JournalDAO;
 import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.DayCell;
 import com.teampingui.models.Habit;
@@ -19,13 +17,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import static com.teampingui.dao.Database.location;
 
 
 public class MainController implements Initializable {
@@ -152,7 +154,9 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Journal
-        lvJournal.setItems(JournalDAO.getJournalEntrys());
+        //TEST
+        loadUsername();
+        lvJournal.setItems(journalObservableList);
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
@@ -200,12 +204,13 @@ public class MainController implements Initializable {
             tc.setPrefWidth(60);
             final int day = i;
             tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
-            tc.setCellFactory(checkbox -> new DayCell(new ICheckBoxClickListener() {
+            tc.setCellFactory(checkbox -> new DayCell(
+                    new ICheckBoxClickListener() {
                 @Override
                 public void onPositionClicked(boolean isChecked, Habit habit) {
                     checkboxClicked(isChecked, habit, day);
                 }
-            }));
+            }, day));
             alCheckboxes.add(tc);
         }
 
@@ -239,5 +244,32 @@ public class MainController implements Initializable {
             habitsProgress.setProgress(percentage);
             progressDisplay.setText((int)(percentage*100)+"% achieved");
         }
+    }
+
+    private void loadUsername() {
+        try {
+            String dbPrefix = "jdbc:sqlite:";
+            Connection con = DriverManager.getConnection(dbPrefix + location);
+            String query = "SELECT value FROM properties WHERE name = 'name'";
+            PreparedStatement stmt = con.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            System.out.println("Hier bin ich 1");
+
+            while (rs.next()) {
+                String username = rs.getString("value");
+                lWelcome.setText("Welcome, " + username);
+                System.out.println("Hier bin ich 2");
+            }
+
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch (Exception e) {
+            System.out.println("Hier bin ich 3");
+            System.out.println(e.getMessage());
+        }
+
+
     }
 }
