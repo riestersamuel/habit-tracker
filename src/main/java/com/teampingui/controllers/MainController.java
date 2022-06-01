@@ -241,12 +241,10 @@ public class MainController implements Initializable {
             String query = "SELECT value FROM properties WHERE name = 'name'";
             PreparedStatement stmt = con.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-            System.out.println("Hier bin ich 1");
 
             while (rs.next()) {
                 String username = rs.getString("value");
                 lWelcome.setText("Welcome, " + username);
-                System.out.println("Hier bin ich 2");
             }
 
             rs.close();
