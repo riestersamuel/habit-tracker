@@ -34,7 +34,7 @@ public class JournalDAO {
     }
 
     private static void updateJournalFromDB() {
-        String getTableQuery ="SELECT * FROM " + tableName;
+        String getTableQuery ="SELECT * FROM " + tableName + " ORDER BY ID DESC";
 
        try (Connection connection = Database.connect()) {
             PreparedStatement statement = connection.prepareStatement(getTableQuery);
