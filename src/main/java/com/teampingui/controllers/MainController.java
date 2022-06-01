@@ -1,6 +1,7 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
+import com.teampingui.dao.JournalDAO;
 import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.DayCell;
 import com.teampingui.models.Habit;
@@ -66,13 +67,7 @@ public class MainController implements Initializable {
     private int doneCounter = 0;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
-    //Journal
-    private ObservableList<JournalEntry> journalObservableList = FXCollections.observableArrayList(
-            new JournalEntry("13.05.2022", "Today was a nice day. I learned that sometimes, you just have to stay positive."),
-            new JournalEntry("12.05.2022", "Insight: Coding isn't as hard as I thought it would be."),
-            new JournalEntry("11.05.2022", "Very stressful day, waiting for the weekend."),
-            new JournalEntry("10.05.2022", "Started a project today - I'm excited for what it turns out to become!")
-    );
+
 
     public MainController() {
 
@@ -156,7 +151,7 @@ public class MainController implements Initializable {
         // Journal
         //TEST
         loadUsername();
-        lvJournal.setItems(journalObservableList);
+        lvJournal.setItems(JournalDAO.getJournalEntrys());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;

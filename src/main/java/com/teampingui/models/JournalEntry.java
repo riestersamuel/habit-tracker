@@ -1,13 +1,8 @@
 package com.teampingui.models;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
 public class JournalEntry {
-
-    private LocalDate dataDate;
-
-    private String entry, date;
+    private String entry;
+    private String date;
 
     public JournalEntry (String date, String  entry) {
         this.date = date;
