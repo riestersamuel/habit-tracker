@@ -2,10 +2,7 @@ package com.teampingui.controllers;
 
 import com.teampingui.Main;
 import com.teampingui.interfaces.ICheckBoxClickListener;
-import com.teampingui.models.DayCell;
-import com.teampingui.models.Habit;
-import com.teampingui.models.JournalEntry;
-import com.teampingui.models.JournalEntryListViewCell;
+import com.teampingui.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -179,8 +175,8 @@ public class MainController implements Initializable {
         // Set ProgressBar // TODO: rework
         for (Habit h: habitObservableList) {
             haveTodoCounter += h.repsProperty().getValue();
-            for (int i = 0; i < 7; i++) {
-                if (h.checkedDays(i).getValue() && h.hasToBeDone(i)) {
+            for (Day day : Day.values()) {
+                if (h.checkedDays(day).getValue() && h.hasToBeDone(day)) {
                     doneCounter++;
                 }
             }
@@ -198,19 +194,11 @@ public class MainController implements Initializable {
 
         // Columns: days checkboxes
         ArrayList<TableColumn<Habit, Boolean>> alCheckboxes = new ArrayList<>();
-        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-        for (int i = 0; i < days.length; i++) {
-            TableColumn<Habit, Boolean> tc = new TableColumn<>(days[i]);
+        for (final Day day : Day.values()) {
+            TableColumn<Habit, Boolean> tc = new TableColumn<>(day.getDay());
             tc.setPrefWidth(60);
-            final int day = i;
             tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
-            tc.setCellFactory(checkbox -> new DayCell(
-                    new ICheckBoxClickListener() {
-                @Override
-                public void onPositionClicked(boolean isChecked, Habit habit) {
-                    checkboxClicked(isChecked, habit, day);
-                }
-            }, day));
+            tc.setCellFactory(checkbox -> new DayCell((isChecked, habit) -> checkboxClicked(isChecked, habit, day), day));
             alCheckboxes.add(tc);
         }
 
@@ -231,9 +219,9 @@ public class MainController implements Initializable {
     /**
      * @param isChecked if the checkbox is checked its true
      * @param habit     the habit which belongs to the clicked checkbox (same row)
-     * @param day       (0=Monday 7=Sunday) shows wich checkbox is clicked
+     * @param day       shows wich checkbox is clicked
      */
-    private void checkboxClicked(boolean isChecked, Habit habit, int day) {
+    private void checkboxClicked(boolean isChecked, Habit habit, Day day) {
         // System.out.println("Checked: " + isChecked);
         // System.out.println("Day: " + day);
         // System.out.println("Habit: " + habit.repsProperty().getValue());

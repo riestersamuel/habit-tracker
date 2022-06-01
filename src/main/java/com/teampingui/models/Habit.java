@@ -27,16 +27,16 @@ public class Habit {
         return name;
     }
 
-    public BooleanProperty checkedDays(int day) {
-        return checkedDays[day];
+    public BooleanProperty checkedDays(Day day) {
+        return checkedDays[day.ordinal()];
     }
 
     public IntegerProperty repsProperty() {
         return reps;
     }
 
-    public boolean hasToBeDone(int day) {
-        return haveTodoDays[day];
+    public boolean hasToBeDone(Day day) {
+        return haveTodoDays[day.ordinal()];
     }
 
 }

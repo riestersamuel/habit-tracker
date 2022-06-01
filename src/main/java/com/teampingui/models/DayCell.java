@@ -1,22 +1,18 @@
 package com.teampingui.models;
 
 import com.teampingui.interfaces.ICheckBoxClickListener;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class DayCell extends TableCell<Habit, Boolean>
 {
 
     private final CheckBox checkBox = new CheckBox();
-    private final int day;
+    private final Day day;
 
-    public DayCell(ICheckBoxClickListener clickListener, final int day) {
+    public DayCell(ICheckBoxClickListener clickListener, final Day day) {
         this.day = day;
 
         checkBox.setOnAction(evt -> {
