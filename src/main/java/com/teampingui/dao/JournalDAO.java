@@ -55,5 +55,6 @@ public class JournalDAO {
 
     public static void insertJournal(JournalEntry entry) {
         //TODO
+        // Habe einen Ansatz in MainCotroller geschrieben
     }
 }
