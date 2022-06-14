@@ -6,13 +6,12 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static com.teampingui.dao.Database.location;
 
 public class JournalDAO {
     //Initializing the logger
@@ -53,8 +52,23 @@ public class JournalDAO {
         }
     }
 
-    public static void insertJournal(JournalEntry entry) {
-        //TODO
-        // Habe einen Ansatz in MainCotroller geschrieben
+    // This method puts the journal entries into the database
+    public static void insertJournal(String content, String currentDate) {
+        try {
+            String dbPrefix = "jdbc:sqlite:";
+            Connection con = DriverManager.getConnection(dbPrefix + location);
+            String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
+            System.out.println("You sent the following query to the database: " + query);
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.executeUpdate();
+
+            stmt.close();
+            con.close();
+        }
+
+        catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
+        }
     }
 }

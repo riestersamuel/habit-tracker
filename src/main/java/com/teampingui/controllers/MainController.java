@@ -123,28 +123,8 @@ public class MainController implements Initializable {
                     currentDate,
                     taNewJournal.getText().trim());
             lvJournal.getItems().add(0, testEntry);
-
-            // This is for adding it to the database
-            // Problem: Wrong order of the entries
-            // Solution: Maybe it's because of the missing ID? How to automatically add an ongoing ID? Or
-            // reverse the order in JournalDAO updateJournalFromDatabase()?
-            try {
-                String content = taNewJournal.getText();
-                String dbPrefix = "jdbc:sqlite:";
-                Connection con = DriverManager.getConnection(dbPrefix + location);
-                String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
-                System.out.println("You sent the following query to the database: " + query);
-                PreparedStatement stmt = con.prepareStatement(query);
-                stmt.executeUpdate();
-
-                stmt.close();
-                con.close();
-            }
-
-            catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-                throw new RuntimeException(ex);
-            }
+            String content = taNewJournal.getText();
+            JournalDAO.insertJournal(content, currentDate);
 
             taNewJournal.clear();
         }
