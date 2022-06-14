@@ -35,9 +35,9 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         //DB Test -> Später zu entfernen
-        String dbPrefix = "jdbc:sqlite:";
+        /* String dbPrefix = "jdbc:sqlite:";
         Connection con = DriverManager.getConnection(dbPrefix + location);
-        String query = "SELECT * FROM test";
+        String query = "SELECT * FROM journal";
         PreparedStatement stmt = con.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
@@ -48,7 +48,7 @@ public class Main extends Application {
 
         rs.close();
         stmt.close();
-        con.close();
+        con.close(); */
 
         launch(args);
     }

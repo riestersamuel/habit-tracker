@@ -19,7 +19,7 @@ public class Database {
     /**
      * Reuired Table for Programm to work
      */
-    private static final String requiredTable ="test";
+    private static final String requiredTable ="journal";
 
     public static boolean isOK() {
         if (!checkDrivers()) return false;
