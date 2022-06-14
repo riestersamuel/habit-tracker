@@ -16,7 +16,14 @@
 #btnHabits, #btnSettings {
     -fx-border-radius: 0px;
     -fx-background-radius: 0px;
-    -fx-background-color: #4B545E;
+    -fx-background-color: #738076;
+    -fx-border-color: #738076;
+    -fx-text-fill: #fff;
+}
+
+#btnHabits:hover, #btnSettings:hover{
+    -fx-background-color: #4E5750;
+    -fx-border-color: #4E5750;
     -fx-text-fill: #fff;
 }
 
@@ -38,8 +45,8 @@
 
 #lErrorMsg, #btnHide {
     -fx-font-size: 20;
-    -fx-text-fill: red;
-    -fx-border-color: red;
+    -fx-text-fill: #E3675B;
+    -fx-border-color: #E3675B;
 }
 
 #btnHide {
@@ -54,32 +61,65 @@
 }*/
 
 #btnAddHabit {
-    -fx-border-color: #006ee6;
-    -fx-text-fill: #006ee6;
-    -fx-background-color: #fff;
+    -fx-border-color: #7CCD8F;
+    -fx-text-fill: #7CCD8F;
 }
 
-#btnAddHabit:hover {
-    -fx-background-color: #006ee6;
+#btnAddHabit:hover{
+    -fx-background-color: #7CCD8F;
     -fx-text-fill: #fff;
 }
 
 .progress-bar .bar {
-    -fx-background-color: #006ee6;
+    -fx-background-color: #7CCD8F;
 }
 
-/*#btnRemoveHabit, #btnAddJournal {
-    -fx-border-color: #006ee6;
-    -fx-text-fill: #006ee6;
-    -fx-background-color: rgba(0, 0, 0, 0);
-}*/
+#btnRemoveHabit:hover {
+    -fx-border-color: #E3675B;
+    -fx-text-fill: #fff;
+    -fx-background-color: #E3675B;
+}
+
+#btnRemoveHabit {
+    -fx-border-color: #E3675B;
+    -fx-text-fill: #E3675B;
+}
 
 #tvHabits {
     -fx-background-color: transparent;
     -fx-border-radius: 8px;
 }
 
+#reps {
+    -fx-alignment: center;
+}
 
+
+.cb-done .box {
+    -fx-background-color: #7CCD8F;
+}
+
+.cb-done:selected .mark {
+    -fx-background-color: white;
+}
+
+.cb-haveto .box{
+    -fx-background-color: #E3675B;
+}
+
+.cb-donthaveto .box{
+    -fx-background-color: #dadada;
+}
+
+.cb-donthaveto:selected .mark{
+    -fx-background-color: white;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #738076;
+}
+
+/*
 .table-view {
     -fx-background-color: transparent;
 }
@@ -93,22 +133,22 @@
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #93f9b911;
-    -fx-text-background-color: #006ee6;
+    -fx-background-color: pink;
+    -fx-text-background-color: #7CCD8F;
 }
 
-.table-row-cell:odd {
+!*.table-row-cell:odd {
     -fx-background-color: #fff;
-}
+}*!
 
 .table-row-cell:even {
     -fx-background-color: #f5f5f5;
 }
 
 
-.table-view .column-header-background {
+!*.table-view .column-header-background {
     -fx-background-color: #fff;
-}
+}*!
 
 .table-view .column-header {
     -fx-background-color: transparent;
@@ -116,32 +156,10 @@
 
 .table-view .column-header .label {
     -fx-alignment: center;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-weight: 800;
 }
 
-#reps {
-    -fx-alignment: center;
-}
-
-
-.cb-done .box {
-    -fx-background-color: green;
-}
-
-.cb-done:selected .mark {
-    -fx-background-color: white;
-}
-
-.cb-haveto .box{
-    -fx-background-color: red;
-}
-
-.cb-donthaveto .box{
-    -fx-background-color: grey;
-}
-
-.cb-donthaveto:selected .mark{
-    -fx-background-color: white;
-}
-
+.table-row-cell:selected .text {
+    -fx-fill: black;
+}*/
