@@ -132,7 +132,7 @@ public class MainController implements Initializable {
                 String content = taNewJournal.getText();
                 String dbPrefix = "jdbc:sqlite:";
                 Connection con = DriverManager.getConnection(dbPrefix + location);
-                String query = "INSERT INTO journal (id, datum, entry) VALUES (NULL, '" + currentDate + "', '" + content + "');";
+                String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
                 System.out.println("You sent the following query to the database: " + query);
                 PreparedStatement stmt = con.prepareStatement(query);
                 stmt.executeUpdate();
