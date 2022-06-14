@@ -28,7 +28,7 @@ public class JournalDAO {
         updateJournalFromDB();
     }
 
-    public static ObservableList<JournalEntry> getJournalEntrys() {
+    public static ObservableList<JournalEntry> getJournalEntries() {
         return FXCollections.observableList(journal);
     }
 

@@ -148,7 +148,7 @@ public class MainController implements Initializable {
         // Journal
         //TEST
         loadUsername();
-        lvJournal.setItems(JournalDAO.getJournalEntrys());
+        lvJournal.setItems(JournalDAO.getJournalEntries());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
