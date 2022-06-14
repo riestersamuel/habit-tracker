@@ -119,9 +119,7 @@ public class MainController implements Initializable {
             lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
         } else {
             String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            JournalEntry testEntry = new JournalEntry(
-                    currentDate,
-                    taNewJournal.getText().trim());
+            JournalEntry testEntry = new JournalEntry(currentDate, taNewJournal.getText().trim());
             lvJournal.getItems().add(0, testEntry);
             String content = taNewJournal.getText();
             JournalDAO.insertJournal(content, currentDate);

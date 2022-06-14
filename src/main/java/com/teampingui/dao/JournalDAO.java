@@ -54,10 +54,10 @@ public class JournalDAO {
 
     // This method puts the journal entries into the database
     public static void insertJournal(String content, String currentDate) {
+        String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
+
         try {
-            String dbPrefix = "jdbc:sqlite:";
-            Connection con = DriverManager.getConnection(dbPrefix + location);
-            String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
+            Connection con = Database.connect();
             System.out.println("You sent the following query to the database: " + query);
             PreparedStatement stmt = con.prepareStatement(query);
             stmt.executeUpdate();
