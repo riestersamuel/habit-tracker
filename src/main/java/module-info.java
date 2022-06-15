@@ -6,6 +6,7 @@ module com.TeamPingui {
     requires javafx.graphics;
     requires org.apache.logging.log4j;
     requires org.xerial.sqlitejdbc;
+    requires java.prefs;
 
     opens com.teampingui.controllers to javafx.fxml;
     opens com.teampingui.models to javafx.fxml;

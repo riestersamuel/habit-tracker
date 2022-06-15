@@ -27,17 +27,11 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
-import static com.teampingui.dao.Database.location;
 
 
 public class MainController implements Initializable {
@@ -215,9 +209,10 @@ public class MainController implements Initializable {
         // Bind Error Msg Time to Progress Bar
         pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
 
+        // Welcome Message
+        lWelcome.setText(Settings.getUsername().isEmpty() ?  "Welcome!" : "Welcome " + Settings.getUsername() + "!");
+
         // Journal
-        //TEST
-        loadUsername();
         lvJournal.setItems(JournalDAO.getJournalEntries());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
@@ -300,27 +295,4 @@ public class MainController implements Initializable {
         }
     }
 
-    private void loadUsername() {
-        try {
-            String dbPrefix = "jdbc:sqlite:";
-            Connection con = DriverManager.getConnection(dbPrefix + location);
-            String query = "SELECT value FROM properties WHERE name = 'name'";
-            PreparedStatement stmt = con.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                String username = rs.getString("value");
-                lWelcome.setText("Welcome " + username);
-            }
-
-            rs.close();
-            stmt.close();
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Hier bin ich 3");
-            System.out.println(e.getMessage());
-        }
-
-
-    }
 }

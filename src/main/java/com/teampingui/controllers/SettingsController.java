@@ -1,53 +1,41 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
+import com.teampingui.models.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import static com.teampingui.dao.Database.location;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class SettingsController {
+public class SettingsController implements Initializable {
 
     @FXML
     Button btnHabits, btnChallenge, btnSettings;
     @FXML
     Label lName, lDateFormat;
     @FXML
-    TextArea taName, taDateFormat;
+    TextField tfName, tfDateFormat;
 
     @FXML
     public void switchScenes(ActionEvent e) {
         Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        tfName.setText(Settings.getUsername());
+        tfDateFormat.setText(Settings.getDateFormat());
+    }
 
-    //This method is used to save the user's name to the database
     @FXML
     void saveChanges(ActionEvent e) {
-        try {
-            String username = taName.getText();
-            String dbPrefix = "jdbc:sqlite:";
-            Connection con = DriverManager.getConnection(dbPrefix + location);
-            String query = "INSERT INTO properties VALUES ('name', '" + username + "');";
-            System.out.println("You sent the following query to the database: " + query);
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt.executeUpdate();
-
-            stmt.close();
-            con.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
-
+        Settings.setUsername(tfName.getText().trim());
+        Settings.setDateFormat(tfDateFormat.getText().trim());
     }
 }
