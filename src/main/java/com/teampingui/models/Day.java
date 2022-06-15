@@ -10,13 +10,13 @@ public enum Day {
     SATURDAY("Sat"),
     SUNDAY("Sun");
 
-    final String day;
+    final String mDay;
 
     Day(String day) {
-        this.day = day;
+        this.mDay = day;
     }
 
     public String getDay() {
-        return day;
+        return mDay;
     }
 }

@@ -10,7 +10,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
-public class JournalEntryListViewCell extends ListCell<com.teampingui.models.JournalEntry> {
+public class JournalEntryListViewCell extends ListCell<JournalEntryItem> {
     @FXML
     private Label dateLabel;
 
@@ -25,7 +25,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
 
 
     @Override
-    protected void updateItem(JournalEntry jEntry, boolean empty) {
+    protected void updateItem(JournalEntryItem jEntry, boolean empty) {
         super.updateItem(jEntry, empty);
 
         if (empty || jEntry == null) {
@@ -50,7 +50,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
 
             entryText.wrappingWidthProperty().bind(vbox.widthProperty());
             dateLabel.setText(jEntry.getDate().toString());
-            entryText.setText(jEntry.getEntry());
+            entryText.setText(jEntry.getContent());
 
             // set the width's
             vbox.setMinWidth(255);
@@ -58,7 +58,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
             vbox.setPrefWidth(255);
 
             dateLabel.setText(jEntry.getDate().toString());
-            entryText.setText(jEntry.getEntry());
+            entryText.setText(jEntry.getContent());
 
             Text text = (Text) vbox.getChildren().get(1);
             text.setTextAlignment(TextAlignment.LEFT);

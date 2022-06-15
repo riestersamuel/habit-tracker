@@ -8,31 +8,31 @@ import javafx.scene.control.TableCell;
 
 public class DayCell extends TableCell<Habit, Boolean> {
 
-    private final CheckBox checkBox = new CheckBox();
-    private final Day day;
+    private final CheckBox mCheckBox = new CheckBox();
+    private final Day mDay;
 
     public DayCell(ICheckBoxClickListener clickListener, final Day day) {
-        this.day = day;
+        this.mDay = day;
 
-        checkBox.setOnAction(evt -> {
-            clickListener.onPositionClicked(checkBox.isSelected(), getTableView().getItems().get(getIndex()));
+        mCheckBox.setOnAction(evt -> {
+            clickListener.onPositionClicked(mCheckBox.isSelected(), getTableView().getItems().get(getIndex()));
             switchStyle();
         });
 
-        this.setGraphic(checkBox);
+        this.setGraphic(mCheckBox);
         this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         this.setEditable(true);
     }
 
     private void switchStyle() {
-        boolean hasTodo = getTableView().getItems().get(getIndex()).hasToBeDone(day);
-        checkBox.getStyleClass().removeAll("cb-haveto", "cb-done", "cb-donthaveto");
-        if (hasTodo && !checkBox.isSelected()) {
-            checkBox.getStyleClass().add("cb-haveto");
-        } else if (hasTodo && checkBox.isSelected()) {
-            checkBox.getStyleClass().add("cb-done");
+        boolean hasTodo = getTableView().getItems().get(getIndex()).hasToBeDone(mDay);
+        mCheckBox.getStyleClass().removeAll("cb-haveto", "cb-done", "cb-donthaveto");
+        if (hasTodo && !mCheckBox.isSelected()) {
+            mCheckBox.getStyleClass().add("cb-haveto");
+        } else if (hasTodo && mCheckBox.isSelected()) {
+            mCheckBox.getStyleClass().add("cb-done");
         } else {
-            checkBox.getStyleClass().add("cb-donthaveto");
+            mCheckBox.getStyleClass().add("cb-donthaveto");
         }
     }
 
@@ -43,11 +43,11 @@ public class DayCell extends TableCell<Habit, Boolean> {
             setGraphic(null);
         } else {
             if (item != null) {
-                checkBox.setAlignment(Pos.CENTER);
-                checkBox.setSelected(item);
+                mCheckBox.setAlignment(Pos.CENTER);
+                mCheckBox.setSelected(item);
             }
             setAlignment(Pos.CENTER);
-            setGraphic(checkBox);
+            setGraphic(mCheckBox);
             switchStyle();
         }
     }

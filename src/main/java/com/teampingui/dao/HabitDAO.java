@@ -7,32 +7,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class HabitDAO {
-    private static final String tableName = "Habits";
-    private static final String colHabitName = "name";
-    /*private static final String colMon = "Mon";
-    private static final String colTue = "Tue";
-    private static final String colWed = "Wed";
-    private static final String colThu = "Thu";
-    private static final String colFri = "Fri";
-    private static final String colSat = "Sat";
-    private static final String colSun = "Sun"; */
-    private static final String colDone = "reps";
-    private static final ObservableList<Habit> habits;
+    private static final String DB_TABLE_NAME = "Habits";
+    private static final String DB_COLUMN_NAME = "name";
+    private static final String DB_COLUMN_REPS = "reps";
+    private static final ObservableList<Habit> mosHabits; // TODO: put in Controller..?
     //Initializing the logger
     private static Logger log = LogManager.getLogger(HabitDAO.class);
 
     static {
-        habits = FXCollections.observableArrayList();
+        mosHabits = FXCollections.observableArrayList();
         updateHabitsFromDB();
     }
 
     public static ObservableList<Habit> getHabits() {
-        return FXCollections.observableList(habits);
+        return FXCollections.observableList(mosHabits);
     }
 
     private static void updateHabitsFromDB() {
         //TODO
-        String getTableQuery = "SELECT * FROM" + tableName;
+        String getTableQuery = "SELECT * FROM" + DB_TABLE_NAME;
 
        /* try (Connection connection = Database.connect()) {
             PreparedStatement statement = connection.prepareStatement(getTableQuery);

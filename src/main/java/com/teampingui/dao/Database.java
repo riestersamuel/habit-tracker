@@ -11,11 +11,11 @@ public class Database {
     /**
      * Location of database
      */
-    public static final String location = Main.class.getResource("/database/database.db").toExternalForm();
+    public static final String LOCATION = Main.class.getResource("/database/database.db").toExternalForm();
     /**
      * Reuired Table for Programm to work
      */
-    private static final String requiredTable = "journal";
+    private static final String REQUIRED_TABLE = "journal";
     //Initializing the logger
     private static Logger log = LogManager.getLogger(Database.class);
 
@@ -46,13 +46,13 @@ public class Database {
     }
 
     private static boolean checkTables() {
-        String checkTables = "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + requiredTable + "'";
+        String checkTables = "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + REQUIRED_TABLE + "'";
 
         try (Connection connection = Database.connect()) {
             PreparedStatement statement = connection.prepareStatement(checkTables);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                if (rs.getString("tbl_name").equals(requiredTable)) return true;
+                if (rs.getString("tbl_name").equals(REQUIRED_TABLE)) return true;
             }
         } catch (SQLException exception) {
             log.error(LocalDateTime.now() + ": Could not find tables in database");
@@ -65,9 +65,9 @@ public class Database {
         String dbPrefix = "jdbc:sqlite:";
         Connection connection;
         try {
-            connection = DriverManager.getConnection(dbPrefix + location);
+            connection = DriverManager.getConnection(dbPrefix + LOCATION);
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + location);
+            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + LOCATION);
             return null;
         }
         return connection;

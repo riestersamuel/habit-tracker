@@ -1,13 +1,13 @@
 package com.teampingui.controllers;
 
 import com.teampingui.Main;
+import com.teampingui.dao.HabitDAO;
 import com.teampingui.dao.JournalDAO;
 import com.teampingui.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -43,7 +43,7 @@ public class MainController implements Initializable {
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
     public ObservableList<Habit> mosHabits;
-    private ObservableList<JournalEntry> mosJournalEntries;
+    private ObservableList<JournalEntryItem> mosJournalEntries;
     //General Layout
     @FXML
     Label lWelcome;
@@ -63,7 +63,7 @@ public class MainController implements Initializable {
     @FXML
     Label wordCount;
     @FXML
-    ListView<JournalEntry> lvJournal;
+    ListView<JournalEntryItem> lvJournal;
     //Habits
     @FXML
     Button btnAddHabit;
@@ -86,7 +86,8 @@ public class MainController implements Initializable {
 
 
     // DAO
-    private JournalDAO journalDAO = new JournalDAO();
+    private JournalDAO mJournalDAO = new JournalDAO();
+    private HabitDAO mHabitDAO = new HabitDAO();
 
     public MainController() {
 
@@ -129,7 +130,7 @@ public class MainController implements Initializable {
 
         // Journal
         try {
-            mosJournalEntries.addAll(journalDAO.read());
+            mosJournalEntries.addAll(mJournalDAO.read());
             lvJournal.setItems(mosJournalEntries);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,10 +212,10 @@ public class MainController implements Initializable {
         }
 
         String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
+        JournalEntryItem newJournalEntry = new JournalEntryItem(sCurrentDate, sEntry);
 
         try {
-            journalDAO.insert(newJournalEntry);
+            mJournalDAO.insert(newJournalEntry);
             lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
         } catch (Exception exception) {

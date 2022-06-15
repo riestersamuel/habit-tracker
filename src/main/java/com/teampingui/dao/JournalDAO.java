@@ -1,6 +1,6 @@
 package com.teampingui.dao;
 
-import com.teampingui.models.JournalEntry;
+import com.teampingui.models.JournalEntryItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,10 +15,10 @@ public class JournalDAO {
 
     private static Logger log = LogManager.getLogger(JournalDAO.class);
 
-    public List<JournalEntry> read() throws SQLException {
+    public List<JournalEntryItem> read() throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
-        List<JournalEntry> journalEntries = new ArrayList<>();
+        List<JournalEntryItem> journalEntries = new ArrayList<>();
 
         try {
             connection = Database.connect();
@@ -27,7 +27,7 @@ public class JournalDAO {
             statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                JournalEntry journalEntry = new JournalEntry(
+                JournalEntryItem journalEntry = new JournalEntryItem(
                         resultSet.getString(2), // 2: Date
                         resultSet.getString(3)  // 3: Entry
                 );
@@ -50,7 +50,7 @@ public class JournalDAO {
         return journalEntries;
     }
 
-    public int insert(JournalEntry journalEntry) throws SQLException {
+    public int insert(JournalEntryItem journalEntry) throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -61,7 +61,7 @@ public class JournalDAO {
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 1;
             statement.setString(counter++, journalEntry.getDate());
-            statement.setString(counter++, journalEntry.getEntry());
+            statement.setString(counter++, journalEntry.getContent());
             statement.executeUpdate();
             connection.commit();
             resultSet = statement.getGeneratedKeys();
