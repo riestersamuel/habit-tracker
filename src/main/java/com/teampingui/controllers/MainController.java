@@ -187,7 +187,7 @@ public class MainController implements Initializable {
 
         // Text empty
         if (sEntry.length() <= 0) {
-            showError("The text can not be empty");
+            showError("Input field can not be empty!");
             return;
         }
 
