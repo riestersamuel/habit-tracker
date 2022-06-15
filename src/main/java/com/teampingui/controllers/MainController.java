@@ -27,6 +27,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class MainController implements Initializable {
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
     public ObservableList<Habit> habitObservableList;
+    private ObservableList<JournalEntry> mosJournalEntries;
     //General Layout
     @FXML
     Label lWelcome;
@@ -86,9 +88,10 @@ public class MainController implements Initializable {
 
     public MainController() {
 
-        // Habits
         habitObservableList = FXCollections.observableArrayList();
+        mosJournalEntries = FXCollections.observableArrayList();
 
+        // Dummy Data
         habitObservableList.addAll(
                 new Habit(
                         "Könken",
@@ -113,96 +116,6 @@ public class MainController implements Initializable {
         );
     }
 
-    // journal lineCount
-    private static int countLines(String str) {
-        String[] lines = str.split("\r\n|\r|\n");
-        return lines.length;
-    }
-
-    @FXML
-    public void switchScenes(ActionEvent e) {
-        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
-    }
-
-    @FXML
-    private void addNewEntry() {
-        String sEntry = taNewJournal.getText().trim();
-
-        if (sEntry.length() > 200) {
-            showError("Text is too long (max. 200 chars)");
-            return;
-        }
-
-        if (sEntry.length() <= 0) {
-            showError("The text can not be empty");
-            return;
-        }
-
-        String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
-
-        try {
-            journalDAO.insert(newJournalEntry);
-            lvJournal.getItems().add(0, newJournalEntry);
-            taNewJournal.clear();
-        } catch (Exception exception) {
-            log.error(exception);
-        }
-
-    }
-
-    private void showError(String msg) {
-        vbErrorContainer.setVisible(true);
-        lErrorMsg.setText(msg);
-
-        if (mTimeline != null) {
-            mTimeline.stop();
-        }
-
-        mDialogTime.set(ERROR_DIALOG_TIME * 100);
-        mTimeline = new Timeline();
-        mTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(ERROR_DIALOG_TIME),
-                        new KeyValue(mDialogTime, 0))
-        );
-        mTimeline.playFromStart();
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(ERROR_DIALOG_TIME * 1000L);
-                    if (Calendar.getInstance().getTimeInMillis() - mErrorMsgMillis > 0) { // TODO: cleaner solution...?
-                        Platform.runLater(() -> vbErrorContainer.setVisible(false));
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        int bufferTime = 50;
-        mErrorMsgMillis = Calendar.getInstance().getTimeInMillis() + ERROR_DIALOG_TIME * 1000 - bufferTime;
-
-        mThreadErrorMsg = new Thread(runnable);
-        mThreadErrorMsg.start();
-    }
-
-    @FXML
-    void openHabitDialog(ActionEvent e) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
-        Parent parent = fxmlLoader.load();
-        AddHabitDialogController dialogController = fxmlLoader.getController();
-        dialogController.setMainHabitList(habitObservableList);
-
-        Scene scene = new Scene(parent);
-        scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
-        Stage stage = new Stage();
-        //stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setScene(scene);
-        stage.showAndWait();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -213,7 +126,12 @@ public class MainController implements Initializable {
         lWelcome.setText(Settings.getUsername().isEmpty() ?  "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
         // Journal
-        lvJournal.setItems(JournalDAO.getJournalEntries());
+        try {
+            mosJournalEntries.addAll(journalDAO.read());
+            lvJournal.setItems(mosJournalEntries);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
@@ -245,6 +163,60 @@ public class MainController implements Initializable {
         double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
+    }
+
+    private static int countLines(String str) {
+        String[] lines = str.split("\r\n|\r|\n");
+        return lines.length;
+    }
+
+    @FXML
+    public void switchScenes(ActionEvent e) {
+        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+    }
+
+    @FXML
+    private void addNewEntry() {
+        String sEntry = taNewJournal.getText().trim();
+
+        // Text too long
+        if (sEntry.length() > 200) {
+            showError("Text is too long (max. 200 chars)");
+            return;
+        }
+
+        // Text empty
+        if (sEntry.length() <= 0) {
+            showError("The text can not be empty");
+            return;
+        }
+
+        String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
+
+        try {
+            journalDAO.insert(newJournalEntry);
+            lvJournal.getItems().add(0, newJournalEntry);
+            taNewJournal.clear();
+        } catch (Exception exception) {
+            log.error(exception);
+        }
+
+    }
+
+    @FXML
+    void openHabitDialog(ActionEvent e) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        AddHabitDialogController dialogController = fxmlLoader.getController();
+        dialogController.setMainHabitList(habitObservableList);
+
+        Scene scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
+        Stage stage = new Stage();
+        //stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     private void dynamicallyAddTableCols() {
@@ -293,6 +265,43 @@ public class MainController implements Initializable {
             habitsProgress.setProgress(percentage);
             progressDisplay.setText((int) (percentage * 100) + "% achieved");
         }
+    }
+
+    private void showError(String msg) {
+        vbErrorContainer.setVisible(true);
+        lErrorMsg.setText(msg);
+
+        if (mTimeline != null) {
+            mTimeline.stop();
+        }
+
+        mDialogTime.set(ERROR_DIALOG_TIME * 100);
+        mTimeline = new Timeline();
+        mTimeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(ERROR_DIALOG_TIME),
+                        new KeyValue(mDialogTime, 0))
+        );
+        mTimeline.playFromStart();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(ERROR_DIALOG_TIME * 1000L);
+                    if (Calendar.getInstance().getTimeInMillis() - mErrorMsgMillis > 0) { // TODO: cleaner solution...?
+                        Platform.runLater(() -> vbErrorContainer.setVisible(false));
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        int bufferTime = 50;
+        mErrorMsgMillis = Calendar.getInstance().getTimeInMillis() + ERROR_DIALOG_TIME * 1000 - bufferTime;
+
+        mThreadErrorMsg = new Thread(runnable);
+        mThreadErrorMsg.start();
     }
 
 }
