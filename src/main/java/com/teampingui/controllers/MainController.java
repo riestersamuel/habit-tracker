@@ -178,8 +178,6 @@ public class MainController implements Initializable {
                 }
             }
         }
-        System.out.println(doneCounter);
-        System.out.println(haveTodoCounter);
         double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
@@ -312,14 +310,16 @@ public class MainController implements Initializable {
             public void run() {
                 try {
                     Thread.sleep(ERROR_DIALOG_TIME * 1000L);
-                    if (Calendar.getInstance().getTimeInMillis() - mErrorMsgMillis > 0) { // TODO: cleaner solution...?
-                        Platform.runLater(() -> vbErrorContainer.setVisible(false));
-                    }
+                    Platform.runLater(() -> vbErrorContainer.setVisible(false));
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.debug("Interrupted");
                 }
             }
         };
+
+        if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
+            mThreadErrorMsg.interrupt();
+        }
 
         int bufferTime = 50;
         mErrorMsgMillis = Calendar.getInstance().getTimeInMillis() + ERROR_DIALOG_TIME * 1000 - bufferTime;

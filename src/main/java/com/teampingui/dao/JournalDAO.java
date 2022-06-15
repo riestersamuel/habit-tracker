@@ -28,8 +28,8 @@ public class JournalDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 JournalEntryItem journalEntry = new JournalEntryItem(
-                        resultSet.getString(2), // 2: Date
-                        resultSet.getString(3)  // 3: Entry
+                        resultSet.getString(DB_COLUMN_DATE),
+                        resultSet.getString(DB_COLUMN_ENTRY)
                 );
 
                 journalEntries.add(journalEntry);
