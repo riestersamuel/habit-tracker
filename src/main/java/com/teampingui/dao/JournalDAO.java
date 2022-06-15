@@ -1,15 +1,11 @@
 package com.teampingui.dao;
 
 import com.teampingui.models.JournalEntry;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JournalDAO {
@@ -29,14 +25,11 @@ public class JournalDAO {
             connection.setAutoCommit(false);
             String query = "SELECT * FROM " + DB_TABLE_NAME + " ORDER BY ID DESC";
             statement = connection.prepareStatement(query);
-            //int counter = 1;
-
-            //statement.setString(counter++, username);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 JournalEntry journalEntry = new JournalEntry(
-                        resultSet.getString(2), // Date
-                        resultSet.getString(3)  // Entry
+                        resultSet.getString(2), // 2: Date
+                        resultSet.getString(3)  // 3: Entry
                 );
 
                 journalEntries.add(journalEntry);
@@ -55,26 +48,6 @@ public class JournalDAO {
         }
 
         return journalEntries;
-
-        /*
-
-        String getTableQuery = "SELECT * FROM " + tableName + " ORDER BY ID DESC";
-
-        try (Connection connection = Database.connect()) {
-            PreparedStatement statement = connection.prepareStatement(getTableQuery);
-            ResultSet rs = statement.executeQuery();
-            journal.clear();
-            while (rs.next()) {
-                // String date = LocalDate.parse(rs.getString(colDate)).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-                journal.add(new JournalEntry(
-                        rs.getString(colDate),
-                        rs.getString(colEntry)
-                ));
-            }
-        } catch (SQLException e) {
-            log.error(LocalDateTime.now(), e);
-            journal.clear();
-        }*/
     }
 
     public int insert(JournalEntry journalEntry) throws SQLException {
