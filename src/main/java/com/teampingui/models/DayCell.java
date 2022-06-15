@@ -51,4 +51,11 @@ public class DayCell extends TableCell<Habit, Boolean> {
             switchStyle();
         }
     }
+
+    @Override
+    public String toString() {
+        return "DayCell: " +
+                "mDay=" + mDay +
+                ", checked=" + mCheckBox.isSelected();
+    }
 }

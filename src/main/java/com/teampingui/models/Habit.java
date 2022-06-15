@@ -2,6 +2,8 @@ package com.teampingui.models;
 
 import javafx.beans.property.*;
 
+import java.util.Arrays;
+
 public class Habit {
 
     private final StringProperty name;
@@ -43,4 +45,13 @@ public class Habit {
         return haveTodoDays[day.ordinal()];
     }
 
+    @Override
+    public String toString() {
+        return "Habit: " +
+                "name=" + name +
+                ", reps=" + reps +
+                ", checkedDays=" + Arrays.toString(checkedDays) +
+                ", haveTodoDays=" + Arrays.toString(haveTodoDays) +
+                ", id=" + id;
+    }
 }

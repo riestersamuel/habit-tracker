@@ -17,4 +17,10 @@ public class JournalEntryItem {
         return mContent;
     }
 
+    @Override
+    public String toString() {
+        return "JournalEntryItem: " +
+                "mDate='" + mDate + '\'' +
+                " - mContent='" + mContent + '\'';
+    }
 }
