@@ -6,10 +6,21 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class HabitDAO {
-    private static final String DB_TABLE_NAME = "Habits";
+    private static final String DB_TABLE_HABIT = "Habits";
+    private static final String DB_TABLE_HAVETODODAYS = "haveTodoDays";
     private static final String DB_COLUMN_NAME = "name";
-    private static final String DB_COLUMN_REPS = "reps";
+
+
     private static final ObservableList<Habit> mosHabits; // TODO: put in Controller..?
     //Initializing the logger
     private static Logger log = LogManager.getLogger(HabitDAO.class);
@@ -25,23 +36,40 @@ public class HabitDAO {
 
     private static void updateHabitsFromDB() {
         //TODO
-        String getTableQuery = "SELECT * FROM" + DB_TABLE_NAME;
+        String getStringQuery = """
+                SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays
+                FROM habit, haveTodoDays
+                WHERE habit.id = haveTodoDays.habit_id
+                AND haveTodoDays.havetodo = 1
+                GROUP BY habit.id;
+                """;
 
-       /* try (Connection connection = Database.connect()) {
-            PreparedStatement statement = connection.prepareStatement(getTableQuery);
+        try  {
+            Connection connection = Database.connect();
+            PreparedStatement statement = connection.prepareStatement(getStringQuery);
             ResultSet rs = statement.executeQuery();
-            habits.clear();
+            mosHabits.clear();
+
             while (rs.next()) {
-                habits.add(new Habit(
-                  /*      rs.getString(colHabitName),
-                        rs.getArray(new boolean[]{true, true, true, true, true, true, true}),
-                        rs.getArray(new boolean[]{false, false, true, false, true, false, false}
-                );
+                List<String> temp = Arrays.asList(rs.getString("weekdays").split(","));
+                List<Integer> zahlen = temp.stream().map(Integer::parseInt).toList();
+
+                boolean[] havetodoweekdays = new boolean[7];
+
+                for (int i : zahlen) {
+                    havetodoweekdays[i] = true;
+                }
+
+              /*  new Habit(
+                        rs.getString(DB_COLUMN_NAME),
+                        havetodoweekdays,
+                        boolean[]
+                ); */
             }
         } catch (SQLException e) {
             log.error(LocalDateTime.now() + ": could not load Habits from database.");
-            habits.clear();
-        } */
+           mosHabits.clear();
+        }
 
     }
 
