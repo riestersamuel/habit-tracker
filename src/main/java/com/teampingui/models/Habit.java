@@ -23,6 +23,10 @@ public class Habit {
         this.reps = new SimpleIntegerProperty(reps);
     }
 
+    public void setChecked(Day day, boolean checked) {
+        checkedDays[day.ordinal()] = new SimpleBooleanProperty(checked);
+    }
+
     public StringProperty nameProperty() {
         return name;
     }

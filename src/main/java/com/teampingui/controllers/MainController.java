@@ -7,9 +7,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,7 +42,7 @@ public class MainController implements Initializable {
     private static final Logger log = LogManager.getLogger(MainController.class);
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
-    public ObservableList<Habit> habitObservableList;
+    public ObservableList<Habit> mosHabits;
     private ObservableList<JournalEntry> mosJournalEntries;
     //General Layout
     @FXML
@@ -88,11 +90,11 @@ public class MainController implements Initializable {
 
     public MainController() {
 
-        habitObservableList = FXCollections.observableArrayList();
+        mosHabits = FXCollections.observableArrayList();
         mosJournalEntries = FXCollections.observableArrayList();
 
         // Dummy Data
-        habitObservableList.addAll(
+        mosHabits.addAll(
                 new Habit(
                         "Könken",
                         new boolean[]{true, true, true, true, true, true, true},
@@ -148,11 +150,26 @@ public class MainController implements Initializable {
         dynamicallyAddTableCols();
 
         //tvHabits.setItems(HabitDAO.getHabits());
-        tvHabits.setItems(habitObservableList);
+        tvHabits.setItems(mosHabits);
         tvHabits.setEditable(true);
 
+        updateProgressBar();
+        mosHabits.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                updateProgressBar();
+            }
+        });
+    }
+
+    private void updateProgressBar() {
+        if (progressDisplay == null)
+            return;
+
         // Set ProgressBar // TODO: rework
-        for (Habit h : habitObservableList) {
+        doneCounter = 0;
+        haveTodoCounter = 0;
+        for (Habit h : mosHabits) {
             haveTodoCounter += h.repsProperty().getValue();
             for (Day day : Day.values()) {
                 if (h.checkedDays(day).getValue() && h.hasToBeDone(day)) {
@@ -160,6 +177,8 @@ public class MainController implements Initializable {
                 }
             }
         }
+        System.out.println(doneCounter);
+        System.out.println(haveTodoCounter);
         double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
@@ -209,7 +228,7 @@ public class MainController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
         Parent parent = fxmlLoader.load();
         AddHabitDialogController dialogController = fxmlLoader.getController();
-        dialogController.setMainHabitList(habitObservableList);
+        dialogController.setMainHabitList(mosHabits);
 
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
@@ -259,11 +278,15 @@ public class MainController implements Initializable {
         // System.out.println("Day: " + day);
         // System.out.println("Habit: " + habit.repsProperty().getValue());
 
-        if (habit.hasToBeDone(day)) {
+        if (habit.hasToBeDone(day)) { // TODO: cleanup
             doneCounter += isChecked ? 1 : -1;
             double percentage = (double) doneCounter / haveTodoCounter;
             habitsProgress.setProgress(percentage);
             progressDisplay.setText((int) (percentage * 100) + "% achieved");
+
+            // Observable
+            mosHabits.indexOf(habit);
+            mosHabits.get(mosHabits.indexOf(habit)).setChecked(day, isChecked);
         }
     }
 
