@@ -23,46 +23,50 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     TextField tfNewHabitName;
 
-    private ObservableList<Habit> tempHabitList;
+    private ObservableList<Habit> mMainCtrlHabitList;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Textformatter
+        int MAX_CHARS = 15;
+        tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
+    }
 
     @FXML
     void addNewHabit(ActionEvent e) {
-        int length = tfNewHabitName.getText().trim().length();
-        String name = "";
-        if (length > 15 || length <= 0) {
-            //lErrorMsg.setVisible(true);
-            // btnHide.setVisible(true);
-            // lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
+        String name= tfNewHabitName.getText().trim();
+        if (name.length() > 15 || name.length() <= 0) {
+            // TODO: Add Error Message?
+            return;
         } else {
             name = tfNewHabitName.getText().trim();
             tfNewHabitName.clear();
         }
 
-        tempHabitList.add(new Habit(
+        mMainCtrlHabitList.add(new Habit(
                 name,
-                new boolean[]{cbMonday.isSelected(), cbTuesday.isSelected(), cbWednesday.isSelected(), cbThursday.isSelected(), cbFriday.isSelected(), cbSaturday.isSelected(), cbSunday.isSelected()},
-                new boolean[7]));
+                new boolean[]{
+                        cbMonday.isSelected(),
+                        cbTuesday.isSelected(),
+                        cbWednesday.isSelected(),
+                        cbThursday.isSelected(),
+                        cbFriday.isSelected(),
+                        cbSaturday.isSelected(),
+                        cbSunday.isSelected()
+                },
+                new boolean[7])
+        );
 
         closeStage(e);
     }
 
     public void setMainHabitList(ObservableList<Habit> habitObservableList) {
-        this.tempHabitList = habitObservableList;
+        this.mMainCtrlHabitList = habitObservableList;
     }
 
     public void closeStage(ActionEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Textformater
-        int MAX_CHARS = 15;
-        tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
-
-
     }
 }

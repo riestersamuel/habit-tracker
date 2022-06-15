@@ -290,7 +290,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void showError(String msg) {
+    private void showError(String msg) { // TODO: exclude?
         vbErrorContainer.setVisible(true);
         lErrorMsg.setText(msg);
 
