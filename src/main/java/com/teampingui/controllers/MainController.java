@@ -2,8 +2,13 @@ package com.teampingui.controllers;
 
 import com.teampingui.Main;
 import com.teampingui.dao.JournalDAO;
-import com.teampingui.interfaces.ICheckBoxClickListener;
 import com.teampingui.models.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,20 +19,30 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import static com.teampingui.dao.Database.location;
 
 
 public class MainController implements Initializable {
+
+    private static final Logger log = LogManager.getLogger(MainController.class);
 
     public ObservableList<Habit> habitObservableList;
     //General Layout
@@ -36,9 +51,11 @@ public class MainController implements Initializable {
     @FXML
     Label lMiniJournal;
     @FXML
+    VBox vbErrorContainer;
+    @FXML
     Label lErrorMsg;
     @FXML
-    Button btnHide;
+    ProgressBar pbErrorDuration;
     //Journal
     @FXML
     TextArea taNewJournal; // Hier auslesen
@@ -64,6 +81,16 @@ public class MainController implements Initializable {
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
 
+    // Error Message
+    private static final Integer ERROR_DIALOG_TIME = 3;
+    private Timeline mTimeline;
+    private IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
+    private Thread mThreadErrorMsg;
+    private long mErrorMsgMillis = 0L;
+
+
+    // DAO
+    private JournalDAO journalDAO = new JournalDAO();
 
     public MainController() {
 
@@ -105,27 +132,68 @@ public class MainController implements Initializable {
         Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
     }
 
-    public void hideMsg(ActionEvent e) {
-        lErrorMsg.setVisible(false);
-        btnHide.setVisible(false);
-    }
-
     @FXML
     private void addNewEntry() {
-        int length = taNewJournal.getText().trim().length();
-        if (length > 200 || length <= 0) {
-            lErrorMsg.setVisible(true);
-            btnHide.setVisible(true);
-            lErrorMsg.setText(length == 0 ? "The text can not be empty" : "Text is too long (max. 200 chars)");
-        } else {
-            String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            JournalEntry testEntry = new JournalEntry(currentDate, taNewJournal.getText().trim());
-            lvJournal.getItems().add(0, testEntry);
-            String content = taNewJournal.getText();
-            JournalDAO.insertJournal(content, currentDate);
+        String sEntry = taNewJournal.getText().trim();
 
-            taNewJournal.clear();
+        if (sEntry.length() > 200) {
+            showError("Text is too long (max. 200 chars)");
+            return;
         }
+
+        if (sEntry.length() <= 0) {
+            showError("The text can not be empty");
+            return;
+        }
+
+        String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
+
+        try {
+            journalDAO.insert(newJournalEntry);
+            lvJournal.getItems().add(0, newJournalEntry);
+            taNewJournal.clear();
+        } catch (Exception exception) {
+            log.error(exception);
+        }
+
+    }
+
+    private void showError(String msg) {
+        vbErrorContainer.setVisible(true);
+        lErrorMsg.setText(msg);
+
+        if (mTimeline != null) {
+            mTimeline.stop();
+        }
+
+        mDialogTime.set(ERROR_DIALOG_TIME * 100);
+        mTimeline = new Timeline();
+        mTimeline.getKeyFrames().add(
+                new KeyFrame(Duration.seconds(ERROR_DIALOG_TIME),
+                        new KeyValue(mDialogTime, 0))
+        );
+        mTimeline.playFromStart();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(ERROR_DIALOG_TIME * 1000L);
+                    if (Calendar.getInstance().getTimeInMillis() - mErrorMsgMillis > 0) { // TODO: cleaner solution...?
+                        Platform.runLater(() -> vbErrorContainer.setVisible(false));
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        int bufferTime = 50;
+        mErrorMsgMillis = Calendar.getInstance().getTimeInMillis() + ERROR_DIALOG_TIME * 1000 - bufferTime;
+
+        mThreadErrorMsg = new Thread(runnable);
+        mThreadErrorMsg.start();
     }
 
     @FXML
@@ -145,6 +213,10 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        // Bind Error Msg Time to Progress Bar
+        pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
+
         // Journal
         //TEST
         loadUsername();
@@ -169,7 +241,7 @@ public class MainController implements Initializable {
         tvHabits.setEditable(true);
 
         // Set ProgressBar // TODO: rework
-        for (Habit h: habitObservableList) {
+        for (Habit h : habitObservableList) {
             haveTodoCounter += h.repsProperty().getValue();
             for (Day day : Day.values()) {
                 if (h.checkedDays(day).getValue() && h.hasToBeDone(day)) {
@@ -177,9 +249,9 @@ public class MainController implements Initializable {
                 }
             }
         }
-        double percentage = (double)doneCounter / haveTodoCounter;
+        double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
-        progressDisplay.setText((int)(percentage*100)+"% achieved");
+        progressDisplay.setText((int) (percentage * 100) + "% achieved");
     }
 
     private void dynamicallyAddTableCols() {
@@ -224,9 +296,9 @@ public class MainController implements Initializable {
 
         if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
-            double percentage = (double)doneCounter / haveTodoCounter;
+            double percentage = (double) doneCounter / haveTodoCounter;
             habitsProgress.setProgress(percentage);
-            progressDisplay.setText((int)(percentage*100)+"% achieved");
+            progressDisplay.setText((int) (percentage * 100) + "% achieved");
         }
     }
 
@@ -246,8 +318,7 @@ public class MainController implements Initializable {
             rs.close();
             stmt.close();
             con.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Hier bin ich 3");
             System.out.println(e.getMessage());
         }

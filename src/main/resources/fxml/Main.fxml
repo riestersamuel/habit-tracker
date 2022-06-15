@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane fx:id="apBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.MainController">
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="apBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.MainController">
    <children>
       <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Home" />
        <Button fx:id="btnSettings" layoutX="533.0" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Settings" />
@@ -34,8 +36,14 @@
                <TableColumn fx:id="reps" prefWidth="85.0" resizable="false" text="Done" />
            </columns-->
        </TableView>
-      <Label fx:id="lErrorMsg" alignment="CENTER" contentDisplay="CENTER" layoutX="383.0" layoutY="766.0" prefWidth="300.0" text="Error Message!" textAlignment="CENTER" visible="false" />
-       <Button fx:id="btnHide" layoutX="689.0" layoutY="766.0" onAction="#hideMsg" prefHeight="30.0" text="X" visible="false" />
+
+      <VBox fx:id="vbErrorContainer" layoutY="51.0" prefHeight="43.0" prefWidth="1066.0" visible="false">
+         <children>
+            <Label fx:id="lErrorMsg" alignment="CENTER" prefHeight="33.0" prefWidth="1066.0" text="Error" textFill="RED"/>
+             <ProgressBar fx:id="pbErrorDuration" progress="0.5" prefWidth="1066.0"/>
+         </children>
+      </VBox>
+
 
    </children>
 </AnchorPane>
