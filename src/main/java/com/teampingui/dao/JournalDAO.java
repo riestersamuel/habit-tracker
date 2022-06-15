@@ -52,23 +52,42 @@ public class JournalDAO {
         }
     }
 
-    // This method puts the journal entries into the database
-    public static void insertJournal(String content, String currentDate) {
-        String query = "INSERT INTO journal (datum, entry) VALUES ('" + currentDate + "', '" + content + "');";
-
+    public int insert(JournalEntry journalEntry) throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
-            Connection con = Database.connect();
-            System.out.println("You sent the following query to the database: " + query);
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt.executeUpdate();
+            connection = Database.connect();
+            connection.setAutoCommit(false);
+            String query = "INSERT INTO journal(datum, entry) VALUES(?, ?)";
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            int counter = 1;
+            statement.setString(counter++, journalEntry.getDate());
+            statement.setString(counter++, journalEntry.getEntry());
+            statement.executeUpdate();
+            connection.commit();
+            resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException exception) {
+            log.error(exception.getMessage());
+            connection.rollback();
+        } finally {
+            if (null != resultSet) {
+                resultSet.close();
+            }
 
-            stmt.close();
-            con.close();
+            if (null != statement) {
+                statement.close();
+            }
+
+            if (null != connection) {
+                connection.close();
+            }
         }
 
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-            throw new RuntimeException(ex);
-        }
+        return 0;
     }
+
 }
