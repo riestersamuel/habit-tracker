@@ -43,7 +43,8 @@ import static com.teampingui.dao.Database.location;
 public class MainController implements Initializable {
 
     private static final Logger log = LogManager.getLogger(MainController.class);
-
+    // Error Message
+    private static final Integer ERROR_DIALOG_TIME = 3;
     public ObservableList<Habit> habitObservableList;
     //General Layout
     @FXML
@@ -80,9 +81,6 @@ public class MainController implements Initializable {
     private int doneCounter = 0;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
-
-    // Error Message
-    private static final Integer ERROR_DIALOG_TIME = 3;
     private Timeline mTimeline;
     private IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     private Thread mThreadErrorMsg;

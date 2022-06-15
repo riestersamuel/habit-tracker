@@ -8,22 +8,20 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 public class Database {
-    //Initializing the logger
-    private static Logger log = LogManager.getLogger(Database.class);
-
     /**
-    * Location of database
-    */
-  public static final String location = Main.class.getResource("/database/database.db").toExternalForm();
-
+     * Location of database
+     */
+    public static final String location = Main.class.getResource("/database/database.db").toExternalForm();
     /**
      * Reuired Table for Programm to work
      */
-    private static final String requiredTable ="journal";
+    private static final String requiredTable = "journal";
+    //Initializing the logger
+    private static Logger log = LogManager.getLogger(Database.class);
 
     public static boolean isOK() {
         if (!checkDrivers()) return false;
-        if(!checkConnection()) return false;
+        if (!checkConnection()) return false;
         return checkTables();
     }
 
@@ -47,7 +45,7 @@ public class Database {
         }
     }
 
-   private static boolean checkTables() {
+    private static boolean checkTables() {
         String checkTables = "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + requiredTable + "'";
 
         try (Connection connection = Database.connect()) {
@@ -69,7 +67,7 @@ public class Database {
         try {
             connection = DriverManager.getConnection(dbPrefix + location);
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " +location);
+            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + location);
             return null;
         }
         return connection;

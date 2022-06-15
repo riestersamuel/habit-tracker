@@ -4,7 +4,7 @@ public class JournalEntry {
     private String entry;
     private String date;
 
-    public JournalEntry (String date, String  entry) {
+    public JournalEntry(String date, String entry) {
         this.date = date;
         this.entry = entry;
     }

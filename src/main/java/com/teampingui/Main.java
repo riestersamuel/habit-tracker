@@ -11,11 +11,8 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
-
-//Zu entfernen
-import static com.teampingui.dao.Database.location;
 
 public class Main extends Application {
 

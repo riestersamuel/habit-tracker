@@ -7,9 +7,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import static com.teampingui.dao.Database.location;
 
@@ -43,9 +44,7 @@ public class SettingsController {
 
             stmt.close();
             con.close();
-        }
-
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             throw new RuntimeException(ex);
         }

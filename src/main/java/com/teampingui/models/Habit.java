@@ -12,7 +12,7 @@ public class Habit {
     //For database
     private final int id = 1;
 
-    public Habit(String name, boolean[] haveTodoDays,boolean[] checkedDays) {
+    public Habit(String name, boolean[] haveTodoDays, boolean[] checkedDays) {
         this.name = new SimpleStringProperty(name);
         int reps = 0;
         for (int i = 0; i < checkedDays.length; i++) {

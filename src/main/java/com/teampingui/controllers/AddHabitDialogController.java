@@ -1,6 +1,5 @@
 package com.teampingui.controllers;
 
-import com.teampingui.dao.HabitDAO;
 import com.teampingui.models.Habit;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,14 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import javafx.util.converter.PercentageStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
     @FXML
-    CheckBox cbMonday,cbTuesday,cbWednesday,cbThursday,cbFriday,cbSaturday,cbSunday;
+    CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday;
     @FXML
     Label lAddHabitHeading;
     @FXML
@@ -40,7 +38,7 @@ public class AddHabitDialogController implements Initializable {
             tfNewHabitName.clear();
         }
 
-      tempHabitList.add(new Habit(
+        tempHabitList.add(new Habit(
                 name,
                 new boolean[]{cbMonday.isSelected(), cbTuesday.isSelected(), cbWednesday.isSelected(), cbThursday.isSelected(), cbFriday.isSelected(), cbSaturday.isSelected(), cbSunday.isSelected()},
                 new boolean[7]));
@@ -53,8 +51,8 @@ public class AddHabitDialogController implements Initializable {
     }
 
     public void closeStage(ActionEvent e) {
-        Node source = (Node)  e.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+        Node source = (Node) e.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
@@ -62,9 +60,8 @@ public class AddHabitDialogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Textformater
-        int MAX_CHARS=15;
-        tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS  ? change : null));
-
+        int MAX_CHARS = 15;
+        tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
 
 
     }

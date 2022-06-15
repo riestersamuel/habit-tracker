@@ -2,16 +2,22 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.SettingsController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="800.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/18"
+            fx:controller="com.teampingui.controllers.SettingsController">
     <children>
-        <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Home" />
-        <Button fx:id="btnSettings" layoutX="533.0" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Settings" />
-        <Label fx:id="lSettings" layoutX="509.0" layoutY="92.0" text="Settings" />
-      <Label fx:id="lName" layoutX="378.0" layoutY="185.0" text="Preferred name" />
-      <TextArea fx:id="taName" layoutX="498.0" layoutY="174.0" prefHeight="13.0" prefWidth="207.0" promptText="John Doe" />
-      <Label fx:id="lDateFormat" layoutX="378.0" layoutY="254.0" text="Date format" />
-      <TextArea fx:id="taDateFormat" layoutX="498.0" layoutY="242.0" prefHeight="39.0" prefWidth="207.0" promptText="2022-12-1" />
-      <Button fx:id="btnSaveChanges" layoutX="378.0" layoutY="312.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="26.0" prefWidth="355.0" text="Save changes" />
+        <Button fx:id="btnHabits" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5" text="Home"/>
+        <Button fx:id="btnSettings" layoutX="533.0" onAction="#switchScenes" prefHeight="52.0" prefWidth="532.5"
+                text="Settings"/>
+        <Label fx:id="lSettings" layoutX="509.0" layoutY="92.0" text="Settings"/>
+        <Label fx:id="lName" layoutX="378.0" layoutY="185.0" text="Preferred name"/>
+        <TextArea fx:id="taName" layoutX="498.0" layoutY="174.0" prefHeight="13.0" prefWidth="207.0"
+                  promptText="John Doe"/>
+        <Label fx:id="lDateFormat" layoutX="378.0" layoutY="254.0" text="Date format"/>
+        <TextArea fx:id="taDateFormat" layoutX="498.0" layoutY="242.0" prefHeight="39.0" prefWidth="207.0"
+                  promptText="2022-12-1"/>
+        <Button fx:id="btnSaveChanges" layoutX="378.0" layoutY="312.0" mnemonicParsing="false" onAction="#saveChanges"
+                prefHeight="26.0" prefWidth="355.0" text="Save changes"/>
 
 
     </children>

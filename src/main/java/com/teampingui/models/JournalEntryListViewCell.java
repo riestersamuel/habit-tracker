@@ -15,7 +15,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
     private Label dateLabel;
 
     @FXML
-    private  Text entryText;
+    private Text entryText;
 
     @FXML
     private VBox vbox;
@@ -28,7 +28,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
     protected void updateItem(JournalEntry jEntry, boolean empty) {
         super.updateItem(jEntry, empty);
 
-        if(empty || jEntry == null) {
+        if (empty || jEntry == null) {
 
             setText(null);
             setGraphic(null);
@@ -60,7 +60,7 @@ public class JournalEntryListViewCell extends ListCell<com.teampingui.models.Jou
             dateLabel.setText(jEntry.getDate().toString());
             entryText.setText(jEntry.getEntry());
 
-            Text text = (Text)vbox.getChildren().get(1);
+            Text text = (Text) vbox.getChildren().get(1);
             text.setTextAlignment(TextAlignment.LEFT);
 
 

@@ -21,7 +21,7 @@
     -fx-text-fill: #fff;
 }
 
-#btnHabits:hover, #btnSettings:hover{
+#btnHabits:hover, #btnSettings:hover {
     -fx-background-color: #4E5750;
     -fx-border-color: #4E5750;
     -fx-text-fill: #fff;
@@ -55,7 +55,7 @@
     -fx-text-fill: #7CCD8F;
 }
 
-#btnAddHabit:hover{
+#btnAddHabit:hover {
     -fx-background-color: #7CCD8F;
     -fx-text-fill: #fff;
 }
@@ -117,15 +117,15 @@
     -fx-background-color: white;
 }
 
-.cb-haveto .box{
+.cb-haveto .box {
     -fx-background-color: #E3675B;
 }
 
-.cb-donthaveto .box{
+.cb-donthaveto .box {
     -fx-background-color: #dadada;
 }
 
-.cb-donthaveto:selected .mark{
+.cb-donthaveto:selected .mark {
     -fx-background-color: white;
 }
 

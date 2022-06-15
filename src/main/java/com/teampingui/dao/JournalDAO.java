@@ -7,21 +7,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
-import static com.teampingui.dao.Database.location;
 
 public class JournalDAO {
-    //Initializing the logger
-    private static Logger log = LogManager.getLogger(JournalDAO.class);
-
     private static final String tableName = "journal";
     private static final String colDate = "datum";
     private static final String colEntry = "entry";
-
     private static final ObservableList<JournalEntry> journal;
+    //Initializing the logger
+    private static Logger log = LogManager.getLogger(JournalDAO.class);
 
     static {
         journal = FXCollections.observableArrayList();
@@ -33,14 +27,14 @@ public class JournalDAO {
     }
 
     private static void updateJournalFromDB() {
-        String getTableQuery ="SELECT * FROM " + tableName + " ORDER BY ID DESC";
+        String getTableQuery = "SELECT * FROM " + tableName + " ORDER BY ID DESC";
 
-       try (Connection connection = Database.connect()) {
+        try (Connection connection = Database.connect()) {
             PreparedStatement statement = connection.prepareStatement(getTableQuery);
             ResultSet rs = statement.executeQuery();
             journal.clear();
             while (rs.next()) {
-               // String date = LocalDate.parse(rs.getString(colDate)).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+                // String date = LocalDate.parse(rs.getString(colDate)).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
                 journal.add(new JournalEntry(
                         rs.getString(colDate),
                         rs.getString(colEntry)

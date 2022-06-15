@@ -4,12 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<VBox fx:id="vbox" maxWidth="255.0" prefHeight="150.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vbox" maxWidth="255.0" prefHeight="150.0" prefWidth="337.0"
+      xmlns="http://javafx.com/javafx/16">
     <children>
-        <Label fx:id="dateLabel" text="Date" textAlignment="JUSTIFY" wrapText="true" />
+        <Label fx:id="dateLabel" text="Date" textAlignment="JUSTIFY" wrapText="true"/>
         <Text fx:id="entryText" text="Content" textAlignment="JUSTIFY" wrappingWidth="255.0">
-         <VBox.margin>
-            <Insets top="6.0" />
-         </VBox.margin></Text>
+            <VBox.margin>
+                <Insets top="6.0"/>
+            </VBox.margin>
+        </Text>
     </children>
 </VBox>

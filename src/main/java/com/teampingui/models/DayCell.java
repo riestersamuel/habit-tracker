@@ -6,8 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 
-public class DayCell extends TableCell<Habit, Boolean>
-{
+public class DayCell extends TableCell<Habit, Boolean> {
 
     private final CheckBox checkBox = new CheckBox();
     private final Day day;
