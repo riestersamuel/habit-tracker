@@ -80,7 +80,6 @@ public class MainController implements Initializable {
     private Timeline mTimeline;
     private IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     private Thread mThreadErrorMsg;
-    private long mErrorMsgMillis = 0L;
 
 
     // DAO
@@ -313,9 +312,6 @@ public class MainController implements Initializable {
         if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
             mThreadErrorMsg.interrupt();
         }
-
-        int bufferTime = 50;
-        mErrorMsgMillis = Calendar.getInstance().getTimeInMillis() + ERROR_DIALOG_TIME * 1000 - bufferTime;
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
