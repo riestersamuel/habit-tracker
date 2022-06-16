@@ -1,5 +1,6 @@
 package com.teampingui.dao;
 
+import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Habit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,32 +12,39 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-public class HabitDAO {
+public class HabitDAO implements IDao<Habit> {
     private static final String DB_TABLE_HABIT = "Habits";
     private static final String DB_TABLE_HAVETODODAYS = "haveTodoDays";
     private static final String DB_COLUMN_NAME = "name";
 
+    private static final Logger log = LogManager.getLogger(HabitDAO.class);
 
-    private static final ObservableList<Habit> mosHabits; // TODO: put in Controller..?
-    //Initializing the logger
-    private static Logger log = LogManager.getLogger(HabitDAO.class);
+    private final ObservableList<Habit> mosHabits;
 
-    static {
+    public HabitDAO() {
         mosHabits = FXCollections.observableArrayList();
-        updateHabitsFromDB();
+        try {
+            mosHabits.addAll(read());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static ObservableList<Habit> getHabits() {
-        return FXCollections.observableList(mosHabits);
-    }
+    private List<Habit> read() throws SQLException {
+        // TODO
+        //  - read habits from database
+        //  - return as list
+        //  - read havetodo days and put into boolean Array (see dummy data)
+        //  - read checked of habit between two dates (2022-06-13 to 2022-06-19)
+        //     - put also in boolean array (see dummy data)
 
-    private static void updateHabitsFromDB() {
-        //TODO
-        String getStringQuery = """
+
+        /*String getStringQuery = """
                 SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays
                 FROM habit, haveTodoDays
                 WHERE habit.id = haveTodoDays.habit_id
@@ -44,7 +52,7 @@ public class HabitDAO {
                 GROUP BY habit.id;
                 """;
 
-        try  {
+        try {
             Connection connection = Database.connect();
             PreparedStatement statement = connection.prepareStatement(getStringQuery);
             ResultSet rs = statement.executeQuery();
@@ -60,31 +68,81 @@ public class HabitDAO {
                     havetodoweekdays[i] = true;
                 }
 
-              /*  new Habit(
-                        rs.getString(DB_COLUMN_NAME),
-                        havetodoweekdays,
-                        boolean[]
-                ); */
+              //  new Habit(
+                //        rs.getString(DB_COLUMN_NAME),
+                //        havetodoweekdays,
+                //        boolean[]
+                //);
             }
         } catch (SQLException e) {
             log.error(LocalDateTime.now() + ": could not load Habits from database.");
-           mosHabits.clear();
-        }
+            mosHabits.clear();
+        }*/
+
+        // TODO: REMOVE ME AFTER READ FROM DATABASE FEATURE IS IMPLEMENTED!!!
+        //  Dummy Data
+        List<Habit> dummyData = new ArrayList<>();
+        dummyData.add(
+                new Habit(
+                        "Könken",
+                        new boolean[]{true, true, true, true, true, true, true},
+                        new boolean[]{false, false, true, false, true, false, false})
+        );
+        dummyData.add(
+                new Habit(
+                        "Könken",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, true, false, false, false, false, false})
+        );
+        dummyData.add(
+                new Habit(
+                        "saufen",
+                        new boolean[]{true, false, false, true, false, false, false},
+                        new boolean[]{true, false, false, true, false, false, false})
+        );
+        dummyData.add(
+                new Habit(
+                        "lesen",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false})
+        );
+        dummyData.add(
+                new Habit(
+                        "lernen",
+                        new boolean[]{true, false, false, false, false, false, false},
+                        new boolean[]{true, false, false, false, false, false, false})
+        );
+        return dummyData;
+    }
+
+
+    @Override
+    public Optional<Habit> get(long id) {
+        return Optional.ofNullable(mosHabits.get((int)id));
+    }
+
+    @Override
+    public ObservableList<Habit> getAll() {
+        return mosHabits;
+    }
+
+    @Override
+    public int insert(Habit habit) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public void update(int index, Habit habit) {
 
     }
 
-    public static void insertHabit(Habit habit) {
-        //TODO
+    @Override
+    public void delete(Habit habit) {
+
     }
 
-    public static void updateHabit(int id, Habit habit) {
-        //TODO
+    public int indexOf(Habit habit) {
+        return mosHabits.indexOf(habit);
     }
-
-    public static void deleteHabit(int id) {
-        //TODO
-    }
-
-
 }
 

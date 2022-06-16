@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -41,7 +42,6 @@ public class MainController implements Initializable {
     private static final Logger log = LogManager.getLogger(MainController.class);
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
-    public ObservableList<Habit> mosHabits;
     //General Layout
     @FXML
     Label lWelcome;
@@ -83,36 +83,10 @@ public class MainController implements Initializable {
 
 
     // DAO
-    private JournalDAO mJournalDAO = new JournalDAO();
-    private HabitDAO mHabitDAO = new HabitDAO();
+    private final JournalDAO mJournalDAO = new JournalDAO();
+    private final HabitDAO mHabitDAO = new HabitDAO();
 
     public MainController() {
-
-        mosHabits = FXCollections.observableArrayList();
-
-        // Dummy Data
-        mosHabits.addAll(
-                new Habit(
-                        "Könken",
-                        new boolean[]{true, true, true, true, true, true, true},
-                        new boolean[]{false, false, true, false, true, false, false}),
-                new Habit(
-                        "Könken",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, true, false, false, false, false, false}),
-                new Habit(
-                        "saufen",
-                        new boolean[]{true, false, false, true, false, false, false},
-                        new boolean[]{true, false, false, true, false, false, false}),
-                new Habit(
-                        "lesen",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false}),
-                new Habit(
-                        "lernen",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false})
-        );
     }
 
     @Override
@@ -143,11 +117,11 @@ public class MainController implements Initializable {
         dynamicallyAddTableCols();
 
         //tvHabits.setItems(HabitDAO.getHabits());
-        tvHabits.setItems(mosHabits);
+        tvHabits.setItems(mHabitDAO.getAll());
         tvHabits.setEditable(true);
 
         updateProgressBar();
-        mosHabits.addListener(new ListChangeListener() {
+        mHabitDAO.getAll().addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 updateProgressBar();
@@ -162,7 +136,7 @@ public class MainController implements Initializable {
         // Set ProgressBar // TODO: rework
         doneCounter = 0;
         haveTodoCounter = 0;
-        for (Habit h : mosHabits) {
+        for (Habit h : mHabitDAO.getAll()) {
             haveTodoCounter += h.repsProperty().getValue();
             for (Day day : Day.values()) {
                 if (h.checkedDays(day).getValue() && h.hasToBeDone(day)) {
@@ -219,7 +193,7 @@ public class MainController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
         Parent parent = fxmlLoader.load();
         AddHabitDialogController dialogController = fxmlLoader.getController();
-        dialogController.setMainHabitList(mosHabits);
+        dialogController.setMainHabitList(mHabitDAO.getAll());
 
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
@@ -276,8 +250,9 @@ public class MainController implements Initializable {
             progressDisplay.setText((int) (percentage * 100) + "% achieved");
 
             // Observable
-            mosHabits.indexOf(habit);
-            mosHabits.get(mosHabits.indexOf(habit)).setChecked(day, isChecked);
+            int habitIndex = mHabitDAO.indexOf(habit);
+            Optional<Habit> updateHabit = mHabitDAO.get(habitIndex);
+            updateHabit.ifPresent(value -> value.setChecked(day, isChecked));
         }
     }
 

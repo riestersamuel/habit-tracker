@@ -1,13 +1,14 @@
 package com.teampingui.interfaces;
 
-import java.util.List;
+import javafx.collections.ObservableList;
+
 import java.util.Optional;
 
 public interface IDao<T> {
 
     Optional<T> get(long id);
 
-    List<T> getAll();
+    ObservableList<T> getAll();
 
     int insert(T t) throws Exception;
 
