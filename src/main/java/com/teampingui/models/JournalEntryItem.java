@@ -1,12 +1,29 @@
 package com.teampingui.models;
 
+import com.teampingui.exceptions.NotInDatabaseException;
+
 public class JournalEntryItem {
+    private int mID = -1;
     private String mContent;
     private String mDate;
 
     public JournalEntryItem(String date, String entry) {
         this.mDate = date;
         this.mContent = entry;
+    }
+
+    public JournalEntryItem(int id, String date, String entry) {
+        this.mID = id;
+        this.mDate = date;
+        this.mContent = entry;
+    }
+
+    public void setDate(String date) {
+        this.mDate = date;
+    }
+
+    public void setContent(String content) {
+        this.mContent = content;
     }
 
     public String getDate() {
@@ -22,5 +39,16 @@ public class JournalEntryItem {
         return "JournalEntryItem: " +
                 "mDate='" + mDate + '\'' +
                 " - mContent='" + mContent + '\'';
+    }
+
+    public void setID(int id) {
+        this.mID = id;
+    }
+
+    public int getID() throws NotInDatabaseException {
+        if (mID == -1) {
+            throw new NotInDatabaseException("Entry is not connected to database");
+        }
+        return mID;
     }
 }

@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class MainController implements Initializable {
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
     public ObservableList<Habit> mosHabits;
-    private ObservableList<JournalEntryItem> mosJournalEntries;
     //General Layout
     @FXML
     Label lWelcome;
@@ -92,7 +90,6 @@ public class MainController implements Initializable {
     public MainController() {
 
         mosHabits = FXCollections.observableArrayList();
-        mosJournalEntries = FXCollections.observableArrayList();
 
         // Dummy Data
         mosHabits.addAll(
@@ -129,12 +126,8 @@ public class MainController implements Initializable {
         lWelcome.setText(Settings.getUsername().isEmpty() ?  "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
         // Journal
-        try {
-            mosJournalEntries.addAll(mJournalDAO.read());
-            lvJournal.setItems(mosJournalEntries);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        lvJournal.setItems(mJournalDAO.getAll());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
         // journal entry max length
         final int MAX_CHARS = 200;
