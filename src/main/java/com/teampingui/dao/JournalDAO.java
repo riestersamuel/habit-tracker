@@ -82,6 +82,8 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        int id = 0;
+
         try {
             connection = Database.connect();
             connection.setAutoCommit(false);
@@ -94,10 +96,9 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             connection.commit();
             resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                int id = resultSet.getInt(1);
+                id = resultSet.getInt(1);
                 journalEntry.setID(id);
                 mosJournalEntries.add(journalEntry);
-                return id;
             }
         } catch (SQLException exception) {
             log.error(exception.getMessage());
@@ -117,7 +118,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             }
         }
 
-        return 0;
+        return id;
     }
 
     @Override
