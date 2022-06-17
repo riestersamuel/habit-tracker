@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
     @FXML
-    CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday;
+    CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday; // TODO: instead of adding each checkbox, just add the container and access checkboxes through .getItems()
     @FXML
     Label lAddHabitHeading;
     @FXML
