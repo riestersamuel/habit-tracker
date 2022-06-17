@@ -3,14 +3,16 @@ package com.teampingui.controllers;
 import com.teampingui.Main;
 import com.teampingui.dao.HabitDAO;
 import com.teampingui.dao.JournalDAO;
+import com.teampingui.interfaces.IButtonClickListener;
 import com.teampingui.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +35,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -96,7 +99,7 @@ public class MainController implements Initializable {
         pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
 
         // Welcome Message
-        lWelcome.setText(Settings.getUsername().isEmpty() ?  "Welcome!" : "Welcome " + Settings.getUsername() + "!");
+        lWelcome.setText(Settings.getUsername().isEmpty() ? "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
         // Journal
 
@@ -136,14 +139,10 @@ public class MainController implements Initializable {
         // Set ProgressBar // TODO: rework
         doneCounter = 0;
         haveTodoCounter = 0;
-        for (Habit h : mHabitDAO.getAll()) {
+        mHabitDAO.getAll().forEach(h -> {
             haveTodoCounter += h.repsProperty().getValue();
-            for (Day day : Day.values()) {
-                if (h.checkedDays(day).getValue() && h.hasToBeDone(day)) {
-                    doneCounter++;
-                }
-            }
-        }
+            Arrays.stream(Day.values()).filter(day -> h.checkedDays(day).getValue() && h.hasToBeDone(day)).forEach(day -> doneCounter++);
+        });
         double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
@@ -201,6 +200,56 @@ public class MainController implements Initializable {
         //stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    private boolean mRemoveButtonsVisible = false;
+
+    @FXML
+    public void removeHabit(ActionEvent actionEvent) {
+        mRemoveButtonsVisible = !mRemoveButtonsVisible;
+        if (mRemoveButtonsVisible) {
+            TableColumn<Habit, Boolean> tcDelete = new TableColumn<>("");
+            tcDelete.setPrefWidth(28);
+
+            double newWidth = tvHabits.getColumns().get(8).getWidth() - 28;
+            tvHabits.getColumns().get(8).setPrefWidth(newWidth);
+            tvHabits.getColumns().add(0, tcDelete);
+
+            tcDelete.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Habit, Boolean>, ObservableValue<Boolean>>() {
+                @Override
+                public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Habit, Boolean> habitStringCellDataFeatures) {
+                    return new SimpleBooleanProperty(habitStringCellDataFeatures.getValue() != null);
+                }
+            });
+            tcDelete.setCellFactory(new Callback<TableColumn<Habit, Boolean>, TableCell<Habit, Boolean>>() {
+                @Override
+                public TableCell<Habit, Boolean> call(TableColumn<Habit, Boolean> habitStringTableColumn) {
+                    return new ButtonCell(new IButtonClickListener() {
+                        @Override
+                        public void onClick(int index) {
+
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Delete Habit");
+                            alert.setContentText("Do you want to delete the Habit '" + tvHabits.getItems().get(index).nameProperty().getValue() + "'?");
+                            ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                            ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+                            alert.getButtonTypes().setAll(btnYes, btnNo);
+                            alert.showAndWait().ifPresent(type -> {
+                                if (type == btnYes) {
+                                    mHabitDAO.delete(tvHabits.getItems().get(index));
+                                } else {
+                                    alert.close();
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            tvHabits.getColumns().remove(0);
+            double newWidth = tvHabits.getColumns().get(8).getWidth() + 28;
+            tvHabits.getColumns().get(8).setPrefWidth(newWidth);
+        }
     }
 
     private void dynamicallyAddTableCols() {
@@ -291,5 +340,4 @@ public class MainController implements Initializable {
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
     }
-
 }

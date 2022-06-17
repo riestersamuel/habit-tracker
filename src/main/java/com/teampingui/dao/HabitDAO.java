@@ -154,7 +154,7 @@ public class HabitDAO implements IDao<Habit> {
 
     @Override
     public void delete(Habit habit) {
-
+        mosHabits.remove(habit);
     }
 
     public int indexOf(Habit habit) {

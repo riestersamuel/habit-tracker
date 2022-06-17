@@ -23,7 +23,7 @@
                prefWidth="60.0" text="200/200" textAlignment="RIGHT"/>
         <ListView fx:id="lvJournal" layoutX="739.0" layoutY="336.0" prefHeight="425.0" prefWidth="287.0"/>
 
-        <Button fx:id="btnRemoveHabit" layoutX="32.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0"
+        <Button fx:id="btnRemoveHabit" layoutX="32.0" layoutY="185.0" mnemonicParsing="false" onAction="#removeHabit" prefHeight="45.0"
                 prefWidth="318.0" text="X Remove a habit"/>
         <Button fx:id="btnAddHabit" layoutX="388.0" layoutY="185.0" mnemonicParsing="false" onAction="#openHabitDialog"
                 prefHeight="45.0" prefWidth="318.0" text="+ Add a new habit"/>
