@@ -53,8 +53,7 @@ public class AddHabitDialogController implements Initializable {
                         cbFriday.isSelected(),
                         cbSaturday.isSelected(),
                         cbSunday.isSelected()
-                },
-                new boolean[7])
+                })
         );
 
         closeStage(e);

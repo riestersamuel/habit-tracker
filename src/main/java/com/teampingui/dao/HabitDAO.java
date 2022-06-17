@@ -7,7 +7,12 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,12 +33,17 @@ public class HabitDAO implements IDao<Habit> {
         mosHabits = FXCollections.observableArrayList();
         try {
             mosHabits.addAll(read());
+            loadCheckedData(LocalDate.now());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     private List<Habit> read() throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
         // TODO
         //  - read habits from database
         //  - read checked of habit between two dates (2022-06-13 to 2022-06-19)
@@ -42,93 +52,103 @@ public class HabitDAO implements IDao<Habit> {
 
         List<Habit> habitEntries = new ArrayList<>();
 
-        String getStringQuery = """
-                SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays
-                FROM habit, haveTodoDays
-                WHERE habit.id = haveTodoDays.habit_id
-                AND haveTodoDays.havetodo = 1
-                GROUP BY habit.id;
-                """;
-
         try {
-            Connection connection = Database.connect();
-            PreparedStatement statement = connection.prepareStatement(getStringQuery);
-            ResultSet rs = statement.executeQuery();
-            mosHabits.clear();
+            connection = Database.connect();
 
-            while (rs.next()) {
+            String getStringQuery = """
+                    SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays
+                    FROM habit, haveTodoDays
+                    WHERE habit.id = haveTodoDays.habit_id
+                    AND haveTodoDays.havetodo = 1
+                    GROUP BY habit.id;
+                    """;
+            statement = connection.prepareStatement(getStringQuery);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
                 // Getting haveTodoDays Boolean Array
-                List<String> splitConcat = Arrays.asList(rs.getString("weekdays").split(","));
+                List<String> splitConcat = Arrays.asList(resultSet.getString("weekdays").split(","));
                 List<Integer> weekdays = splitConcat.stream().map(Integer::parseInt).toList();
                 boolean[] haveTodoDays = new boolean[7];
-                for (int i : weekdays) {
-                    haveTodoDays[i] = true;
-                }
-
-                // Getting checkedDays Boolean Array
-                boolean[] checkedDays = new boolean[]{true, true, true, false, false, false, false};
-
-
-                // boolean[] checkedDays = new boolean[7];
-            /* if (rs.getDate(DB_COLUMN_ENTRYDATE).compareTo(Date.valueOf("2022-06-13")) < 0 || rs.getDate(DB_COLUMN_ENTRYDATE).compareTo(Date.valueOf("2022-06-19")) > 0) {
-                Date[] week = new Date[]{Date.valueOf("2022-06-13"), Date.valueOf("2022-06-14")};
-
-                // Array mit allen daten der Woche erstellen
-                   // Array mit allen checked daten erstellen
-                    // vergleichen: Wenn entry date = NULL == false sonst true
-
-                    System.out.println("Statement correct");
-                } else {
-                    log.info("Please select other date.");
-                    log.error(LocalDateTime.now() + ": Date out of bond.");
-                } */
+                weekdays.forEach(i -> haveTodoDays[i] = true);
 
                 habitEntries.add(new Habit(
-                        rs.getString(DB_COLUMN_NAME),
-                        haveTodoDays,
-                        checkedDays)
+
+                        resultSet.getString(DB_COLUMN_NAME),
+                        haveTodoDays)
                 );
             }
         } catch (SQLException e) {
             log.info("Habits couldn't be loaded. Please try again!");
             log.error(LocalDateTime.now() + ": could not load habits from database." + e);
             mosHabits.clear();
+        } finally {
+            if (null != resultSet) {
+                resultSet.close();
+            }
+
+            if (null != statement) {
+                statement.close();
+            }
+
+            if (null != connection) {
+                connection.close();
+            }
         }
 
-        // TODO: REMOVE ME AFTER READ FROM DATABASE FEATURE IS IMPLEMENTED!!!
-        //  Dummy Data
-       /* List<Habit> dummyData = new ArrayList<>();
-        dummyData.add(
-                new Habit(
-                        "Könken",
-                        new boolean[]{true, true, true, true, true, true, true},
-                        new boolean[]{false, false, true, false, true, false, false})
-        );
-        dummyData.add(
-                new Habit(
-                        "Könken",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, true, false, false, false, false, false})
-        );
-        dummyData.add(
-                new Habit(
-                        "saufen",
-                        new boolean[]{true, false, false, true, false, false, false},
-                        new boolean[]{true, false, false, true, false, false, false})
-        );
-        dummyData.add(
-                new Habit(
-                        "lesen",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false})
-        );
-        dummyData.add(
-                new Habit(
-                        "lernen",
-                        new boolean[]{true, false, false, false, false, false, false},
-                        new boolean[]{true, false, false, false, false, false, false})
-        ); */
         return habitEntries;
+    }
+
+    public void loadCheckedData(LocalDate date) throws SQLException { // TODO: cleanup function
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        String fromDate = date.with(DayOfWeek.MONDAY).toString();
+        String toDate = date.with(DayOfWeek.SUNDAY).toString();
+
+        try {
+            connection = Database.connect();
+
+            String getStringQuery = "SELECT habit.id, habit.name, GROUP_CONCAT(checkedDays.entry_date) AS done_days " +
+                    "FROM habit, checkedDays " +
+                    "WHERE habit.id = checkedDays.habit_id " +
+                    "AND checkedDays.done = 1 " +
+                    "AND entry_date >= date('" + fromDate + "') AND entry_date <= date('" + toDate + "') " +
+                    "GROUP BY habit.id;";
+
+            statement = connection.prepareStatement(getStringQuery);
+            resultSet = statement.executeQuery();
+
+            //reset
+            mosHabits.forEach(i -> i.setCheckedDays(new boolean[]{false, false, false, false, false, false, false}));
+
+            while (resultSet.next()) {
+                // Getting haveTodoDays Boolean Array
+                List<String> splitConcat = Arrays.asList(resultSet.getString("done_days").split(","));
+
+                boolean[] doneDays = new boolean[7];
+                splitConcat.forEach(sDate -> doneDays[LocalDate.parse(sDate).getDayOfWeek().getValue() - 1] = true);
+                mosHabits.get(resultSet.getInt("id") - 1).setCheckedDays(doneDays); // TODO: get habit by DB ID!!! otherwise gets buggy with deleted habits)
+            }
+        } catch (SQLException e) {
+            log.info("Habits couldn't be loaded. Please try again!");
+            log.error(LocalDateTime.now() + ": could not load habits from database." + e);
+            //mosHabits.clear();
+        } finally {
+            if (null != resultSet) {
+                resultSet.close();
+            }
+
+            if (null != statement) {
+                statement.close();
+            }
+
+            if (null != connection) {
+                connection.close();
+            }
+        }
+
     }
 
 

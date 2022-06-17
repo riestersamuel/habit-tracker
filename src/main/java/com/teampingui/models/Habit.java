@@ -3,26 +3,40 @@ package com.teampingui.models;
 import javafx.beans.property.*;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Habit {
 
-    private final StringProperty name;
-    private final IntegerProperty reps;
+    private StringProperty name;
+    private IntegerProperty reps;
     private final BooleanProperty[] checkedDays = new BooleanProperty[7];
     private final boolean[] haveTodoDays = new boolean[7];
 
     //For database
-    private final int id = 1;
+    private int mDB_ID = -1;
 
-    public Habit(String name, boolean[] haveTodoDays, boolean[] checkedDays) {
+    public Habit(String name, boolean[] haveTodoDays) {
+        init(name, haveTodoDays);
+    }
+
+    public Habit(int dbID,String name, boolean[] haveTodoDays) {
+        this.mDB_ID = dbID;
+        init(name, haveTodoDays);
+    }
+
+    private void init(String name, boolean[] haveTodoDays) {
         this.name = new SimpleStringProperty(name);
         int reps = 0;
         for (int i = 0; i < checkedDays.length; i++) {
             reps += haveTodoDays[i] ? 1 : 0;
             this.haveTodoDays[i] = haveTodoDays[i];
-            this.checkedDays[i] = new SimpleBooleanProperty(checkedDays[i]);
+            this.checkedDays[i] = new SimpleBooleanProperty(false);
         }
         this.reps = new SimpleIntegerProperty(reps);
+    }
+
+    public void setCheckedDays(boolean[] checkedDays) {
+        IntStream.range(0, checkedDays.length).forEach(i -> this.checkedDays[i].set(checkedDays[i]));
     }
 
     public void setChecked(Day day, boolean checked) {
@@ -52,6 +66,6 @@ public class Habit {
                 ", reps=" + reps +
                 ", checkedDays=" + Arrays.toString(checkedDays) +
                 ", haveTodoDays=" + Arrays.toString(haveTodoDays) +
-                ", id=" + id;
+                ", id=" + mDB_ID;
     }
 }

@@ -32,6 +32,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -72,6 +75,8 @@ public class MainController implements Initializable {
     Button btnRemoveHabit;
     @FXML
     Button btnHabits, btnChallenge, btnSettings;
+    @FXML
+    Label lDate;
     @FXML
     private ProgressBar habitsProgress;
     @FXML
@@ -287,12 +292,12 @@ public class MainController implements Initializable {
      * @param habit     the habit which belongs to the clicked checkbox (same row)
      * @param day       shows wich checkbox is clicked
      */
-    private void checkboxClicked(boolean isChecked, Habit habit, Day day) {
+    private void checkboxClicked(boolean isChecked, Habit habit, Day day) { // TODO: cleanup
         // System.out.println("Checked: " + isChecked);
         // System.out.println("Day: " + day);
         // System.out.println("Habit: " + habit.repsProperty().getValue());
 
-        if (habit.hasToBeDone(day)) { // TODO: cleanup
+        if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
             double percentage = (double) doneCounter / haveTodoCounter;
             habitsProgress.setProgress(percentage);
@@ -339,5 +344,36 @@ public class MainController implements Initializable {
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
+    }
+
+    private LocalDate mDate = LocalDate.now();
+
+    public void onClickWeekBefore(ActionEvent actionEvent) {
+        changeWeek(false);
+    }
+
+    public void onClickWeekNext(ActionEvent actionEvent) {
+        changeWeek(true);
+    }
+
+    private void changeWeek(boolean nextWeek) {
+        try {
+            if (nextWeek) {
+                mHabitDAO.loadCheckedData(mDate.plusDays(7));
+                mDate = mDate.plusDays(7);
+            } else {
+                mHabitDAO.loadCheckedData(mDate.minusDays(7));
+                mDate = mDate.minusDays(7);
+            }
+            updateProgressBar();
+
+            String fromDate = mDate.with(DayOfWeek.MONDAY).toString();
+            String toDate = mDate.with(DayOfWeek.SUNDAY).toString();
+
+            lDate.setText(fromDate + " - " + toDate); // TODO: use right date format
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
