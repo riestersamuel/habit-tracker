@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +18,7 @@ public class HabitDAO implements IDao<Habit> {
     private static final String DB_TABLE_HABIT = "Habits";
     private static final String DB_TABLE_HAVETODODAYS = "haveTodoDays";
     private static final String DB_COLUMN_NAME = "name";
+    private static final String DB_COLUMN_ENTRYDATE = "entry_date";
 
     private static final Logger log = LogManager.getLogger(HabitDAO.class);
 
@@ -44,10 +42,13 @@ public class HabitDAO implements IDao<Habit> {
         //     - put also in boolean array (see dummy data)
 
 
-        /*String getStringQuery = """
-                SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays
-                FROM habit, haveTodoDays
+        List<Habit> habitEntries = new ArrayList<>();
+
+        String getStringQuery = """
+                SELECT habit.id, habit.name, GROUP_CONCAT(haveTodoDays.weekday) AS weekdays, checkedDays.entry_date, checkedDays.done
+                FROM habit, haveTodoDays, checkedDays
                 WHERE habit.id = haveTodoDays.habit_id
+                AND haveTodoDays.habit_id = checkedDays.habit_id
                 AND haveTodoDays.havetodo = 1
                 GROUP BY habit.id;
                 """;
@@ -59,29 +60,42 @@ public class HabitDAO implements IDao<Habit> {
             mosHabits.clear();
 
             while (rs.next()) {
-                List<String> temp = Arrays.asList(rs.getString("weekdays").split(","));
-                List<Integer> zahlen = temp.stream().map(Integer::parseInt).toList();
-
-                boolean[] havetodoweekdays = new boolean[7];
-
-                for (int i : zahlen) {
-                    havetodoweekdays[i] = true;
+                // Getting haveTodoDays Boolean Array
+                List<String> splitConcat = Arrays.asList(rs.getString("weekdays").split(","));
+                List<Integer> weekdays = splitConcat.stream().map(Integer::parseInt).toList();
+                boolean[] haveTodoDays = new boolean[7];
+                for (int i : weekdays) {
+                    haveTodoDays[i] = true;
                 }
 
-              //  new Habit(
-                //        rs.getString(DB_COLUMN_NAME),
-                //        havetodoweekdays,
-                //        boolean[]
-                //);
+                // Getting checkedDays Boolean Array
+                boolean[] checkedDays = new boolean[]{true, true, true, true, false, false, false};
+               // boolean[] checkedDays = new boolean[7];
+               /* if (rs.getDate(DB_COLUMN_ENTRYDATE).compareTo(Date.valueOf("2022-06-13")) < 0 || rs.getDate(DB_COLUMN_ENTRYDATE).compareTo(Date.valueOf("2022-06-19")) > 0) {
+                    // Wenn entry date = 0 == false sonst true
+
+                    System.out.println("Statement correct");
+                } else {
+                    log.info("Please select other date.");
+                    log.error(LocalDateTime.now() + ": Date out of bond.");
+                } */
+
+
+                habitEntries.add(new Habit(
+                        rs.getString(DB_COLUMN_NAME),
+                        haveTodoDays,
+                        checkedDays)
+                );
             }
         } catch (SQLException e) {
-            log.error(LocalDateTime.now() + ": could not load Habits from database.");
+            log.info("Habits couldn't be loaded. Please try again!");
+            log.error(LocalDateTime.now() + ": could not load habits from database." +e);
             mosHabits.clear();
-        }*/
+        }
 
         // TODO: REMOVE ME AFTER READ FROM DATABASE FEATURE IS IMPLEMENTED!!!
         //  Dummy Data
-        List<Habit> dummyData = new ArrayList<>();
+       /* List<Habit> dummyData = new ArrayList<>();
         dummyData.add(
                 new Habit(
                         "Könken",
@@ -111,8 +125,8 @@ public class HabitDAO implements IDao<Habit> {
                         "lernen",
                         new boolean[]{true, false, false, false, false, false, false},
                         new boolean[]{true, false, false, false, false, false, false})
-        );
-        return dummyData;
+        ); */
+        return habitEntries;
     }
 
 
