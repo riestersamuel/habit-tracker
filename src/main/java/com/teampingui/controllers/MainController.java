@@ -121,6 +121,9 @@ public class MainController implements Initializable {
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/" + MAX_CHARS));
 
+        // Date
+        displayTableDate();
+
         // Habits
         dynamicallyAddTableCols();
 
@@ -366,14 +369,16 @@ public class MainController implements Initializable {
                 mDate = mDate.minusDays(7);
             }
             updateProgressBar();
-
-            String fromDate = mDate.with(DayOfWeek.MONDAY).toString();
-            String toDate = mDate.with(DayOfWeek.SUNDAY).toString();
-
-            lDate.setText(fromDate + " - " + toDate); // TODO: use right date format
+            displayTableDate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void displayTableDate() {
+        String fromDate = mDate.with(DayOfWeek.MONDAY).format(DateTimeFormatter.ofPattern("dd. MMMM"));
+        String toDate = mDate.with(DayOfWeek.SUNDAY).format(DateTimeFormatter.ofPattern("dd. MMMM yyyy"));
+        lDate.setText(fromDate + " - " + toDate);
     }
 }
