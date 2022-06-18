@@ -1,7 +1,7 @@
 package com.teampingui.controllers;
 
+import com.teampingui.dao.HabitDAO;
 import com.teampingui.models.Habit;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,7 +23,7 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     TextField tfNewHabitName;
 
-    private ObservableList<Habit> mMainCtrlHabitList;
+    private HabitDAO mHabitDAO;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -34,7 +34,7 @@ public class AddHabitDialogController implements Initializable {
 
     @FXML
     void addNewHabit(ActionEvent e) {
-        String name= tfNewHabitName.getText().trim();
+        String name = tfNewHabitName.getText().trim();
         if (name.length() > 15 || name.length() <= 0) {
             // TODO: Add Error Message?
             return;
@@ -43,24 +43,27 @@ public class AddHabitDialogController implements Initializable {
             tfNewHabitName.clear();
         }
 
-        mMainCtrlHabitList.add(new Habit(
-                name,
-                new boolean[]{
-                        cbMonday.isSelected(),
-                        cbTuesday.isSelected(),
-                        cbWednesday.isSelected(),
-                        cbThursday.isSelected(),
-                        cbFriday.isSelected(),
-                        cbSaturday.isSelected(),
-                        cbSunday.isSelected()
-                })
-        );
+        boolean[] havetodos = new boolean[]{
+                cbMonday.isSelected(),
+                cbTuesday.isSelected(),
+                cbWednesday.isSelected(),
+                cbThursday.isSelected(),
+                cbFriday.isSelected(),
+                cbSaturday.isSelected(),
+                cbSunday.isSelected()
+        };
+
+        try {
+            mHabitDAO.insert(new Habit(name, havetodos));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         closeStage(e);
     }
 
-    public void setMainHabitList(ObservableList<Habit> habitObservableList) {
-        this.mMainCtrlHabitList = habitObservableList;
+    public void setHabitDAO(HabitDAO habitDAO) {
+        this.mHabitDAO = habitDAO;
     }
 
     public void closeStage(ActionEvent e) {

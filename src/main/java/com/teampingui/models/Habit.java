@@ -59,6 +59,10 @@ public class Habit {
         return haveTodoDays[day.ordinal()];
     }
 
+    public boolean[] hasToBeDoneList() {
+        return haveTodoDays;
+    }
+
     @Override
     public String toString() {
         return "Habit: " +

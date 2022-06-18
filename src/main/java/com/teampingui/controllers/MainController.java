@@ -200,7 +200,7 @@ public class MainController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
         Parent parent = fxmlLoader.load();
         AddHabitDialogController dialogController = fxmlLoader.getController();
-        dialogController.setMainHabitList(mHabitDAO.getAll());
+        dialogController.setHabitDAO(mHabitDAO);
 
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());

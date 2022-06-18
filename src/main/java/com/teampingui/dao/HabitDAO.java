@@ -1,16 +1,15 @@
 package com.teampingui.dao;
 
+import com.teampingui.exceptions.JournalDaoException;
 import com.teampingui.interfaces.IDao;
+import com.teampingui.models.Day;
 import com.teampingui.models.Habit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,11 +43,6 @@ public class HabitDAO implements IDao<Habit> {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        // TODO
-        //  - read habits from database
-        //  - read checked of habit between two dates (2022-06-13 to 2022-06-19)
-        //     - put also in boolean array (see dummy data)
-
 
         List<Habit> habitEntries = new ArrayList<>();
 
@@ -66,6 +60,7 @@ public class HabitDAO implements IDao<Habit> {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                System.out.println("Loaded: " + resultSet.getString(DB_COLUMN_NAME));
                 // Getting haveTodoDays Boolean Array
                 List<String> splitConcat = Arrays.asList(resultSet.getString("weekdays").split(","));
                 List<Integer> weekdays = splitConcat.stream().map(Integer::parseInt).toList();
@@ -163,8 +158,66 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     @Override
-    public int insert(Habit habit) throws Exception {
-        return 0;
+    public int insert(Habit habit) throws Exception { // TODO: clean this mess up
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int id = 0;
+
+        try {
+            connection = Database.connect();
+            connection.setAutoCommit(false);
+
+            String query = "INSERT INTO habit (name, reps) VALUES (?,?)";
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            int counter = 0;
+            statement.setString(++counter, habit.nameProperty().getValue());
+            statement.setString(++counter, null);
+            statement.executeUpdate();
+            connection.commit();
+            resultSet = statement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt(1);
+
+                query = "INSERT INTO main.haveTodoDays (habit_id, weekday, havetodo) VALUES (?,?,?)";
+                statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                for (Day day : Day.values()) {
+                    if (!habit.hasToBeDone(day))
+                        continue;
+
+                    counter = 0;
+                    statement.setInt(++counter, id);
+                    statement.setInt(++counter, day.ordinal());
+                    statement.setInt(++counter, 1);
+                    statement.executeUpdate();
+                }
+                connection.commit();
+
+                //habit.setID(id); // TODO: ID for Habit?
+                mosHabits.add(habit);
+                System.out.println("Sollte geklappt haben...");
+            }
+        } catch (SQLException exception) {
+            log.error(exception.getMessage());
+            System.out.println("Nope: "+ exception);
+            connection.rollback();
+            // throw new JournalDaoException(exception); // TODO: Exception for HabitDAO?
+        } finally {
+            if (null != resultSet) {
+                resultSet.close();
+            }
+
+            if (null != statement) {
+                statement.close();
+            }
+
+            if (null != connection) {
+                connection.close();
+            }
+        }
+
+        return id;
     }
 
     @Override

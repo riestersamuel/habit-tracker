@@ -16,6 +16,7 @@ module com.TeamPingui {
     exports com.teampingui;
     exports com.teampingui.interfaces;
     exports com.teampingui.exceptions;
+    exports com.teampingui.dao;
     opens com.teampingui.interfaces to javafx.fxml;
     opens com.teampingui.exceptions to javafx.fxml;
 }
