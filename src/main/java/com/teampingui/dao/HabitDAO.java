@@ -233,5 +233,11 @@ public class HabitDAO implements IDao<Habit> {
     public int indexOf(Habit habit) {
         return mosHabits.indexOf(habit);
     }
+
+    public void setIsChecked(Habit habit, Day day, boolean isChecked) {
+        // TODO: Update checkedDays Database
+        // remove if isChecked=false
+        // add    if isChecked=true
+    }
 }
 

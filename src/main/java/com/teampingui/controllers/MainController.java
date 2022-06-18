@@ -299,6 +299,9 @@ public class MainController implements Initializable {
         // System.out.println("Checked: " + isChecked);
         // System.out.println("Day: " + day);
         // System.out.println("Habit: " + habit.repsProperty().getValue());
+        // habit.checkedDays(day); // TODO: use this instead of is Checked..?
+
+        mHabitDAO.setIsChecked(habit, day, isChecked);
 
         if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
