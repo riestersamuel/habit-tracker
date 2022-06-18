@@ -1,6 +1,6 @@
 package com.teampingui.dao;
 
-import com.teampingui.exceptions.JournalDaoException;
+import com.teampingui.exceptions.HabitDaoException;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Day;
 import com.teampingui.models.Habit;
@@ -26,7 +26,7 @@ public class HabitDAO implements IDao<Habit> {
 
     private static final Logger log = LogManager.getLogger(HabitDAO.class);
 
-    private final ObservableList<Habit> mosHabits;
+    public final ObservableList<Habit> mosHabits;
 
     public HabitDAO() {
         mosHabits = FXCollections.observableArrayList();
@@ -202,7 +202,7 @@ public class HabitDAO implements IDao<Habit> {
             log.error(exception.getMessage());
             System.out.println("Nope: "+ exception);
             connection.rollback();
-            // throw new JournalDaoException(exception); // TODO: Exception for HabitDAO?
+            throw new HabitDaoException(exception);
         } finally {
             if (null != resultSet) {
                 resultSet.close();
@@ -227,10 +227,32 @@ public class HabitDAO implements IDao<Habit> {
 
     @Override
     public void delete(Habit habit) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = Database.connect();
+            connection.setAutoCommit(false);
+
+            // Delete Habit from Database
+            String query = "DELETE FROM habit WHERE id = ?;";
+            statement = connection.prepareStatement(query);
+            //TODO: Don't get indexOf (Doesn't Work correct) but get Id of habit
+            statement.setInt(1, indexOf(habit));
+            statement.executeUpdate();
+            connection.commit();
+
+            } catch (SQLException exception) {
+            log.error(exception.getMessage());
+            System.out.println("Nope: "+ exception);
+        }
+
+        // Delete habit from List
         mosHabits.remove(habit);
     }
 
     public int indexOf(Habit habit) {
+        System.out.println(mosHabits.indexOf(habit));
         return mosHabits.indexOf(habit);
     }
 
