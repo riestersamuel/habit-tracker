@@ -235,16 +235,15 @@ public class HabitDAO implements IDao<Habit> {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
-            String query = "DELETE FROM habit WHERE id = ?;";
+            String query = "DELETE FROM habit WHERE name = ?;";
             statement = connection.prepareStatement(query);
-            //TODO: Don't get indexOf (Doesn't Work correct) but get Id of habit
-            statement.setInt(1, indexOf(habit));
+            //TODO: Delete id?
+            statement.setString(1, habit.nameProperty().getValue());
             statement.executeUpdate();
             connection.commit();
 
             } catch (SQLException exception) {
             log.error(exception.getMessage());
-            System.out.println("Nope: "+ exception);
         }
 
         // Delete habit from List
