@@ -189,8 +189,9 @@ public class MainController implements Initializable {
             mJournalDAO.insert(newJournalEntry);
             lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
+            log.info("New entry added");
         } catch (Exception exception) {
-            log.error(exception);
+            log.error("Failed to add new entry: " + exception.getMessage());
         }
 
     }

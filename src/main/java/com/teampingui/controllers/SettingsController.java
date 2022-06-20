@@ -8,12 +8,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
 public class SettingsController implements Initializable {
+
+    private static final Logger log = LogManager.getLogger(SettingsController.class);
 
     @FXML
     Button btnHabits, btnChallenge, btnSettings;
@@ -37,5 +41,6 @@ public class SettingsController implements Initializable {
     protected void saveChanges(ActionEvent e) {
         Settings.setUsername(tfName.getText().trim());
         Settings.setDateFormat(tfDateFormat.getText().trim());
+        log.info("Settings saved");
     }
 }

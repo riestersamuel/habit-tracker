@@ -1,2 +1,8 @@
 JavaFX Application Thread INFO  dao.HabitDAO - Habits were loaded successfully.
-JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:31:57.336582: Application started
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:51:42.552812: Replaced current scene content with Main.fxml
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:51:44.782138: Application started
+JavaFX Application Thread INFO  controllers.MainController - New entry added
+JavaFX Application Thread INFO  dao.HabitDAO - Habit was inserted successfully into the database.
+JavaFX Application Thread INFO  dao.HabitDAO - Habit was deleted successfully from the database.
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:52:17.114630: Replaced current scene content with Settings.fxml
+JavaFX Application Thread INFO  controllers.SettingsController - Settings saved
