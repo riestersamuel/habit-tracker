@@ -49,11 +49,11 @@ public class JournalDAO implements IDao<JournalEntryItem> {
                         resultSet.getString(DB_COLUMN_DATE),
                         resultSet.getString(DB_COLUMN_ENTRY)
                 );
-                //log.debug("Loaded JournalEntry: " + journalEntry);
+                log.debug("Loaded JournalEntry: " + journalEntry);
                 journalEntries.add(journalEntry);
             }
         } catch (SQLException exception) {
-            log.error(exception.getMessage());
+            log.error("An error occured while reading journal entries from database: " + exception.getMessage());
             connection.close();
         } finally {
             if (null != statement) {
@@ -101,7 +101,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
                 mosJournalEntries.add(journalEntry);
             }
         } catch (SQLException exception) {
-            log.error(exception.getMessage());
+            log.error("An error occured while inserting journal entry into database: " + exception.getMessage());
             connection.rollback();
             throw new JournalDaoException(exception);
         } finally {
@@ -125,6 +125,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
     public void update(int index, JournalEntryItem journalEntryItem) {
         mosJournalEntries.set(index, journalEntryItem);
         // TODO: Database
+
     }
 
     @Override

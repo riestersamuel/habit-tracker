@@ -73,9 +73,9 @@ public class HabitDAO implements IDao<Habit> {
                         haveTodoDays)
                 );
             }
+            log.info("Habits were loaded successfully.");
         } catch (SQLException e) {
-            log.info("Habits couldn't be loaded. Please try again!");
-            log.error(LocalDateTime.now() + ": could not load habits from database." + e);
+            log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
             mosHabits.clear();
         } finally {
             if (null != resultSet) {
@@ -127,8 +127,7 @@ public class HabitDAO implements IDao<Habit> {
                 mosHabits.get(resultSet.getInt("id") - 1).setCheckedDays(doneDays); // TODO: get habit by DB ID!!! otherwise gets buggy with deleted habits)
             }
         } catch (SQLException e) {
-            log.info("Habits couldn't be loaded. Please try again!");
-            log.error(LocalDateTime.now() + ": could not load habits from database." + e);
+            log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
             //mosHabits.clear();
         } finally {
             if (null != resultSet) {
@@ -196,11 +195,10 @@ public class HabitDAO implements IDao<Habit> {
 
                 //habit.setID(id); // TODO: ID for Habit?
                 mosHabits.add(habit);
-                System.out.println("Sollte geklappt haben...");
+                log.info("Habit was inserted successfully into the database.");
             }
         } catch (SQLException exception) {
-            log.error(exception.getMessage());
-            System.out.println("Nope: "+ exception);
+            log.error("An error occured while inserting a habit into the database." + exception.getMessage());
             connection.rollback();
             throw new HabitDaoException(exception);
         } finally {
@@ -241,9 +239,9 @@ public class HabitDAO implements IDao<Habit> {
             statement.setString(1, habit.nameProperty().getValue());
             statement.executeUpdate();
             connection.commit();
-
+            log.info("Habit was deleted successfully from the database.");
             } catch (SQLException exception) {
-            log.error(exception.getMessage());
+            log.error("An error occured while deleting a habit from the database." + exception.getMessage());
         }
 
         // Delete habit from List

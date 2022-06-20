@@ -43,7 +43,8 @@ public class Main extends Application {
                 primaryStage.show();
                 log.info(LocalDateTime.now() + ": Application started");
             } catch (Exception ex) {
-                log.error("Failed to show the primary stage (" + ex + ").");
+                log.fatal("Failed to show the primary stage (" + ex.getMessage() + "). Shutting down the application.");
+                System.exit(1);
             }
         } else {
             log.error(LocalDateTime.now() + ": Database could not be loaded");
@@ -54,7 +55,7 @@ public class Main extends Application {
         try {
             replaceSceneContent("Main.fxml");
         } catch (Exception ex) {
-            log.error("Failed to replace the scene content with the main page (" + ex + ").");
+            log.error("Failed to replace the scene content with the main page (" + ex.getMessage() + ").");
         }
     }
 
@@ -62,12 +63,11 @@ public class Main extends Application {
         try {
             replaceSceneContent("Settings.fxml");
         } catch (Exception ex) {
-            log.error("Failed to show the scene content with the settings (" + ex + ").");
+            log.error("Failed to show the scene content with the settings (" + ex.getMessage() + ").");
         }
     }
 
     private void replaceSceneContent(String fxml) throws Exception {
-        // Was ist Parent für ein Datentyp und was kann/soll er machen?
         FXMLLoader lloader = new FXMLLoader();
         lloader.setLocation(getClass().getResource("/fxml/" + fxml));
         Parent page = lloader.load();
@@ -81,6 +81,7 @@ public class Main extends Application {
             stage.getScene().setRoot(page);
         }
         stage.sizeToScene();
+        log.info(LocalDateTime.now() + ": Replaced current scene content with " + fxml);
     }
 
     public void sceneSwitch(ActionEvent e, Button btnHabits, Button btnChallenge, Button btnSettings) {

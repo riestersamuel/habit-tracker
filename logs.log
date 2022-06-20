@@ -1,1 +1,2 @@
-JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:24:10.640187: Application started
+JavaFX Application Thread INFO  dao.HabitDAO - Habits were loaded successfully.
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:31:57.336582: Application started
