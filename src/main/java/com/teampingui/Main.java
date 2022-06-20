@@ -41,6 +41,7 @@ public class Main extends Application {
                 stage = primaryStage;
                 gotoMain();
                 primaryStage.show();
+                log.info(LocalDateTime.now() + ": Application started");
             } catch (Exception ex) {
                 log.error("Failed to show the primary stage (" + ex + ").");
             }
