@@ -1,8 +1,6 @@
+JavaFX Application Thread DEBUG dao.JournalDAO - Loaded JournalEntry: JournalEntryItem: mDate='16.06.2022' - mContent='Started a software project today. I am excited for what it turns out to become.'
+JavaFX Application Thread DEBUG dao.JournalDAO - Loaded JournalEntry: JournalEntryItem: mDate='15.06.2022' - mContent='I did not feel so good today. Either way I managed to stay on track with my excercise habit and therefore I am proud of myself!'
+JavaFX Application Thread DEBUG dao.JournalDAO - Loaded JournalEntry: JournalEntryItem: mDate='14.06.2022' - mContent='Today was a nice day. I learned that self-discipline is the key to building great habits and therefore a great life.'
 JavaFX Application Thread INFO  dao.HabitDAO - Habits were loaded successfully.
-JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:51:42.552812: Replaced current scene content with Main.fxml
-JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:51:44.782138: Application started
-JavaFX Application Thread INFO  controllers.MainController - New entry added
-JavaFX Application Thread INFO  dao.HabitDAO - Habit was inserted successfully into the database.
-JavaFX Application Thread INFO  dao.HabitDAO - Habit was deleted successfully from the database.
-JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T11:52:17.114630: Replaced current scene content with Settings.fxml
-JavaFX Application Thread INFO  controllers.SettingsController - Settings saved
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T13:59:17.609867162: Replaced current scene content with Main.fxml
+JavaFX Application Thread INFO  teampingui.Main - 2022-06-20T13:59:18.010267083: Application started
