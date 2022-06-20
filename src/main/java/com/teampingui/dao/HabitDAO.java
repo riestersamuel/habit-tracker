@@ -26,7 +26,7 @@ public class HabitDAO implements IDao<Habit> {
 
     private static final Logger log = LogManager.getLogger(HabitDAO.class);
 
-    public final ObservableList<Habit> mosHabits;
+    private final ObservableList<Habit> mosHabits;
 
     public HabitDAO() {
         mosHabits = FXCollections.observableArrayList();

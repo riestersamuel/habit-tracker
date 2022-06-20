@@ -21,7 +21,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
 
     private static final Logger log = LogManager.getLogger(JournalDAO.class);
 
-    public final ObservableList<JournalEntryItem> mosJournalEntries;
+    private final ObservableList<JournalEntryItem> mosJournalEntries;
 
     public JournalDAO() {
         mosJournalEntries = FXCollections.observableArrayList();
