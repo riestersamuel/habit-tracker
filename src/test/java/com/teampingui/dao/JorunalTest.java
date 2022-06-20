@@ -1,18 +1,14 @@
-package mainpackage;
+package com.teampingui.dao;
 
-import com.teampingui.dao.Database;
-import com.teampingui.dao.JournalDAO;
 import com.teampingui.exceptions.JournalDaoException;
+import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntryItem;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class JournalTest extends Database {
-
+class JorunalTest {
     @Test
     public void testInsertJournalEntry() {
         //TODO: Check if that's correct testing method
@@ -28,7 +24,7 @@ public class JournalTest extends Database {
         }
 
         // Does the list of entries contain the new entry?
-        Assumptions.assumeTrue(journalDAO.mosJournalEntries.contains(journalEntry));
+        //Assumptions.assumeTrue(journalDAO.mosJournalEntries.contains(journalEntry)); // TODO: Dont change access modifier because of unit test!
 
         // Remove last entry from list and database
         //TODO: After implemeting the delete method, check or manage that the new entry is also removed from the database
