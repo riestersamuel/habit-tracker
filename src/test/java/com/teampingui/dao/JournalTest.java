@@ -1,14 +1,12 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
-import com.teampingui.models.Habit;
 import com.teampingui.models.JournalEntryItem;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-class JorunalTest {
+class JournalTest {
     @Test
     public void testInsertJournalEntry() {
         //TODO: Check if that's correct testing method
