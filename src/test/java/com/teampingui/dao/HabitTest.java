@@ -11,29 +11,7 @@ class HabitTest {
     Habit habit = new Habit("Test", new boolean[]{true, false, true, true, true, false, false});
 
     @Test
-    public void testInsertHabitEntry() {
-        //TODO: Check if that's correct testing method
-        try {
-            habitDAO.insert(habit);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @After
-    public void testInsertHabitEntry_after() {
-        // Does the list of entries contain the new entry?
-        //Assumptions.assumeTrue(habitDAO.mosHabits.contains(habit)); // TODO: Dont change access modifier because of unit test!
-        Assumptions.assumeTrue(habitDAO.getAll().contains(habit));
-
-        // Remove last entry from list and database
-        habitDAO.delete(habit);
-    }
-
-    @Before
-    //TODO: Check why this method is not executed
-    public void testRemoveHabitEntry_before() {
-        System.out.println("HIER BIN ICH");
+    public void testRemoveHabitEntry() {
         // First we need to add a new habit
         try {
             habitDAO.insert(habit);
@@ -43,10 +21,6 @@ class HabitTest {
 
         // See if the habit is now in the list
         System.out.println(habitDAO.getAll());
-    }
-
-    @Test
-    public void testRemoveHabitEntry() {
         // Remove last entry from list and database
         habitDAO.delete(habit);
 
@@ -55,4 +29,19 @@ class HabitTest {
         Assumptions.assumeFalse(habitDAO.getAll().contains(habit));
     }
 
+    @Test
+    public void testInsertHabitEntry() {
+        //TODO: Check if that's correct testing method
+        try {
+            habitDAO.insert(habit);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        // Does the list of entries contain the new entry?
+        //Assumptions.assumeTrue(habitDAO.mosHabits.contains(habit)); // TODO: Dont change access modifier because of unit test!
+        Assumptions.assumeTrue(habitDAO.getAll().contains(habit));
+
+        // Remove last entry from list and database
+        habitDAO.delete(habit);
+    }
 }
