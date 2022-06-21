@@ -35,6 +35,14 @@ public class Habit {
         this.reps = new SimpleIntegerProperty(reps);
     }
 
+    public void setDB_ID(final int ID) {
+        mDB_ID = ID;
+    }
+
+    public int getDB_ID() {
+        return mDB_ID;
+    }
+
     public void setCheckedDays(boolean[] checkedDays) {
         IntStream.range(0, checkedDays.length).forEach(i -> this.checkedDays[i].set(checkedDays[i]));
     }

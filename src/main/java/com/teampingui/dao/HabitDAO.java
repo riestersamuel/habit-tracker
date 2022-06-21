@@ -68,7 +68,7 @@ public class HabitDAO implements IDao<Habit> {
                 weekdays.forEach(i -> haveTodoDays[i] = true);
 
                 habitEntries.add(new Habit(
-
+                        resultSet.getInt("id"),
                         resultSet.getString(DB_COLUMN_NAME),
                         haveTodoDays)
                 );
@@ -193,7 +193,7 @@ public class HabitDAO implements IDao<Habit> {
                 }
                 connection.commit();
 
-                //habit.setID(id); // TODO: ID for Habit?
+                habit.setDB_ID(id);
                 mosHabits.add(habit);
                 log.info("Habit was inserted successfully into the database.");
             }
@@ -233,10 +233,10 @@ public class HabitDAO implements IDao<Habit> {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
-            String query = "DELETE FROM habit WHERE name = ?;";
+            String query = "DELETE FROM habit WHERE id=?;";
             statement = connection.prepareStatement(query);
             //TODO: Delete id?
-            statement.setString(1, habit.nameProperty().getValue());
+            statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
             connection.commit();
             log.info("Habit was deleted successfully from the database.");
