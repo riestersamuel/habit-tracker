@@ -2,6 +2,7 @@ package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
 import com.teampingui.models.JournalEntryItem;
+import org.junit.After;
 import org.junit.jupiter.api.*;
 
 import java.sql.SQLException;
