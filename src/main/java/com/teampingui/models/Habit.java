@@ -1,5 +1,6 @@
 package com.teampingui.models;
 
+import com.teampingui.exceptions.NotInDatabaseException;
 import javafx.beans.property.*;
 
 import java.util.Arrays;
@@ -39,7 +40,10 @@ public class Habit {
         mDB_ID = ID;
     }
 
-    public int getDB_ID() {
+    public int getDB_ID() throws NotInDatabaseException{
+        if (mDB_ID == -1) {
+            throw new NotInDatabaseException("Habit is not connected to database");
+        }
         return mDB_ID;
     }
 

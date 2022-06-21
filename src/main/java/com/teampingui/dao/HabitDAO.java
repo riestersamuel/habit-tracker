@@ -1,6 +1,7 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.HabitDaoException;
+import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Day;
 import com.teampingui.models.Habit;
@@ -235,13 +236,14 @@ public class HabitDAO implements IDao<Habit> {
             // Delete Habit from Database
             String query = "DELETE FROM habit WHERE id=?;";
             statement = connection.prepareStatement(query);
-            //TODO: Delete id?
             statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
             connection.commit();
             log.info("Habit was successfully deleted from the database.");
             } catch (SQLException exception) {
             log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
+        } catch (NotInDatabaseException notInDatabaseException) {
+            log.warn("Habit is not linked to a database entry", notInDatabaseException);
         }
 
         // Delete habit from List
