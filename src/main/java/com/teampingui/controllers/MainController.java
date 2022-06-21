@@ -316,7 +316,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void showError(String msg) { // TODO: exclude?
+    public void showError(String msg) { // TODO: exclude?
         vbErrorContainer.setVisible(true);
         lErrorMsg.setText(msg);
 
