@@ -10,11 +10,6 @@ class JournalTest {
     JournalDAO journalDAO = new JournalDAO();
     JournalEntryItem journalEntry = new JournalEntryItem("01.01.2020", "This text came from JournalTest.java");
 
-    @BeforeEach
-    public void setUp() {
-        Database.connect();
-    }
-
     @Test
     public void testInsertJournalEntry() {
         //TODO: Check if that's correct testing method
