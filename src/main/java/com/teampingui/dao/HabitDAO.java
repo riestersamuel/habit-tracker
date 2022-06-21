@@ -256,14 +256,8 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     public void setIsChecked(Habit habit, LocalDate date, boolean isChecked) {
-        // TODO: Update checkedDays Database
-        // remove if isChecked=false
-        // add    if isChecked=true
-
-
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
 
         String checkDate = date.toString();
 
@@ -271,25 +265,23 @@ public class HabitDAO implements IDao<Habit> {
             connection = Database.connect();
             connection.setAutoCommit(false);
 
-            // Delete Habit from Database
-            String query = "SELECT * FROM checkedDays WHERE habit_id =(?) AND entry_date = date('" + checkDate + "');";
+            String query = "";
+
+            if (isChecked) {
+                query = "INSERT INTO checkedDays (habit_id, entry_date, done) VALUES (?, date('" + checkDate + "'), 1);";
+            } else {
+                query = "DELETE FROM checkedDays WHERE habit_id =? AND entry_date = date('" + checkDate + "');";
+            }
+
             statement = connection.prepareStatement(query);
             statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-
-            }
-
-
-
             connection.commit();
 
 
             log.info("Habit checks were successfully updated from the database.");
         } catch (SQLException exception) {
-            log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
+            log.error("An error occurred while loading checkedDays from the database." + exception.getMessage());
         } catch (NotInDatabaseException notInDatabaseException) {
             log.warn("Habit is not linked to a database entry", notInDatabaseException);
         }
