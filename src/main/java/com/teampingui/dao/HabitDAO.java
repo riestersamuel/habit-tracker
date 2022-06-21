@@ -239,9 +239,9 @@ public class HabitDAO implements IDao<Habit> {
             statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
             connection.commit();
-            log.info("Habit was deleted successfully from the database.");
+            log.info("Habit was successfully deleted from the database.");
             } catch (SQLException exception) {
-            log.error("An error occured while deleting a habit from the database." + exception.getMessage());
+            log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
         }
 
         // Delete habit from List
