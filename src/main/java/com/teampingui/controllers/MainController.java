@@ -333,15 +333,12 @@ public class MainController implements Initializable {
         );
         mTimeline.playFromStart();
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(ERROR_DIALOG_TIME * 1000L);
-                    Platform.runLater(() -> vbErrorContainer.setVisible(false));
-                } catch (InterruptedException e) {
-                    log.debug("Interrupted");
-                }
+        Runnable runnable = () -> {
+            try {
+                Thread.sleep(ERROR_DIALOG_TIME * 1000L);
+                Platform.runLater(() -> vbErrorContainer.setVisible(false));
+            } catch (InterruptedException e) {
+                log.debug("Interrupted");
             }
         };
 
