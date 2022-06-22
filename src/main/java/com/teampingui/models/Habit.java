@@ -14,7 +14,7 @@ public class Habit {
     private final boolean[] haveTodoDays = new boolean[7];
 
     //For database
-    private int mDB_ID = -1;
+    private static int mDB_ID = -1;
 
     public Habit(String name, boolean[] haveTodoDays) {
         init(name, haveTodoDays);
@@ -36,11 +36,12 @@ public class Habit {
         this.reps = new SimpleIntegerProperty(reps);
     }
 
-    public void setDB_ID(final int ID) {
+    public static void setDB_ID(final int ID) {
         mDB_ID = ID;
+        if(ID < 0) {throw new IllegalArgumentException();};
     }
 
-    public int getDB_ID() throws NotInDatabaseException{
+    public static int getDB_ID() throws NotInDatabaseException{
         if (mDB_ID == -1) {
             throw new NotInDatabaseException("Habit is not connected to database");
         }
