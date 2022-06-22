@@ -13,7 +13,6 @@ class JournalTest {
 
     @Test
     public void testInsertJournalEntry() {
-        //TODO: Check if that's correct testing method
         try {
             journalDAO.insert(journalEntry);
         } catch (SQLException e) {
@@ -27,11 +26,12 @@ class JournalTest {
     public void tearDown() {
 
         // Does the list of entries contain the new entry?
-        //Assumptions.assumeTrue(journalDAO.mosJournalEntries.contains(journalEntry)); // TODO: Dont change access modifier because of unit test!
         Assumptions.assumeTrue(journalDAO.getAll().contains(journalEntry));
+        System.out.println(journalDAO.getAll());
 
         // Remove last entry from list and database
-        //TODO: After implemeting the delete method, check or manage that the new entry is also removed from the database
+        // TODO: After implemeting the delete method, check or manage that the new entry is also removed from the database
         journalDAO.delete(journalEntry);
+        System.out.println(journalDAO.getAll());
     }
 }

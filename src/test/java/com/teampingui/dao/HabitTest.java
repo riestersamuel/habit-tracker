@@ -31,14 +31,12 @@ class HabitTest {
 
     @Test
     public void testInsertHabitEntry() {
-        //TODO: Check if that's correct testing method
         try {
             habitDAO.insert(habit);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         // Does the list of entries contain the new entry?
-        //Assumptions.assumeTrue(habitDAO.mosHabits.contains(habit)); // TODO: Dont change access modifier because of unit test!
         Assumptions.assumeTrue(habitDAO.getAll().contains(habit));
 
         // Remove last entry from list and database
