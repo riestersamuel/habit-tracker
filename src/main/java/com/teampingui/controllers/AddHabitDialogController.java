@@ -57,7 +57,7 @@ public class AddHabitDialogController implements Initializable {
     void addNewHabit(ActionEvent e) {
         String name = tfNewHabitName.getText().trim();
         if (name.length() > 15 || name.length() <= 0) {
-            showError("Inputfield can not be empty!");// TODO: Add Error Message?
+            showError("Inputfield can not be empty!");
             log.warn("Inputfield can not be empty!");
             return;
         }
