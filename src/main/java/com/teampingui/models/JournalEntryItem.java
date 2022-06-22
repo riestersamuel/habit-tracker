@@ -43,6 +43,9 @@ public class JournalEntryItem {
 
     public void setID(int id) {
         this.mID = id;
+        if (id < 0){
+            throw new IllegalArgumentException();
+        }
     }
 
     public int getID() throws NotInDatabaseException {
