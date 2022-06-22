@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class NegativeHabitTest {
     @Test(expected = RuntimeException.class)
-    public void testInsertJournalEntry() {
+    public void testHabitID() {
         try {
             Habit.setDB_ID(-10);
         } catch (IllegalArgumentException e) {
