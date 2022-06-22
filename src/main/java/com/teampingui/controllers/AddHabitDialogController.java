@@ -56,10 +56,12 @@ public class AddHabitDialogController implements Initializable {
         String name = tfNewHabitName.getText().trim();
         if (name.length() > 15 || name.length() <= 0) {
             showError("Inputfield can not be empty!");// TODO: Add Error Message?
+            log.warn("Inputfield can not be empty!");
             return;
         }
         else if(!(cbMonday.isSelected()||cbTuesday.isSelected()||cbWednesday.isSelected()||cbThursday.isSelected()||cbFriday.isSelected()||cbSaturday.isSelected()||cbSunday.isSelected())){
             showError("You have to select at least 1 day");
+            log.warn("You have to select at least 1 day");
             tfNewHabitName.clear();
             return;
         }else {
