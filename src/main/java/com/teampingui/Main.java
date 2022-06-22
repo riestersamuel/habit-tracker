@@ -77,6 +77,7 @@ public class Main extends Application {
             //Importing our own css sheet
             scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
             stage.setScene(scene);
+            stage.setResizable(false);
         } else {
             stage.getScene().setRoot(page);
         }

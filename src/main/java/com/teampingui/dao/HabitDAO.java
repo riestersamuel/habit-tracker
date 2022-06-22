@@ -256,13 +256,11 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     public void setIsChecked(Habit habit, LocalDate date, boolean isChecked) {
-        Connection connection = null;
         PreparedStatement statement = null;
 
         String checkDate = date.toString();
 
-        try {
-            connection = Database.connect();
+        try(Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
 
             String query = "";
