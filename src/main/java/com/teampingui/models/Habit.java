@@ -37,8 +37,11 @@ public class Habit {
     }
 
     public static void setDB_ID(final int ID) {
-        mDB_ID = ID;
-        if(ID < 0) {throw new IllegalArgumentException();};
+        if(ID < 0) {
+            throw new IllegalArgumentException();
+        }else{
+            mDB_ID = ID;
+        }
     }
 
     public static int getDB_ID() throws NotInDatabaseException{
