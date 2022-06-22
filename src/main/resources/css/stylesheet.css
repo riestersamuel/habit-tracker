@@ -74,7 +74,7 @@
 }
 
 #vbErrorContainer {
-    -fx-background-color: rgba(255, 0, 0, 0.5);
+    -fx-background-color: rgba(255, 0, 0, 1);
     -fx-border-color: red;
     -fx-border-width: 2;
     -fx-text-fill: white;
@@ -131,6 +131,11 @@
 
 .table-row-cell:selected {
     -fx-background-color: #73807690;
+}
+
+#lErrorMsgHabit {
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
 }
 
 /*

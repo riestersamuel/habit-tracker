@@ -26,7 +26,7 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday; // TODO: instead of adding each checkbox, just add the container and access checkboxes through .getItems()
     @FXML
-    Label lAddHabitHeading, lErrorMsg;
+    Label lAddHabitHeading, lErrorMsgHabit;
     @FXML
     TextField tfNewHabitName;
     @FXML
@@ -46,6 +46,8 @@ public class AddHabitDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Progressbar
+        pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
         // Textformatter
         int MAX_CHARS = 15;
         tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
@@ -93,7 +95,7 @@ public class AddHabitDialogController implements Initializable {
 
     public void showError(String msg) {
         vbErrorContainer.setVisible(true);
-        lErrorMsg.setText(msg);
+        lErrorMsgHabit.setText(msg);
 
         if (mTimeline != null) {
             mTimeline.stop();
