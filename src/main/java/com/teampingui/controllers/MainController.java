@@ -370,9 +370,10 @@ public class MainController implements Initializable {
             }
             updateProgressBar();
             displayTableDate();
+            log.info("Changed week successfully!");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(LocalDateTime.now() + ":Failed to change week" + e.getMessage());
         }
     }
 
