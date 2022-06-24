@@ -35,7 +35,7 @@ public class HabitDAO implements IDao<Habit> {
             mosHabits.addAll(read());
             loadCheckedData(LocalDate.now());
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
         }
 
     }
@@ -61,7 +61,7 @@ public class HabitDAO implements IDao<Habit> {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                System.out.println("Loaded: " + resultSet.getString(DB_COLUMN_NAME));
+                log.info("Loaded: " + resultSet.getString(DB_COLUMN_NAME));
                 // Getting haveTodoDays Boolean Array
                 List<String> splitConcat = Arrays.asList(resultSet.getString("weekdays").split(","));
                 List<Integer> weekdays = splitConcat.stream().map(Integer::parseInt).toList();
