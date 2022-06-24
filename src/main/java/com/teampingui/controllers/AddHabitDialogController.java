@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
@@ -69,6 +70,7 @@ public class AddHabitDialogController implements Initializable {
         }else {
             name = tfNewHabitName.getText().trim();
             tfNewHabitName.clear();
+            log.info("New habit was added successfully.");
         }
 
         boolean[] havetodos = new boolean[]{
@@ -84,14 +86,12 @@ public class AddHabitDialogController implements Initializable {
         try {
             mHabitDAO.insert(new Habit(name, havetodos));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error(LocalDateTime.now() + ": Failed to insert habit!" + ex.getMessage());
         }
         closeStage(e);
     }
 
-    public void setHabitDAO(HabitDAO habitDAO) {
-        this.mHabitDAO = habitDAO;
-    }
+    public void setHabitDAO(HabitDAO habitDAO) {this.mHabitDAO = habitDAO;}
 
     public void showError(String msg) {
         vbErrorContainer.setVisible(true);
