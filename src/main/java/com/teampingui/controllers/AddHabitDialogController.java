@@ -117,7 +117,7 @@ public class AddHabitDialogController implements Initializable {
                     Thread.sleep(ERROR_DIALOG_TIME * 1000L);
                     Platform.runLater(() -> vbErrorContainer.setVisible(false));
                 } catch (InterruptedException e) {
-                    log.debug("Interrupted");
+                    log.debug("Interrupted: " + e.getMessage());
                 }
             }
         };

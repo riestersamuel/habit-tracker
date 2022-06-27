@@ -32,7 +32,7 @@ public class Database {
             log.info("Successfully started SQLite Drivers.");
             return true;
         } catch (ClassNotFoundException | SQLException classNotFoundException) {
-            log.error(LocalDateTime.now() + ": Could not start SQLite Drivers");
+            log.error(LocalDateTime.now() + ": Could not start SQLite Drivers." + classNotFoundException.getMessage());
             return false;
         }
     }
@@ -42,7 +42,7 @@ public class Database {
             log.info("Successfully connected to database.");
             return connection != null;
         } catch (SQLException e) {
-            log.error(LocalDateTime.now() + ": Could not connect to database");
+            log.error(LocalDateTime.now() + ": Could not connect to database. " + e.getMessage());
             return false;
         }
     }
@@ -58,7 +58,7 @@ public class Database {
             }
             log.info("Successfully checked tables in database.");
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not find tables in database");
+            log.error(LocalDateTime.now() + ": Could not find tables in database. " + exception.getMessage());
             return false;
         }
         return false;
@@ -71,7 +71,7 @@ public class Database {
             connection = DriverManager.getConnection(dbPrefix + LOCATION);
             log.info("Successfully connected to SQLite DB at " + LOCATION);
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + LOCATION);
+            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + LOCATION + ". " + exception.getMessage());
             return null;
         }
         return connection;
