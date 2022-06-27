@@ -27,8 +27,6 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday; // TODO: instead of adding each checkbox, just add the container and access checkboxes through .getItems()
     @FXML
-    VBox vDays;
-    @FXML
     Label lAddHabitHeading, lErrorMsgHabit;
     @FXML
     TextField tfNewHabitName;
@@ -38,7 +36,7 @@ public class AddHabitDialogController implements Initializable {
     ProgressBar pbErrorDuration;
     private static final Integer ERROR_DIALOG_TIME = 3;
     private Timeline mTimeline;
-    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
+    private IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
 
     private Thread mThreadErrorMsg;
 
@@ -112,12 +110,15 @@ public class AddHabitDialogController implements Initializable {
         );
         mTimeline.playFromStart();
 
-        Runnable runnable = () -> {
-            try {
-                Thread.sleep(ERROR_DIALOG_TIME * 1000L);
-                Platform.runLater(() -> vbErrorContainer.setVisible(false));
-            } catch (InterruptedException e) {
-                log.debug("Interrupted");
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(ERROR_DIALOG_TIME * 1000L);
+                    Platform.runLater(() -> vbErrorContainer.setVisible(false));
+                } catch (InterruptedException e) {
+                    log.debug("Interrupted: " + e.getMessage());
+                }
             }
         };
 

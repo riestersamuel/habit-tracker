@@ -321,12 +321,13 @@ public class MainController implements Initializable {
                 Thread.sleep(ERROR_DIALOG_TIME * 1000L);
                 Platform.runLater(() -> vbErrorContainer.setVisible(false));
             } catch (InterruptedException e) {
-                log.debug("Interrupted");
+                log.debug("Interrupted: " + e.getMessage());
             }
         };
 
         if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
             mThreadErrorMsg.interrupt();
+            //TODO: Add logging here if needed
         }
 
         mThreadErrorMsg = new Thread(runnable);
