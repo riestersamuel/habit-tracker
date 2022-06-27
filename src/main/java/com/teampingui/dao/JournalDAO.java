@@ -28,10 +28,10 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         mosJournalEntries = FXCollections.observableArrayList();
         try {
             mosJournalEntries.addAll(read());
-            log.info("Successfully load journal enries from database.");
+            log.info("Successfully load journal entries from database.");
         } catch (SQLException e) {
             e.printStackTrace();
-            log.error(LocalDateTime.now() + ": could not load journal entries from database." + e.getMessage());
+            log.error("Could not load journal entries from database." + e.getMessage());
 
         }
     }
@@ -104,7 +104,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
                 journalEntry.setID(id);
                 mosJournalEntries.add(journalEntry);
             }
-            log.info("Successfully insert journal entry into database.");
+            log.info("Successfully insert journal entry '" + journalEntry + "' into database.");
         } catch (SQLException exception) {
             log.error("An error occured while inserting journal entry into database: " + exception.getMessage());
             connection.rollback();

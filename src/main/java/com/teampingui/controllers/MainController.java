@@ -186,7 +186,7 @@ public class MainController implements Initializable {
             mJournalDAO.insert(newJournalEntry);
             lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
-            log.info("New entry added");
+            log.info("New entry added: "  + newJournalEntry);
         } catch (Exception exception) {
             log.error("Failed to add new entry: " + exception.getMessage());
         }
@@ -358,7 +358,7 @@ public class MainController implements Initializable {
             log.info("Changed week successfully.");
 
         } catch (SQLException e) {
-            log.error(LocalDateTime.now() + ": Failed to change week!" + e.getMessage());
+            log.error("Failed to change week!" + e.getMessage());
         }
     }
 

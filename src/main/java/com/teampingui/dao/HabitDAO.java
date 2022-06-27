@@ -130,7 +130,7 @@ public class HabitDAO implements IDao<Habit> {
                 log.info("Successfully loaded habits from database.");
             }
         } catch (SQLException e) {
-            log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
+            log.error("could not load habits from database." + e.getMessage());
             //mosHabits.clear();
         } finally {
             if (null != resultSet) {
@@ -198,7 +198,7 @@ public class HabitDAO implements IDao<Habit> {
 
                 habit.setDB_ID(id);
                 mosHabits.add(habit);
-                log.info("Habit was inserted successfully into the database.");
+                log.info("Habit '" + habit + "' was inserted successfully into the database.");
             }
         } catch (SQLException exception) {
             log.error("An error occured while inserting a habit into the database." + exception.getMessage());
@@ -241,7 +241,7 @@ public class HabitDAO implements IDao<Habit> {
             statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
             connection.commit();
-            log.info("Habit was successfully deleted from the database.");
+            log.info("Habit '" + habit + "' was successfully deleted from the database.");
             } catch (SQLException exception) {
             log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
         } catch (NotInDatabaseException notInDatabaseException) {

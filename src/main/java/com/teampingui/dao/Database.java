@@ -58,7 +58,7 @@ public class Database {
             }
             log.info("Successfully checked tables in database.");
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not find tables in database. " + exception.getMessage());
+            log.error("Could not find tables in database. " + exception.getMessage());
             return false;
         }
         return false;
@@ -69,9 +69,9 @@ public class Database {
         Connection connection;
         try {
             connection = DriverManager.getConnection(dbPrefix + LOCATION);
-            log.info("Successfully connected to SQLite DB at " + LOCATION);
+            log.info("Successfully connected to SQLite DB at " + LOCATION + ".");
         } catch (SQLException exception) {
-            log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + LOCATION + ". " + exception.getMessage());
+            log.error("Could not connect to SQLite DB at " + LOCATION + ". " + exception.getMessage());
             return null;
         }
         return connection;

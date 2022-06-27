@@ -72,7 +72,7 @@ public class AddHabitDialogController implements Initializable {
         }else {
             name = tfNewHabitName.getText().trim();
             tfNewHabitName.clear();
-            log.info("New habit was added successfully.");
+            log.info("New habit '" + name + "' was added successfully.");
         }
 
         boolean[] havetodos = new boolean[]{
@@ -87,9 +87,9 @@ public class AddHabitDialogController implements Initializable {
 
         try {
             mHabitDAO.insert(new Habit(name, havetodos));
-            log.info("Successfully inserted new habit to database.");
+            log.info("Successfully inserted " + name + " to database.");
         } catch (Exception ex) {
-            log.error(LocalDateTime.now() + ": Failed to insert habit!" + ex.getMessage());
+            log.error("Failed to insert habit!" + ex.getMessage());
         }
         closeStage(e);
     }
