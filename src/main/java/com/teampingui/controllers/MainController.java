@@ -132,12 +132,7 @@ public class MainController implements Initializable {
         tvHabits.setEditable(true);
 
         updateProgressBar();
-        mHabitDAO.getAll().addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(ListChangeListener.Change change) {
-                updateProgressBar();
-            }
-        });
+        mHabitDAO.getAll().addListener((ListChangeListener) change -> updateProgressBar());
     }
 
     private void updateProgressBar() {
@@ -226,36 +221,23 @@ public class MainController implements Initializable {
             tvHabits.getColumns().get(8).setPrefWidth(newWidth);
             tvHabits.getColumns().add(0, tcDelete);
 
-            tcDelete.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Habit, Boolean>, ObservableValue<Boolean>>() {
-                @Override
-                public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Habit, Boolean> habitStringCellDataFeatures) {
-                    return new SimpleBooleanProperty(habitStringCellDataFeatures.getValue() != null);
-                }
-            });
-            tcDelete.setCellFactory(new Callback<TableColumn<Habit, Boolean>, TableCell<Habit, Boolean>>() {
-                @Override
-                public TableCell<Habit, Boolean> call(TableColumn<Habit, Boolean> habitStringTableColumn) {
-                    return new ButtonCell(new IButtonClickListener() {
-                        @Override
-                        public void onClick(int index) {
+            tcDelete.setCellValueFactory(habitStringCellDataFeatures -> new SimpleBooleanProperty(habitStringCellDataFeatures.getValue() != null));
+            tcDelete.setCellFactory(habitStringTableColumn -> new ButtonCell(index -> {
 
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
-                            alert.setTitle("Delete Habit");
-                            alert.setContentText("Do you want to delete the Habit '" + tvHabits.getItems().get(index).nameProperty().getValue() + "'?");
-                            ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
-                            ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);
-                            alert.getButtonTypes().setAll(btnYes, btnNo);
-                            alert.showAndWait().ifPresent(type -> {
-                                if (type == btnYes) {
-                                    mHabitDAO.delete(tvHabits.getItems().get(index));
-                                } else {
-                                    alert.close();
-                                }
-                            });
-                        }
-                    });
-                }
-            });
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Delete Habit");
+                alert.setContentText("Do you want to delete the Habit '" + tvHabits.getItems().get(index).nameProperty().getValue() + "'?");
+                ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(btnYes, btnNo);
+                alert.showAndWait().ifPresent(type -> {
+                    if (type == btnYes) {
+                        mHabitDAO.delete(tvHabits.getItems().get(index));
+                    } else {
+                        alert.close();
+                    }
+                });
+            }));
         } else {
             tvHabits.getColumns().remove(0);
             double newWidth = tvHabits.getColumns().get(8).getWidth() + 28;
