@@ -61,7 +61,7 @@
                         <ProgressBar fx:id="pbErrorDuration" prefWidth="1066.0" progress="0.5" />
                     </children>
                 </VBox>
-            <VBox prefHeight="296.0" prefWidth="258.0" spacing="30.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="7" GridPane.valignment="CENTER">
+            <VBox fx:id="weekdays" prefHeight="296.0" prefWidth="258.0" spacing="30.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="7" GridPane.valignment="CENTER">
                <children>
                       <CheckBox fx:id="cbMonday" mnemonicParsing="false" text="Monday" />
                       <CheckBox fx:id="cbTuesday" mnemonicParsing="false" text="Tuesday" />
