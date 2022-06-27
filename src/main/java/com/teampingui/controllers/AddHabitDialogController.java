@@ -85,6 +85,7 @@ public class AddHabitDialogController implements Initializable {
 
         try {
             mHabitDAO.insert(new Habit(name, havetodos));
+            log.info("Successfully inserted new habit to database.");
         } catch (Exception ex) {
             log.error(LocalDateTime.now() + ": Failed to insert habit!" + ex.getMessage());
         }

@@ -29,6 +29,7 @@ public class Database {
         try {
             Class.forName("org.sqlite.JDBC");
             DriverManager.registerDriver(new org.sqlite.JDBC());
+            log.info("Successfully started SQLite Drivers.");
             return true;
         } catch (ClassNotFoundException | SQLException classNotFoundException) {
             log.error(LocalDateTime.now() + ": Could not start SQLite Drivers");
@@ -38,6 +39,7 @@ public class Database {
 
     private static boolean checkConnection() {
         try (Connection connection = connect()) {
+            log.info("Successfully connected to database.");
             return connection != null;
         } catch (SQLException e) {
             log.error(LocalDateTime.now() + ": Could not connect to database");
@@ -54,6 +56,7 @@ public class Database {
             while (rs.next()) {
                 if (rs.getString("tbl_name").equals(REQUIRED_TABLE)) return true;
             }
+            log.info("Successfully checked tables in database.");
         } catch (SQLException exception) {
             log.error(LocalDateTime.now() + ": Could not find tables in database");
             return false;
@@ -66,6 +69,7 @@ public class Database {
         Connection connection;
         try {
             connection = DriverManager.getConnection(dbPrefix + LOCATION);
+            log.info("Successfully connected to SQLite DB at " + LOCATION);
         } catch (SQLException exception) {
             log.error(LocalDateTime.now() + ": Could not connect to SQLite DB at " + LOCATION);
             return null;

@@ -127,7 +127,7 @@ public class HabitDAO implements IDao<Habit> {
                 boolean[] doneDays = new boolean[7];
                 splitConcat.forEach(sDate -> doneDays[LocalDate.parse(sDate).getDayOfWeek().getValue() - 1] = true);
                 mosHabits.get(resultSet.getInt("id") - 1).setCheckedDays(doneDays); // TODO: get habit by DB ID!!! otherwise gets buggy with deleted habits)
-                log.info("Successfully load habits from database.");
+                log.info("Successfully loaded habits from database.");
             }
         } catch (SQLException e) {
             log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
