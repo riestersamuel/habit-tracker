@@ -17,7 +17,7 @@ import java.util.Optional;
 public class JournalDAO implements IDao<JournalEntryItem> {
     private static final String DB_TABLE_NAME = "journal";
     private static final String DB_COLUMN_ID = "id";
-    private static final String DB_COLUMN_DATE = "datum"; // TODO: set table column to "date" instead of "datum"
+    private static final String DB_COLUMN_DATE = "journal_date";
     private static final String DB_COLUMN_ENTRY = "entry";
 
     private static final Logger log = LogManager.getLogger(JournalDAO.class);
@@ -91,7 +91,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         try {
             connection = Database.connect();
             connection.setAutoCommit(false);
-            String query = "INSERT INTO journal(datum, entry) VALUES(?, ?)";
+            String query = "INSERT INTO journal(journal_date, entry) VALUES(?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 0;
             statement.setString(++counter, journalEntry.getDate());
