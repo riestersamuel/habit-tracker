@@ -1,6 +1,7 @@
 package com.teampingui.controllers;
 
 import com.teampingui.dao.HabitDAO;
+import com.teampingui.models.Day;
 import com.teampingui.models.Habit;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -54,6 +55,11 @@ public class AddHabitDialogController implements Initializable {
         // Textformatter
         int MAX_CHARS = 15;
         tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
+
+        for (Day d : Day.values()) {
+            // TODO: Add Checkboxes here
+            // d.getDay() for getting Day name
+        }
     }
 
     @FXML

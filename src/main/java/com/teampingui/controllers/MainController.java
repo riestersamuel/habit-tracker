@@ -3,7 +3,6 @@ package com.teampingui.controllers;
 import com.teampingui.Main;
 import com.teampingui.dao.HabitDAO;
 import com.teampingui.dao.JournalDAO;
-import com.teampingui.interfaces.IButtonClickListener;
 import com.teampingui.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -12,7 +11,6 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +23,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -254,7 +251,7 @@ public class MainController implements Initializable {
         // Columns: days checkboxes
         ArrayList<TableColumn<Habit, Boolean>> alCheckboxes = new ArrayList<>();
         for (final Day day : Day.values()) {
-            TableColumn<Habit, Boolean> tc = new TableColumn<>(day.getDay());
+            TableColumn<Habit, Boolean> tc = new TableColumn<>(day.getShortDay());
             tc.setPrefWidth(60);
             tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
             tc.setCellFactory(checkbox -> new DayCell((isChecked, habit) -> checkboxClicked(isChecked, habit, day), day));

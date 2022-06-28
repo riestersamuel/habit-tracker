@@ -4,13 +4,13 @@ import java.time.DayOfWeek;
 
 public enum Day {
 
-    MONDAY(DayOfWeek.MONDAY,"Mon"),
-    TUESDAY(DayOfWeek.TUESDAY,"Tue"),
-    WEDNESDAY(DayOfWeek.WEDNESDAY,"Wed"),
-    THURSDAY(DayOfWeek.THURSDAY,"Thu"),
-    FRIDAY(DayOfWeek.FRIDAY,"Fri"),
-    SATURDAY(DayOfWeek.SATURDAY,"Sat"),
-    SUNDAY(DayOfWeek.SUNDAY,"Sun");
+    MONDAY(DayOfWeek.MONDAY,"Monday"),
+    TUESDAY(DayOfWeek.TUESDAY,"Tuesday"),
+    WEDNESDAY(DayOfWeek.WEDNESDAY,"Wednesday"),
+    THURSDAY(DayOfWeek.THURSDAY,"Thursday"),
+    FRIDAY(DayOfWeek.FRIDAY,"Friday"),
+    SATURDAY(DayOfWeek.SATURDAY,"Saturday"),
+    SUNDAY(DayOfWeek.SUNDAY,"Sunday");
 
     final DayOfWeek mDayOfWeek;
     final String mDay;
@@ -22,6 +22,10 @@ public enum Day {
 
     public DayOfWeek getDayOfWeek() {
         return mDayOfWeek;
+    }
+
+    public String getShortDay() {
+        return mDay.substring(0,3);
     }
 
     public String getDay() {
