@@ -9,6 +9,8 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,8 +29,8 @@ import java.util.ResourceBundle;
 public class AddHabitDialogController implements Initializable {
     @FXML
     CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday; // TODO: instead of adding each checkbox, just add the container and access checkboxes through .getItems()
-    @FXML
-    VBox weekdays;
+    //@FXML
+    //ListView<CheckBox> lvWeekdays;
     @FXML
     Label lAddHabitHeading, lErrorMsgHabit;
     @FXML
@@ -41,6 +43,8 @@ public class AddHabitDialogController implements Initializable {
     private Timeline mTimeline;
     private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
 
+    private ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
+
     private Thread mThreadErrorMsg;
 
     private static final Logger log = LogManager.getLogger(MainController.class);
@@ -50,16 +54,17 @@ public class AddHabitDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Add Checkboxes
+//        for (Day d : Day.values()) {
+//            checkBoxes.add(new CheckBox(d.getDay()));
+//            lvWeekdays.setItems(checkBoxes);
+//        }
+
         //Progressbar
         pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
         // Textformatter
         int MAX_CHARS = 15;
         tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
-
-        for (Day d : Day.values()) {
-            // TODO: Add Checkboxes here
-            // d.getDay() for getting Day name
-        }
     }
 
     @FXML
