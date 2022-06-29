@@ -136,7 +136,7 @@ public class MainController implements Initializable {
         if (progressDisplay == null)
             return;
 
-        // Set ProgressBar // TODO: rework
+        // Set ProgressBar
         doneCounter = 0;
         haveTodoCounter = 0;
         mHabitDAO.getAll().forEach(h -> {
@@ -297,7 +297,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void showError(String msg) { // TODO: exclude?
+    public void showError(String msg) {
         vbErrorContainer.setVisible(true);
         lErrorMsg.setText(msg);
 
@@ -317,18 +317,20 @@ public class MainController implements Initializable {
             try {
                 Thread.sleep(ERROR_DIALOG_TIME * 1000L);
                 Platform.runLater(() -> vbErrorContainer.setVisible(false));
+                log.info("Thread is working fine.");
             } catch (InterruptedException e) {
-                log.debug("Interrupted: " + e.getMessage());
+                log.debug("The thread was interrupted: " + e.getMessage());
             }
         };
 
         if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
             mThreadErrorMsg.interrupt();
-            //TODO: Add logging here if needed
+            log.debug("The thread was interrupted.");
         }
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
+        //TODO: Thread logging here?
     }
 
     private LocalDate mDate = LocalDate.now();
