@@ -28,9 +28,7 @@ import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
     @FXML
-    CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday; // TODO: instead of adding each checkbox, just add the container and access checkboxes through .getItems()
-    //@FXML
-    //ListView<CheckBox> lvWeekdays;
+    ListView<CheckBox> lvWeekdays;
     @FXML
     Label lAddHabitHeading, lErrorMsgHabit;
     @FXML
@@ -55,13 +53,11 @@ public class AddHabitDialogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Add Checkboxes
-//        for (Day d : Day.values()) {
-//            checkBoxes.add(new CheckBox(d.getDay()));
-//            lvWeekdays.setItems(checkBoxes);
-//        }
+        for (Day d : Day.values()) {
+            checkBoxes.add(new CheckBox(d.getDay()));
+        }
+        lvWeekdays.setItems(checkBoxes);
 
-        //Progressbar
-        pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
         // Textformatter
         int MAX_CHARS = 15;
         tfNewHabitName.setTextFormatter(new TextFormatter<String>(change -> change.getControlNewText().length() <= MAX_CHARS ? change : null));
@@ -75,26 +71,29 @@ public class AddHabitDialogController implements Initializable {
             log.warn("Inputfield can not be empty!");
             return;
         }
-        else if(!(cbMonday.isSelected()||cbTuesday.isSelected()||cbWednesday.isSelected()||cbThursday.isSelected()||cbFriday.isSelected()||cbSaturday.isSelected()||cbSunday.isSelected())){
+
+        boolean someSelected = false;
+        for (CheckBox cb : checkBoxes) {
+            if (cb.isSelected()) {
+                someSelected = true;
+                break;
+            }
+        }
+        if(!someSelected) {
             showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");
             tfNewHabitName.clear();
             return;
-        }else {
-            name = tfNewHabitName.getText().trim();
-            tfNewHabitName.clear();
-            log.info("New habit '" + name + "' was added successfully.");
         }
+        name = tfNewHabitName.getText().trim();
+        tfNewHabitName.clear();
+        log.info("New habit '" + name + "' was added successfully.");
 
-        boolean[] havetodos = new boolean[]{
-                cbMonday.isSelected(),
-                cbTuesday.isSelected(),
-                cbWednesday.isSelected(),
-                cbThursday.isSelected(),
-                cbFriday.isSelected(),
-                cbSaturday.isSelected(),
-                cbSunday.isSelected()
-        };
+
+        boolean[] havetodos = new boolean[7];
+        for (int i = 0; i < havetodos.length; i++) {
+            havetodos[i] = checkBoxes.get(i).isSelected();
+        }
 
         try {
             mHabitDAO.insert(new Habit(name, havetodos));
@@ -148,3 +147,4 @@ public class AddHabitDialogController implements Initializable {
         stage.close();
     }
 }
+
