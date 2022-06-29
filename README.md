@@ -1,6 +1,21 @@
 # General information
+Our project is a combination of a habit tracker and a journal app. The goal of our app is to help people to live better lives. The idea is that by doing simple positive habits every day, life becomes much better in the long run.
+
+When starting the program you’ll see all the main functions. We wanted to create a simple utility app which is easy to use and where the user can see all useful information at a glimpse. On the left you have the “Habit” section, on the right your daily journal. You can add a habit by clicking on the “Add a new Habit” Button. A new Window will pop up, where you can name your new habit and set the days where you want to accomplish the habit. As soon as you click on “OK”, the habit will be added to your main screen. The days where you haven’t accomplished the habit (yet) will be colored red. Accomplished ones will be marked green.
+When you don’t want to remove a habit, just click on the “Remove Habit” button and delete the habit from the table below. To exit the “delete mode”, click on the “Remove Habit” button again. To see your progress over the last weeks, click on the arrows above the habit - table and skip through the weeks.
+On the right side of the screen is the “Daily Journal ''. Here you can write a short paragraph (no more than 200 Words) to keep track of your thoughts or things you’ve done over the day.
 
 # Installing and starting the program
+In order to run the program you need Maven and Java installed on your computer. You can find Java on [this page](https://www.oracle.com/java/technologies/javase-jre-downloads.html).
+
+## Compiling the program
+Creating the .jar file:
+1) Move to the root folder of the project
+2) Create the jar package: ```mvn package```
+3) The jar file can be found in the subfolder ```target/```
+
+## Starting the program
+After successful compiling you can run ```java -jar target/AddressDatabase-1.0.jar```.
 
 # Instructions
 ## How to track your habits
@@ -18,7 +33,7 @@ In order to add a new entry, you need to enter some text into the text area and 
 In order to change the displayed name, you can navigate to the settings menu and enter your name there. After that you can hit the "Save changes" button and return to the main page.
 
 # Developers
-- Beutel, Julius () 
-- Bestvater, Tom ()
+- Beutel, Julius (jb266) 
+- Bestvater, Tom (tb173)
 - Riester, Samuel (sr185)
-- Singer, Steffen ()
+- Singer, Steffen (ss546)
