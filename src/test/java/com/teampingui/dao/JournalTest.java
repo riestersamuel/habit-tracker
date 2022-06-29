@@ -30,7 +30,6 @@ class JournalTest {
         System.out.println(journalDAO.getAll());
 
         // Remove last entry from list and database
-        // TODO: After implemeting the delete method, check or manage that the new entry is also removed from the database
         journalDAO.delete(journalEntry);
         System.out.println(journalDAO.getAll());
     }
