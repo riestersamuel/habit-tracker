@@ -127,17 +127,20 @@ public class AddHabitDialogController implements Initializable {
             try {
                 Thread.sleep(ERROR_DIALOG_TIME * 1000L);
                 Platform.runLater(() -> vbErrorContainer.setVisible(false));
+                log.info("Thread is working fine.");
             } catch (InterruptedException e) {
-                log.debug("Interrupted: " + e.getMessage());
+                log.debug("The thread was interrupted: " + e.getMessage());
             }
         };
 
         if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
             mThreadErrorMsg.interrupt();
+            log.debug("The thread was interrupted.");
         }
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
+        //TODO: Thread logging here?
     }
 
     public void closeStage(ActionEvent e) {
