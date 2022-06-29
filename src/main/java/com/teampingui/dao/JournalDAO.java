@@ -133,8 +133,8 @@ public class JournalDAO implements IDao<JournalEntryItem> {
 
     @Override
     public void delete(JournalEntryItem journalEntryItem) {
-        // TODO: Why? Only used for tests
-        //Delete Habit from Database
+        // This method is currently only used for a unit test
+        // Delete Habit from Database
         Connection connection = null;
         PreparedStatement statement = null;
 

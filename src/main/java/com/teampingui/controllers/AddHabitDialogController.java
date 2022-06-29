@@ -140,7 +140,6 @@ public class AddHabitDialogController implements Initializable {
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
-        //TODO: Thread logging here?
     }
 
     public void closeStage(ActionEvent e) {

@@ -289,10 +289,6 @@ public class HabitDAO implements IDao<Habit> {
         } catch (NotInDatabaseException notInDatabaseException) {
             log.warn("Habit is not linked to a database entry", notInDatabaseException);
         }
-
-
-
-
     }
 }
 

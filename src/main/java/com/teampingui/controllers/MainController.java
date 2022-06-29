@@ -319,7 +319,7 @@ public class MainController implements Initializable {
                 Platform.runLater(() -> vbErrorContainer.setVisible(false));
                 log.info("Thread is working fine.");
             } catch (InterruptedException e) {
-                log.debug("The thread was interrupted: " + e.getMessage());
+                log.debug("The thread was interrupted", e);
             }
         };
 
@@ -330,7 +330,6 @@ public class MainController implements Initializable {
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
-        //TODO: Thread logging here?
     }
 
     private LocalDate mDate = LocalDate.now();
