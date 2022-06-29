@@ -1,6 +1,7 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
+import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.JournalEntryItem;
 import javafx.collections.FXCollections;
@@ -135,7 +136,29 @@ public class JournalDAO implements IDao<JournalEntryItem> {
 
     @Override
     public void delete(JournalEntryItem journalEntryItem) {
-        // TODO: Object & Database
+        //Delete Habit from Database
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = Database.connect();
+            connection.setAutoCommit(false);
+
+            // Delete Habit from Database
+            String query = "DELETE FROM journal WHERE id=?;";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, journalEntryItem.getID());
+            statement.executeUpdate();
+            connection.commit();
+            log.info("Journal entry '" + journalEntryItem + "' was successfully deleted from the database.");
+        } catch (SQLException exception) {
+            log.error("An error occurred while deleting a journal entry  from the database." + exception.getMessage());
+        } catch (NotInDatabaseException notInDatabaseException) {
+            log.warn("Journal entry is not linked to a database entry", notInDatabaseException);
+        }
+
+        // Delete habit from List
+        mosJournalEntries.remove(journalEntryItem);
     }
 
 }
