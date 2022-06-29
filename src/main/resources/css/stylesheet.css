@@ -74,8 +74,8 @@
 }
 
 #vbErrorContainer {
-    -fx-background-color: rgba(255, 0, 0, 1);
-    -fx-border-color: red;
+    -fx-background-color: #E3675B;
+    -fx-border-color: #E3675B;
     -fx-border-width: 2;
     -fx-text-fill: white;
     -fx-max-height: 38;
