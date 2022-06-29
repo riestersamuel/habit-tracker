@@ -92,7 +92,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         try {
             connection = Database.connect();
             connection.setAutoCommit(false);
-            String query = "INSERT INTO journal(journal_date, entry) VALUES(?, ?)";
+            String query = "INSERT INTO "+DB_TABLE_NAME+"("+DB_COLUMN_DATE+", "+DB_COLUMN_ENTRY+") VALUES(?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 0;
             statement.setString(++counter, journalEntry.getDate());
@@ -129,9 +129,6 @@ public class JournalDAO implements IDao<JournalEntryItem> {
 
     @Override
     public void update(int index, JournalEntryItem journalEntryItem) {
-        mosJournalEntries.set(index, journalEntryItem);
-        // TODO: Database (Why?)
-
     }
 
     @Override
@@ -146,7 +143,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
-            String query = "DELETE FROM journal WHERE id=?;";
+            String query = "DELETE FROM "+DB_TABLE_NAME+" WHERE id=?;";
             statement = connection.prepareStatement(query);
             statement.setInt(1, journalEntryItem.getID());
             statement.executeUpdate();
