@@ -63,6 +63,8 @@ public class HabitDAO implements IDao<Habit> {
                     " AND "+DB_TABLE_HAVETODODAYS+".havetodo = 1" +
                     " GROUP BY "+DB_TABLE_HABIT+"."+DB_COLUMN_ID+";";
 
+            log.debug(getStringQuery);
+
             statement = connection.prepareStatement(getStringQuery);
             resultSet = statement.executeQuery();
 
@@ -112,10 +114,10 @@ public class HabitDAO implements IDao<Habit> {
         try {
             connection = Database.connect();
 
-            String getStringQuery = "SELECT "+DB_TABLE_HABIT+".id, "+DB_TABLE_HABIT+"."+DB_COLUMN_NAME+", GROUP_CONCAT(checkedDays.entry_date) AS done_days " +
+            String getStringQuery = "SELECT "+DB_TABLE_HABIT+".id, "+DB_TABLE_HABIT+"."+DB_COLUMN_NAME+", GROUP_CONCAT("+DB_TABLE_CHECKEDDAYS+".entry_date) AS done_days " +
                     "FROM "+DB_TABLE_HABIT+", "+DB_TABLE_CHECKEDDAYS+
                     " WHERE "+DB_TABLE_HABIT+".id = "+DB_TABLE_CHECKEDDAYS+"."+DB_COLUMN_HABITID +
-                    "AND "+DB_TABLE_CHECKEDDAYS+".done = 1 " +
+                    " AND "+DB_TABLE_CHECKEDDAYS+".done = 1 " +
                     "AND entry_date >= date('" + fromDate + "') AND entry_date <= date('" + toDate + "') " +
                     "GROUP BY habit.id;";
 
