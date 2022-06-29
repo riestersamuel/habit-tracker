@@ -130,12 +130,13 @@ public class JournalDAO implements IDao<JournalEntryItem> {
     @Override
     public void update(int index, JournalEntryItem journalEntryItem) {
         mosJournalEntries.set(index, journalEntryItem);
-        // TODO: Database
+        // TODO: Database (Why?)
 
     }
 
     @Override
     public void delete(JournalEntryItem journalEntryItem) {
+        // TODO: Why? Only used for tests
         //Delete Habit from Database
         Connection connection = null;
         PreparedStatement statement = null;
