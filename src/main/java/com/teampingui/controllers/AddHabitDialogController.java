@@ -52,6 +52,8 @@ public class AddHabitDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
+
         //Add Checkboxes
         for (Day d : Day.values()) {
             checkBoxes.add(new CheckBox(d.getDay()));
@@ -66,7 +68,7 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     void addNewHabit(ActionEvent e) {
         String name = tfNewHabitName.getText().trim();
-        if (name.length() > 15 || name.length() <= 0) {
+        if (name.length() == 0) {
             showError("Inputfield can not be empty!");
             log.warn("Inputfield can not be empty!");
             return;

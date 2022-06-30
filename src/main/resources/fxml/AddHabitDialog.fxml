@@ -5,10 +5,13 @@
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <DialogPane prefWidth="280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.teampingui.controllers.AddHabitDialogController">
     <content>
@@ -52,7 +55,16 @@
                 <GridPane.margin>
                     <Insets left="140.0" />
                 </GridPane.margin>
+                <VBox prefHeight="200.0" prefWidth="100.0" />
             </Button>
+            <VBox fx:id="vbErrorContainer" visible="false">
+                <Label fx:id="lErrorMsgHabit" alignment="CENTER" prefHeight="33.0" prefWidth="1066.0" text="Error" textFill="RED">
+                    <font>
+                        <Font size="1.0" />
+                    </font>
+                </Label>
+                <ProgressBar fx:id="pbErrorDuration" prefWidth="1066.0" progress="0.5" />
+            </VBox>
         </GridPane>
     </content>
 </DialogPane>
