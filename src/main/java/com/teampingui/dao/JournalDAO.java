@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -92,7 +91,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         try {
             connection = Database.connect();
             connection.setAutoCommit(false);
-            String query = "INSERT INTO "+DB_TABLE_NAME+"("+DB_COLUMN_DATE+", "+DB_COLUMN_ENTRY+") VALUES(?, ?)";
+            String query = "INSERT INTO " + DB_TABLE_NAME + "(" + DB_COLUMN_DATE + ", " + DB_COLUMN_ENTRY + ") VALUES(?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 0;
             statement.setString(++counter, journalEntry.getDate());
@@ -143,7 +142,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
-            String query = "DELETE FROM "+DB_TABLE_NAME+" WHERE id=?;";
+            String query = "DELETE FROM " + DB_TABLE_NAME + " WHERE id=?;";
             statement = connection.prepareStatement(query);
             statement.setInt(1, journalEntryItem.getID());
             statement.executeUpdate();

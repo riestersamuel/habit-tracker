@@ -2,7 +2,8 @@ package com.teampingui.exceptions;
 
 public class HabitDaoException extends Exception {
 
-    public HabitDaoException() {}
+    public HabitDaoException() {
+    }
 
     public HabitDaoException(String message) {
         super(message);

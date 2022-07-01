@@ -18,20 +18,20 @@ public class JournalEntryItem {
         this.mContent = entry;
     }
 
-    public void setDate(String date) {
-        this.mDate = date;
-    }
-
-    public void setContent(String content) {
-        this.mContent = content;
-    }
-
     public String getDate() {
         return mDate;
     }
 
+    public void setDate(String date) {
+        this.mDate = date;
+    }
+
     public String getContent() {
         return mContent;
+    }
+
+    public void setContent(String content) {
+        this.mContent = content;
     }
 
     @Override
@@ -41,17 +41,17 @@ public class JournalEntryItem {
                 " - mContent='" + mContent + '\'';
     }
 
-    public void setID(int id) {
-        this.mID = id;
-        if (id < 0){
-            throw new IllegalArgumentException();
-        }
-    }
-
     public int getID() throws NotInDatabaseException {
         if (mID == -1) {
             throw new NotInDatabaseException("Entry is not connected to database");
         }
         return mID;
+    }
+
+    public void setID(int id) {
+        this.mID = id;
+        if (id < 0) {
+            throw new IllegalArgumentException();
+        }
     }
 }

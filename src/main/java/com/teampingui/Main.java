@@ -11,13 +11,12 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class Main extends Application {
 
     //Initializing the logger
-    private static Logger log = LogManager.getLogger(Main.class);
+    private static final Logger log = LogManager.getLogger(Main.class);
     // Singleton
     private static Main instance;
     private Stage stage;

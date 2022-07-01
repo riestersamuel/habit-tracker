@@ -49,7 +49,7 @@ public class JournalEntryListViewCell extends ListCell<JournalEntryItem> {
             }
 
             entryText.wrappingWidthProperty().bind(vbox.widthProperty());
-            dateLabel.setText(jEntry.getDate().toString());
+            dateLabel.setText(jEntry.getDate());
             entryText.setText(jEntry.getContent());
 
             // set the width's
@@ -57,7 +57,7 @@ public class JournalEntryListViewCell extends ListCell<JournalEntryItem> {
             vbox.setMaxWidth(255);
             vbox.setPrefWidth(255);
 
-            dateLabel.setText(jEntry.getDate().toString());
+            dateLabel.setText(jEntry.getDate());
             entryText.setText(jEntry.getContent());
 
             Text text = (Text) vbox.getChildren().get(1);

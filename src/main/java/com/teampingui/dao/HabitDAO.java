@@ -57,11 +57,11 @@ public class HabitDAO implements IDao<Habit> {
             connection = Database.connect();
 
             String getStringQuery =
-                    "SELECT "+DB_TABLE_HABIT+"."+DB_COLUMN_ID+", "+DB_TABLE_HABIT+"."+DB_COLUMN_NAME+", GROUP_CONCAT("+DB_TABLE_HAVETODODAYS+".weekday) AS weekdays " +
-                    "FROM "+DB_TABLE_HABIT+", "+DB_TABLE_HAVETODODAYS+
-                    " WHERE "+DB_TABLE_HABIT+"."+DB_COLUMN_ID+" = "+DB_TABLE_HAVETODODAYS+"."+DB_COLUMN_HABITID +
-                    " AND "+DB_TABLE_HAVETODODAYS+".havetodo = 1" +
-                    " GROUP BY "+DB_TABLE_HABIT+"."+DB_COLUMN_ID+";";
+                    "SELECT " + DB_TABLE_HABIT + "." + DB_COLUMN_ID + ", " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_HAVETODODAYS + ".weekday) AS weekdays " +
+                            "FROM " + DB_TABLE_HABIT + ", " + DB_TABLE_HAVETODODAYS +
+                            " WHERE " + DB_TABLE_HABIT + "." + DB_COLUMN_ID + " = " + DB_TABLE_HAVETODODAYS + "." + DB_COLUMN_HABITID +
+                            " AND " + DB_TABLE_HAVETODODAYS + ".havetodo = 1" +
+                            " GROUP BY " + DB_TABLE_HABIT + "." + DB_COLUMN_ID + ";";
 
             log.debug(getStringQuery);
 
@@ -114,10 +114,10 @@ public class HabitDAO implements IDao<Habit> {
         try {
             connection = Database.connect();
 
-            String getStringQuery = "SELECT "+DB_TABLE_HABIT+".id, "+DB_TABLE_HABIT+"."+DB_COLUMN_NAME+", GROUP_CONCAT("+DB_TABLE_CHECKEDDAYS+".entry_date) AS done_days " +
-                    "FROM "+DB_TABLE_HABIT+", "+DB_TABLE_CHECKEDDAYS+
-                    " WHERE "+DB_TABLE_HABIT+".id = "+DB_TABLE_CHECKEDDAYS+"."+DB_COLUMN_HABITID +
-                    " AND "+DB_TABLE_CHECKEDDAYS+".done = 1 " +
+            String getStringQuery = "SELECT " + DB_TABLE_HABIT + ".id, " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_CHECKEDDAYS + ".entry_date) AS done_days " +
+                    "FROM " + DB_TABLE_HABIT + ", " + DB_TABLE_CHECKEDDAYS +
+                    " WHERE " + DB_TABLE_HABIT + ".id = " + DB_TABLE_CHECKEDDAYS + "." + DB_COLUMN_HABITID +
+                    " AND " + DB_TABLE_CHECKEDDAYS + ".done = 1 " +
                     "AND entry_date >= date('" + fromDate + "') AND entry_date <= date('" + toDate + "') " +
                     "GROUP BY habit.id;";
 
@@ -177,7 +177,7 @@ public class HabitDAO implements IDao<Habit> {
             connection = Database.connect();
             connection.setAutoCommit(false);
 
-            String query = "INSERT INTO "+DB_TABLE_HABIT+" ("+DB_COLUMN_NAME+", "+DB_COLUMN_REPS+") VALUES (?,?)";
+            String query = "INSERT INTO " + DB_TABLE_HABIT + " (" + DB_COLUMN_NAME + ", " + DB_COLUMN_REPS + ") VALUES (?,?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int counter = 0;
             statement.setString(++counter, habit.nameProperty().getValue());
@@ -189,7 +189,7 @@ public class HabitDAO implements IDao<Habit> {
             if (resultSet.next()) {
                 id = resultSet.getInt(1);
 
-                query = "INSERT INTO "+DB_TABLE_HAVETODODAYS+" ("+DB_COLUMN_HABITID+", weekday, havetodo) VALUES (?,?,?)";
+                query = "INSERT INTO " + DB_TABLE_HAVETODODAYS + " (" + DB_COLUMN_HABITID + ", weekday, havetodo) VALUES (?,?,?)";
                 statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 for (Day day : Day.values()) {
                     if (!habit.hasToBeDone(day))
@@ -242,13 +242,13 @@ public class HabitDAO implements IDao<Habit> {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
-            String query = "DELETE FROM "+DB_TABLE_HABIT+" WHERE id=?;";
+            String query = "DELETE FROM " + DB_TABLE_HABIT + " WHERE id=?;";
             statement = connection.prepareStatement(query);
             statement.setInt(1, habit.getDB_ID());
             statement.executeUpdate();
             connection.commit();
             log.info("Habit '" + habit + "' was successfully deleted from the database.");
-            } catch (SQLException exception) {
+        } catch (SQLException exception) {
             log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
         } catch (NotInDatabaseException notInDatabaseException) {
             log.warn("Habit is not linked to a database entry", notInDatabaseException);
@@ -268,15 +268,15 @@ public class HabitDAO implements IDao<Habit> {
 
         String checkDate = date.toString();
 
-        try(Connection connection = Database.connect()) {
+        try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
 
             String query = "";
 
             if (isChecked) {
-                query = "INSERT INTO "+DB_TABLE_CHECKEDDAYS+" (habit_id, entry_date, done) VALUES (?, date('" + checkDate + "'), 1);";
+                query = "INSERT INTO " + DB_TABLE_CHECKEDDAYS + " (habit_id, entry_date, done) VALUES (?, date('" + checkDate + "'), 1);";
             } else {
-                query = "DELETE FROM "+DB_TABLE_CHECKEDDAYS+" WHERE habit_id =? AND entry_date = date('" + checkDate + "');";
+                query = "DELETE FROM " + DB_TABLE_CHECKEDDAYS + " WHERE habit_id =? AND entry_date = date('" + checkDate + "');";
             }
 
             statement = connection.prepareStatement(query);

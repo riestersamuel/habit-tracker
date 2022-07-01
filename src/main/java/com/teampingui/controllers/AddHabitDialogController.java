@@ -23,10 +23,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
+    private static final Integer ERROR_DIALOG_TIME = 3;
+    private static final Logger log = LogManager.getLogger(MainController.class);
+    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     @FXML
     ListView<CheckBox> lvWeekdays;
     @FXML
@@ -37,17 +39,9 @@ public class AddHabitDialogController implements Initializable {
     VBox vbErrorContainer;
     @FXML
     ProgressBar pbErrorDuration;
-    private static final Integer ERROR_DIALOG_TIME = 3;
     private Timeline mTimeline;
-    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
-
-    private ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
-
+    private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
     private Thread mThreadErrorMsg;
-
-    private static final Logger log = LogManager.getLogger(MainController.class);
-
-
     private HabitDAO mHabitDAO;
 
     @Override
@@ -81,7 +75,7 @@ public class AddHabitDialogController implements Initializable {
                 break;
             }
         }
-        if(!someSelected) {
+        if (!someSelected) {
             showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");
             tfNewHabitName.clear();
@@ -106,7 +100,9 @@ public class AddHabitDialogController implements Initializable {
         closeStage(e);
     }
 
-    public void setHabitDAO(HabitDAO habitDAO) {this.mHabitDAO = habitDAO;}
+    public void setHabitDAO(HabitDAO habitDAO) {
+        this.mHabitDAO = habitDAO;
+    }
 
     public void showError(String msg) {
         vbErrorContainer.setVisible(true);

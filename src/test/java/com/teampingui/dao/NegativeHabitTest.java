@@ -3,11 +3,8 @@ package com.teampingui.dao;
 import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.models.Habit;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 
-import java.sql.SQLException;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class NegativeHabitTest {
 

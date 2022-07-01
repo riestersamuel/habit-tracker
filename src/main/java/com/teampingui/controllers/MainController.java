@@ -45,6 +45,10 @@ public class MainController implements Initializable {
     private static final Logger log = LogManager.getLogger(MainController.class);
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
+    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
+    // DAO
+    private final JournalDAO mJournalDAO = new JournalDAO();
+    private final HabitDAO mHabitDAO = new HabitDAO();
     //General Layout
     @FXML
     Label lWelcome;
@@ -83,15 +87,16 @@ public class MainController implements Initializable {
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
     private Timeline mTimeline;
-    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     private Thread mThreadErrorMsg;
-
-
-    // DAO
-    private final JournalDAO mJournalDAO = new JournalDAO();
-    private final HabitDAO mHabitDAO = new HabitDAO();
+    private boolean mRemoveButtonsVisible = false;
+    private LocalDate mDate = LocalDate.now();
 
     public MainController() {
+    }
+
+    private static int countLines(String str) {
+        String[] lines = str.split("\r\n|\r|\n");
+        return lines.length;
     }
 
     @Override
@@ -148,11 +153,6 @@ public class MainController implements Initializable {
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
     }
 
-    private static int countLines(String str) {
-        String[] lines = str.split("\r\n|\r|\n");
-        return lines.length;
-    }
-
     @FXML
     public void switchScenes(ActionEvent e) {
         Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
@@ -183,7 +183,7 @@ public class MainController implements Initializable {
             mJournalDAO.insert(newJournalEntry);
             lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
-            log.info("New entry added: "  + newJournalEntry);
+            log.info("New entry added: " + newJournalEntry);
         } catch (Exception exception) {
             log.error("Failed to add new entry: " + exception.getMessage());
         }
@@ -204,8 +204,6 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
-
-    private boolean mRemoveButtonsVisible = false;
 
     @FXML
     public void removeHabit(ActionEvent actionEvent) {
@@ -331,8 +329,6 @@ public class MainController implements Initializable {
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
     }
-
-    private LocalDate mDate = LocalDate.now();
 
     public void onClickWeekBefore(ActionEvent actionEvent) {
         changeWeek(false);

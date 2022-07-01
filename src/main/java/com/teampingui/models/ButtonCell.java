@@ -6,11 +6,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 
-public class ButtonCell extends TableCell<Habit, Boolean>{
+public class ButtonCell extends TableCell<Habit, Boolean> {
     final Button mCellButton = new Button("-");
 
-    public ButtonCell(final IButtonClickListener clickListener){
-        mCellButton.setOnAction(new EventHandler<ActionEvent>(){
+    public ButtonCell(final IButtonClickListener clickListener) {
+        mCellButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 clickListener.onClick(getIndex());
@@ -21,10 +21,9 @@ public class ButtonCell extends TableCell<Habit, Boolean>{
     @Override
     protected void updateItem(Boolean t, boolean empty) {
         super.updateItem(t, empty);
-        if(!empty){
+        if (!empty) {
             setGraphic(mCellButton);
-        }
-        else{
+        } else {
             setGraphic(null);
         }
     }

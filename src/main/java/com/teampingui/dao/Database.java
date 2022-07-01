@@ -17,7 +17,7 @@ public class Database {
      */
     private static final String REQUIRED_TABLE = "journal";
     //Initializing the logger
-    private static Logger log = LogManager.getLogger(Database.class);
+    private static final Logger log = LogManager.getLogger(Database.class);
 
     public static boolean isOK() {
         if (!checkDrivers()) return false;

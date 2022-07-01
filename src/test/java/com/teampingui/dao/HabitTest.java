@@ -1,8 +1,6 @@
 package com.teampingui.dao;
 
 import com.teampingui.models.Habit;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
