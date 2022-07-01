@@ -345,11 +345,11 @@ public class MainController implements Initializable {
     private void changeWeek(boolean nextWeek) {
         try {
             if (nextWeek) {
-                mHabitDAO.loadCheckedData(mDate.plusDays(7));
                 mDate = mDate.plusDays(7);
+                mHabitDAO.loadCheckedData(mDate);
             } else {
-                mHabitDAO.loadCheckedData(mDate.minusDays(7));
                 mDate = mDate.minusDays(7);
+                mHabitDAO.loadCheckedData(mDate);
             }
             updateProgressBar();
             displayTableDate();

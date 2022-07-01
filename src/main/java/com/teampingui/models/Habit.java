@@ -56,7 +56,7 @@ public class Habit {
     }
 
     public void setChecked(Day day, boolean checked) {
-        checkedDays[day.ordinal()] = new SimpleBooleanProperty(checked);
+        checkedDays[day.ordinal()].set(checked);
     }
 
     public StringProperty nameProperty() {
