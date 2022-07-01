@@ -14,7 +14,7 @@ public class NegativeHabitTest {
     public void testSetDbIdInvalid() {
         int negativeID = -99;
         try {
-            invalidIDHabit.setDB_ID(negativeID);
+            invalidIDHabit.setDBID(negativeID);
         } catch (IllegalArgumentException e) {
             System.out.println("Successfully caught negative value in setDB_ID(): " + e);
         } catch (Exception e) {

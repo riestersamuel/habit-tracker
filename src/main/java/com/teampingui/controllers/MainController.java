@@ -3,6 +3,7 @@ package com.teampingui.controllers;
 import com.teampingui.Main;
 import com.teampingui.dao.HabitDAO;
 import com.teampingui.dao.JournalDAO;
+import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.*;
 import javafx.animation.KeyFrame;
@@ -354,6 +355,8 @@ public class MainController implements Initializable {
 
         } catch (SQLException e) {
             log.error("Failed to change week!", e);
+        } catch (NotInDatabaseException e) {
+            e.printStackTrace();
         }
     }
 

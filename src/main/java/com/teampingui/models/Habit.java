@@ -42,7 +42,7 @@ public class Habit {
         return mDB_ID;
     }
 
-    public void setDB_ID(final int ID) {
+    public void setDBID(final int ID) {
         if (ID < 1) {
             throw new IllegalArgumentException();
         } else {
@@ -56,6 +56,10 @@ public class Habit {
 
     public void setChecked(Day day, boolean checked) {
         checkedDays[day.ordinal()].set(checked);
+    }
+
+    public void setChecked(int indexDay, boolean checked) {
+        checkedDays[indexDay].set(checked);
     }
 
     public StringProperty nameProperty() {

@@ -39,9 +39,10 @@ public class HabitDAO implements IDao<Habit> {
         try {
             mosHabits.addAll(read());
             loadCheckedData(LocalDate.now());
-            log.info("Successfully load habits from database.");
         } catch (SQLException e) {
             log.error(LocalDateTime.now() + ": could not load habits from database." + e.getMessage());
+        } catch (NotInDatabaseException e) {
+            e.printStackTrace();
         }
 
     }
@@ -69,7 +70,6 @@ public class HabitDAO implements IDao<Habit> {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                log.info("Loaded: " + resultSet.getString(DB_COLUMN_NAME));
                 // Getting haveTodoDays Boolean Array
                 List<String> splitConcat = Arrays.asList(resultSet.getString("weekdays").split(","));
                 List<Integer> weekdays = splitConcat.stream().map(Integer::parseInt).toList();
@@ -77,10 +77,11 @@ public class HabitDAO implements IDao<Habit> {
                 weekdays.forEach(i -> haveTodoDays[i] = true);
 
                 habitEntries.add(new Habit(
-                        resultSet.getInt("id"),
+                        resultSet.getInt(DB_COLUMN_ID),
                         resultSet.getString(DB_COLUMN_NAME),
                         haveTodoDays)
                 );
+                log.debug("Loaded habit. ID=" + resultSet.getString(DB_COLUMN_ID));
             }
             log.info("Habits were loaded successfully.");
         } catch (SQLException e) {
@@ -103,7 +104,7 @@ public class HabitDAO implements IDao<Habit> {
         return habitEntries;
     }
 
-    public void loadCheckedData(LocalDate date) throws SQLException { // TODO: cleanup function
+    public void loadCheckedData(LocalDate date) throws SQLException, NotInDatabaseException { // TODO: cleanup function
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -124,21 +125,33 @@ public class HabitDAO implements IDao<Habit> {
             statement = connection.prepareStatement(getStringQuery);
             resultSet = statement.executeQuery();
 
-            //reset
-            mosHabits.forEach(i -> i.setCheckedDays(new boolean[]{false, false, false, false, false, false, false}));
+            resultSet.next();
+            for (Habit rootHabit : mosHabits) {
 
-            while (resultSet.next()) {
-                // Getting haveTodoDays Boolean Array
-                List<String> splitConcat = Arrays.asList(resultSet.getString("done_days").split(","));
+                boolean sameHabit = false;
+                try {
+                    sameHabit = !resultSet.isClosed() && (rootHabit.getDBID() == resultSet.getInt(DB_COLUMN_ID));
+                } catch (NotInDatabaseException notInDatabaseException) {
+                    // ignore
+                }
 
-                boolean[] doneDays = new boolean[7];
-                splitConcat.forEach(sDate -> doneDays[LocalDate.parse(sDate).getDayOfWeek().getValue() - 1] = true);
-                mosHabits.get(resultSet.getInt("id") - 1).setCheckedDays(doneDays); // TODO: get habit by DB ID!!! otherwise gets buggy with deleted habits)
-                log.info("Successfully loaded habits from database.");
+                if (sameHabit) {
+                    List<String> splitConcat = Arrays.asList(resultSet.getString("done_days").split(","));
+
+                    boolean[] doneDays = new boolean[7];
+                    splitConcat.forEach(sDate -> doneDays[LocalDate.parse(sDate).getDayOfWeek().getValue() - 1] = true);
+
+                    int index = mosHabits.indexOf(rootHabit);
+                    mosHabits.get(index).setCheckedDays(doneDays);
+                    log.debug("Loaded habit checks. ID=" + rootHabit.getDBID());
+                    resultSet.next();
+                } else {
+                    log.debug("Loaded habit checks (blank). ID=" + rootHabit.getDBID());
+                    int index = mosHabits.indexOf(rootHabit);
+                    mosHabits.get(index).setCheckedDays(new boolean[7]);
+                }
+
             }
-        } catch (SQLException e) {
-            log.error("could not load habits from database." + e.getMessage());
-            //mosHabits.clear();
         } finally {
             if (null != resultSet) {
                 resultSet.close();
@@ -203,7 +216,7 @@ public class HabitDAO implements IDao<Habit> {
                 }
                 connection.commit();
 
-                habit.setDB_ID(id);
+                habit.setDBID(id);
                 mosHabits.add(habit);
                 log.info("Habit '" + habit + "' was inserted successfully into the database.");
             }
@@ -282,6 +295,7 @@ public class HabitDAO implements IDao<Habit> {
             statement.setInt(1, habit.getDBID());
             statement.executeUpdate();
             connection.commit();
+            mosHabits.get(indexOf(habit)).setChecked(date.getDayOfWeek().getValue() - 1, isChecked);
 
 
             log.info("Habit checks were successfully updated from the database.");
