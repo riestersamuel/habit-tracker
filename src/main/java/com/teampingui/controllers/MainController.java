@@ -83,7 +83,7 @@ public class MainController implements Initializable {
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
     private Timeline mTimeline;
-    private IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
+    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     private Thread mThreadErrorMsg;
 
 
@@ -129,7 +129,7 @@ public class MainController implements Initializable {
         tvHabits.setEditable(true);
 
         updateProgressBar();
-        mHabitDAO.getAll().addListener((ListChangeListener) change -> updateProgressBar());
+        mHabitDAO.getAll().addListener((ListChangeListener<Habit>) change -> updateProgressBar());
     }
 
     private void updateProgressBar() {
@@ -314,18 +314,18 @@ public class MainController implements Initializable {
         mTimeline.playFromStart();
 
         Runnable runnable = () -> {
+            log.debug("error message threat started");
             try {
                 Thread.sleep(ERROR_DIALOG_TIME * 1000L);
                 Platform.runLater(() -> vbErrorContainer.setVisible(false));
-                log.info("Thread is working fine.");
+                log.debug("error message is now invisible");
             } catch (InterruptedException e) {
-                log.debug("The thread was interrupted", e);
+                log.debug("error message thread interrupted");
             }
         };
 
         if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
             mThreadErrorMsg.interrupt();
-            log.debug("The thread was interrupted.");
         }
 
         mThreadErrorMsg = new Thread(runnable);
