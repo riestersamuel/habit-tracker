@@ -356,7 +356,7 @@ public class MainController implements Initializable {
             log.info("Changed week successfully.");
 
         } catch (SQLException e) {
-            log.error("Failed to change week!" + e.getMessage());
+            log.error("Failed to change week!", e);
         }
     }
 
