@@ -10,7 +10,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
-public class JournalEntryListViewCell extends ListCell<JournalEntryItem> {
+public class JournalEntryListCell extends ListCell<JournalEntry> {
     @FXML
     private Label dateLabel;
 
@@ -25,7 +25,7 @@ public class JournalEntryListViewCell extends ListCell<JournalEntryItem> {
 
 
     @Override
-    protected void updateItem(JournalEntryItem jEntry, boolean empty) {
+    protected void updateItem(JournalEntry jEntry, boolean empty) {
         super.updateItem(jEntry, empty);
 
         if (empty || jEntry == null) {

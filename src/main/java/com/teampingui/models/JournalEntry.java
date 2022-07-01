@@ -2,17 +2,17 @@ package com.teampingui.models;
 
 import com.teampingui.exceptions.NotInDatabaseException;
 
-public class JournalEntryItem {
+public class JournalEntry {
     private int mID = -1;
     private String mContent;
     private String mDate;
 
-    public JournalEntryItem(String date, String entry) {
+    public JournalEntry(String date, String entry) {
         this.mDate = date;
         this.mContent = entry;
     }
 
-    public JournalEntryItem(int id, String date, String entry) {
+    public JournalEntry(int id, String date, String entry) {
         this.mID = id;
         this.mDate = date;
         this.mContent = entry;

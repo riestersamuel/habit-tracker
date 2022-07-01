@@ -3,7 +3,7 @@ package com.teampingui.dao;
 import com.teampingui.exceptions.JournalDaoException;
 import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.interfaces.IDao;
-import com.teampingui.models.JournalEntryItem;
+import com.teampingui.models.JournalEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JournalDAO implements IDao<JournalEntryItem> {
+public class JournalDAO implements IDao<JournalEntry> {
     private static final String DB_TABLE_NAME = "journal";
     private static final String DB_COLUMN_ID = "id";
     private static final String DB_COLUMN_DATE = "journal_date";
@@ -22,7 +22,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
 
     private static final Logger log = LogManager.getLogger(JournalDAO.class);
 
-    private final ObservableList<JournalEntryItem> mosJournalEntries;
+    private final ObservableList<JournalEntry> mosJournalEntries;
 
     public JournalDAO() {
         mosJournalEntries = FXCollections.observableArrayList();
@@ -36,10 +36,10 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         }
     }
 
-    private List<JournalEntryItem> read() throws SQLException {
+    private List<JournalEntry> read() throws SQLException {
         Connection connection = null;
         PreparedStatement statement = null;
-        List<JournalEntryItem> journalEntries = new ArrayList<>();
+        List<JournalEntry> journalEntries = new ArrayList<>();
 
         try {
             connection = Database.connect();
@@ -48,7 +48,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                JournalEntryItem journalEntry = new JournalEntryItem(
+                JournalEntry journalEntry = new JournalEntry(
                         resultSet.getInt(DB_COLUMN_ID),
                         resultSet.getString(DB_COLUMN_DATE),
                         resultSet.getString(DB_COLUMN_ENTRY)
@@ -73,16 +73,16 @@ public class JournalDAO implements IDao<JournalEntryItem> {
     }
 
     @Override
-    public Optional<JournalEntryItem> get(long id) {
+    public Optional<JournalEntry> get(long id) {
         return Optional.ofNullable(mosJournalEntries.get((int) id));
     }
 
     @Override
-    public ObservableList<JournalEntryItem> getAll() {
+    public ObservableList<JournalEntry> getAll() {
         return mosJournalEntries;
     }
 
-    public int insert(JournalEntryItem journalEntry) throws SQLException, JournalDaoException { // TODO: Need for returning inserted id..?
+    public int insert(JournalEntry journalEntry) throws SQLException, JournalDaoException { // TODO: Need for returning inserted id..?
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -127,11 +127,11 @@ public class JournalDAO implements IDao<JournalEntryItem> {
     }
 
     @Override
-    public void update(int index, JournalEntryItem journalEntryItem) {
+    public void update(int index, JournalEntry journalEntry) {
     }
 
     @Override
-    public void delete(JournalEntryItem journalEntryItem) {
+    public void delete(JournalEntry journalEntry) {
         // This method is currently only used for a unit test
         // Delete Habit from Database
         Connection connection = null;
@@ -144,10 +144,10 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             // Delete Habit from Database
             String query = "DELETE FROM " + DB_TABLE_NAME + " WHERE id=?;";
             statement = connection.prepareStatement(query);
-            statement.setInt(1, journalEntryItem.getID());
+            statement.setInt(1, journalEntry.getID());
             statement.executeUpdate();
             connection.commit();
-            log.info("Journal entry '" + journalEntryItem + "' was successfully deleted from the database.");
+            log.info("Journal entry '" + journalEntry + "' was successfully deleted from the database.");
         } catch (SQLException exception) {
             log.error("An error occurred while deleting a journal entry  from the database." + exception.getMessage());
         } catch (NotInDatabaseException notInDatabaseException) {
@@ -155,12 +155,12 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         }
 
         // Delete habit from List
-        mosJournalEntries.remove(journalEntryItem);
+        mosJournalEntries.remove(journalEntry);
     }
 
     @Override
-    public int indexOf(JournalEntryItem journalEntryItem) {
-        return mosJournalEntries.indexOf(journalEntryItem);
+    public int indexOf(JournalEntry journalEntry) {
+        return mosJournalEntries.indexOf(journalEntry);
     }
 
 }

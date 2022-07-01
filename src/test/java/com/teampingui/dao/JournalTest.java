@@ -1,7 +1,7 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
-import com.teampingui.models.JournalEntryItem;
+import com.teampingui.models.JournalEntry;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 class JournalTest {
     JournalDAO journalDAO = new JournalDAO();
-    JournalEntryItem journalEntry = new JournalEntryItem("01.01.2020", "This text came from JournalTest.java");
+    JournalEntry journalEntry = new JournalEntry("01.01.2020", "This text came from JournalTest.java");
 
     @Test
     public void testInsertJournalEntry() {

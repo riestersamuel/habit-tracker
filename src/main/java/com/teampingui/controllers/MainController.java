@@ -48,7 +48,7 @@ public class MainController implements Initializable {
     private static final Integer ERROR_DIALOG_TIME = 3;
     private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     // DAO
-    private final IDao<JournalEntryItem> mJournalDAO = new JournalDAO();
+    private final IDao<JournalEntry> mJournalDAO = new JournalDAO();
     private final IDao<Habit> mHabitDAO = new HabitDAO();
     //General Layout
     @FXML
@@ -69,7 +69,7 @@ public class MainController implements Initializable {
     @FXML
     Label wordCount;
     @FXML
-    ListView<JournalEntryItem> lvJournal;
+    ListView<JournalEntry> lvJournal;
     //Habits
     @FXML
     Button btnAddHabit;
@@ -112,7 +112,7 @@ public class MainController implements Initializable {
         // Journal
 
         lvJournal.setItems(mJournalDAO.getAll());
-        lvJournal.setCellFactory(studentListView -> new JournalEntryListViewCell());
+        lvJournal.setCellFactory(studentListView -> new JournalEntryListCell());
         // journal entry max length
         final int MAX_CHARS = 200;
         //journal entry max rows
@@ -178,7 +178,7 @@ public class MainController implements Initializable {
         }
 
         String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-        JournalEntryItem newJournalEntry = new JournalEntryItem(sCurrentDate, sEntry);
+        JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
 
         try {
             mJournalDAO.insert(newJournalEntry);
