@@ -208,7 +208,7 @@ public class HabitDAO implements IDao<Habit> {
                 log.info("Habit '" + habit + "' was inserted successfully into the database.");
             }
         } catch (SQLException exception) {
-            log.error("An error occured while inserting a habit into the database." + exception.getMessage());
+            log.error("An error occurred while inserting a habit into the database." + exception.getMessage());
             connection.rollback();
             throw new HabitDaoException(exception);
         } finally {

@@ -185,7 +185,7 @@ public class MainController implements Initializable {
             taNewJournal.clear();
             log.info("New entry added: " + newJournalEntry);
         } catch (Exception exception) {
-            log.error("Failed to add new entry: " + exception.getMessage());
+            log.error("Failed to add new entry.", exception);
         }
 
     }

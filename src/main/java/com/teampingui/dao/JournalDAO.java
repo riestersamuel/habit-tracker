@@ -57,7 +57,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
                 journalEntries.add(journalEntry);
             }
         } catch (SQLException exception) {
-            log.error("An error occured while reading journal entries from database: " + exception.getMessage());
+            log.error("An error occurred while reading journal entries from database.", exception);
             connection.close();
         } finally {
             if (null != statement) {
@@ -106,7 +106,7 @@ public class JournalDAO implements IDao<JournalEntryItem> {
             }
             log.info("Successfully insert journal entry '" + journalEntry + "' into database.");
         } catch (SQLException exception) {
-            log.error("An error occured while inserting journal entry into database: " + exception.getMessage());
+            log.error("An error occurred while inserting journal entry into database.", exception);
             connection.rollback();
             throw new JournalDaoException(exception);
         } finally {
