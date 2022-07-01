@@ -244,7 +244,7 @@ public class HabitDAO implements IDao<Habit> {
             // Delete Habit from Database
             String query = "DELETE FROM " + DB_TABLE_HABIT + " WHERE id=?;";
             statement = connection.prepareStatement(query);
-            statement.setInt(1, habit.getDB_ID());
+            statement.setInt(1, habit.getDBID());
             statement.executeUpdate();
             connection.commit();
             log.info("Habit '" + habit + "' was successfully deleted from the database.");
@@ -259,7 +259,6 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     public int indexOf(Habit habit) {
-        System.out.println(mosHabits.indexOf(habit));
         return mosHabits.indexOf(habit);
     }
 
@@ -280,7 +279,7 @@ public class HabitDAO implements IDao<Habit> {
             }
 
             statement = connection.prepareStatement(query);
-            statement.setInt(1, habit.getDB_ID());
+            statement.setInt(1, habit.getDBID());
             statement.executeUpdate();
             connection.commit();
 

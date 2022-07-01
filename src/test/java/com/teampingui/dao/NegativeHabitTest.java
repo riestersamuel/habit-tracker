@@ -25,7 +25,7 @@ public class NegativeHabitTest {
     @Test
     public void testGetDbIdInvalid() {
         try {
-            invalidIDHabit.getDB_ID();
+            invalidIDHabit.getDBID();
         } catch (NotInDatabaseException e) {
             System.out.println("Successfully caught invalid ID in getDB_ID(): " + e);
         } catch (Exception e) {

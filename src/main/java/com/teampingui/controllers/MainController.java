@@ -3,6 +3,7 @@ package com.teampingui.controllers;
 import com.teampingui.Main;
 import com.teampingui.dao.HabitDAO;
 import com.teampingui.dao.JournalDAO;
+import com.teampingui.interfaces.IDao;
 import com.teampingui.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -47,8 +48,8 @@ public class MainController implements Initializable {
     private static final Integer ERROR_DIALOG_TIME = 3;
     private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     // DAO
-    private final JournalDAO mJournalDAO = new JournalDAO();
-    private final HabitDAO mHabitDAO = new HabitDAO();
+    private final IDao<JournalEntryItem> mJournalDAO = new JournalDAO();
+    private final IDao<Habit> mHabitDAO = new HabitDAO();
     //General Layout
     @FXML
     Label lWelcome;
@@ -280,7 +281,7 @@ public class MainController implements Initializable {
         // System.out.println("Day: " + day);
         // System.out.println("Habit: " + habit.repsProperty().getValue());
         // habit.checkedDays(day); // TODO: use this instead of is Checked..?
-        mHabitDAO.setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked);
+        ((HabitDAO)mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked); // TODO: solve this without a cast
 
         if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
@@ -342,10 +343,10 @@ public class MainController implements Initializable {
         try {
             if (nextWeek) {
                 mDate = mDate.plusDays(7);
-                mHabitDAO.loadCheckedData(mDate);
+                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);  // TODO: solve this without a cast
             } else {
                 mDate = mDate.minusDays(7);
-                mHabitDAO.loadCheckedData(mDate);
+                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);  // TODO: solve this without a cast
             }
             updateProgressBar();
             displayTableDate();

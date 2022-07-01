@@ -1,6 +1,7 @@
 package com.teampingui.controllers;
 
 import com.teampingui.dao.HabitDAO;
+import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Day;
 import com.teampingui.models.Habit;
 import javafx.animation.KeyFrame;
@@ -42,7 +43,7 @@ public class AddHabitDialogController implements Initializable {
     private Timeline mTimeline;
     private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
     private Thread mThreadErrorMsg;
-    private HabitDAO mHabitDAO;
+    private IDao<Habit> mHabitDAO;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -100,7 +101,7 @@ public class AddHabitDialogController implements Initializable {
         closeStage(e);
     }
 
-    public void setHabitDAO(HabitDAO habitDAO) {
+    public void setHabitDAO(IDao<Habit> habitDAO) {
         this.mHabitDAO = habitDAO;
     }
 

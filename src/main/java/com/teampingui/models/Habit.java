@@ -35,7 +35,7 @@ public class Habit {
         this.reps = new SimpleIntegerProperty(reps);
     }
 
-    public int getDB_ID() throws NotInDatabaseException {
+    public int getDBID() throws NotInDatabaseException {
         if (mDB_ID == 0) {
             throw new NotInDatabaseException("Habit is not connected to database");
         }

@@ -1,5 +1,6 @@
 package com.teampingui.interfaces;
 
+import com.teampingui.models.Habit;
 import javafx.collections.ObservableList;
 
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface IDao<T> {
     void update(int index, T t);
 
     void delete(T t);
+
+    int indexOf(T t);
 }

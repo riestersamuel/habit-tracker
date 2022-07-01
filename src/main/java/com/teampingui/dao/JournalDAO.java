@@ -158,4 +158,9 @@ public class JournalDAO implements IDao<JournalEntryItem> {
         mosJournalEntries.remove(journalEntryItem);
     }
 
+    @Override
+    public int indexOf(JournalEntryItem journalEntryItem) {
+        return mosJournalEntries.indexOf(journalEntryItem);
+    }
+
 }
