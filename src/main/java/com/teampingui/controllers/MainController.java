@@ -139,10 +139,10 @@ public class MainController implements Initializable {
         // Set ProgressBar
         doneCounter = 0;
         haveTodoCounter = 0;
-        mHabitDAO.getAll().forEach(h -> {
-            haveTodoCounter += h.repsProperty().getValue();
-            Arrays.stream(Day.values()).filter(day -> h.checkedDays(day).getValue() && h.hasToBeDone(day)).forEach(day -> doneCounter++);
-        });
+        for (Habit habit : mHabitDAO.getAll()) {
+            haveTodoCounter += habit.repsProperty().getValue();
+            doneCounter += Arrays.stream(Day.values()).filter(day -> habit.checkedDays(day).getValue() && habit.hasToBeDone(day)).count();
+        }
         double percentage = (double) doneCounter / haveTodoCounter;
         habitsProgress.setProgress(percentage);
         progressDisplay.setText((int) (percentage * 100) + "% achieved");
