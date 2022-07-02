@@ -77,7 +77,7 @@ public class MainController implements Initializable {
     @FXML
     Button btnRemoveHabit;
     @FXML
-    Button btnHabits, btnChallenge, btnSettings;
+    Button btnHabits, btnSettings;
     @FXML
     Label lDate;
     @FXML
@@ -111,7 +111,6 @@ public class MainController implements Initializable {
         lWelcome.setText(Settings.getUsername().isEmpty() ? "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
         // Journal
-
         lvJournal.setItems(mJournalDAO.getAll());
         lvJournal.setCellFactory(studentListView -> new JournalEntryListCell());
         // journal entry max length
@@ -130,8 +129,6 @@ public class MainController implements Initializable {
 
         // Habits
         dynamicallyAddTableCols();
-
-        //tvHabits.setItems(HabitDAO.getHabits());
         tvHabits.setItems(mHabitDAO.getAll());
         tvHabits.setEditable(true);
 
@@ -157,7 +154,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void switchScenes(ActionEvent e) {
-        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+        Main.getInstance().sceneSwitch(e, btnHabits, btnSettings);
     }
 
     @FXML
@@ -202,7 +199,6 @@ public class MainController implements Initializable {
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
         Stage stage = new Stage();
-        //stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
     }

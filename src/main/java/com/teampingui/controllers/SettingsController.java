@@ -20,7 +20,7 @@ public class SettingsController implements Initializable {
     private static final Logger log = LogManager.getLogger(SettingsController.class);
 
     @FXML
-    Button btnHabits, btnChallenge, btnSettings;
+    Button btnHabits, btnSettings;
     @FXML
     Label lName, lDateFormat;
     @FXML
@@ -28,7 +28,7 @@ public class SettingsController implements Initializable {
 
     @FXML
     public void switchScenes(ActionEvent e) {
-        Main.getInstance().sceneSwitch(e, btnHabits, btnChallenge, btnSettings);
+        Main.getInstance().sceneSwitch(e, btnHabits, btnSettings);
     }
 
     @Override

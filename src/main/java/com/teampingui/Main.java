@@ -84,7 +84,7 @@ public class Main extends Application {
         log.info(LocalDateTime.now() + ": Replaced current scene content with " + fxml);
     }
 
-    public void sceneSwitch(ActionEvent e, Button btnHabits, Button btnChallenge, Button btnSettings) {
+    public void sceneSwitch(ActionEvent e, Button btnHabits, Button btnSettings) {
         Object source = e.getSource();
         if (btnHabits.equals(source)) {
             gotoMain();
