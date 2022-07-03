@@ -20,13 +20,6 @@
             </children>
         </HBox>
 
-        <HBox layoutX="378.0" layoutY="251.0" prefHeight="26.0" prefWidth="355.0">
-            <children>
-                <Label fx:id="lDateFormat" prefHeight="20.0" prefWidth="200.0" text="Date format"/>
-                <TextField fx:id="tfDateFormat" prefHeight="24.0" prefWidth="200.0" promptText="2022-12-1"/>
-            </children>
-        </HBox>
-
         <Button fx:id="btnSaveChanges" layoutX="378.0" layoutY="312.0" mnemonicParsing="false" onAction="#saveChanges"
                 prefHeight="26.0" prefWidth="355.0" text="Save changes"/>
 

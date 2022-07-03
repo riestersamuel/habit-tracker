@@ -22,9 +22,9 @@ public class SettingsController implements Initializable {
     @FXML
     Button btnHabits, btnSettings;
     @FXML
-    Label lName, lDateFormat;
+    Label lName;
     @FXML
-    TextField tfName, tfDateFormat;
+    TextField tfName;
 
     @FXML
     public void switchScenes(ActionEvent e) {
@@ -34,13 +34,11 @@ public class SettingsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tfName.setText(Settings.getUsername());
-        tfDateFormat.setText(Settings.getDateFormat());
     }
 
     @FXML
     protected void saveChanges(ActionEvent e) {
         Settings.setUsername(tfName.getText().trim());
-        Settings.setDateFormat(tfDateFormat.getText().trim());
         log.info("Settings saved");
     }
 }
