@@ -161,13 +161,6 @@ public class MainController implements Initializable {
     private void addNewEntry() {
         String sEntry = taNewJournal.getText().trim();
 
-        // Text too long
-        if (sEntry.length() > 200) {
-            showError("Text is too long (max. 200 chars)");
-            log.warn("Text is too long (max. 200 chars)");
-            return;
-        }
-
         // Text empty
         if (sEntry.length() <= 0) {
             showError("Input field can not be empty!");
