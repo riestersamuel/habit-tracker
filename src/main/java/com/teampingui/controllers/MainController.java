@@ -149,15 +149,6 @@ public class MainController implements Initializable {
     private void addNewEntry() {
         String sEntry = taNewJournal.getText().trim();
 
-        // Text too long
-        if (sEntry.length() > 200) {
-            ErrorDialog eDialog = new ErrorDialog(apBackground, "Text is too long (max. 200 chars)");
-            eDialog.show();
-            //showError("Text is too long (max. 200 chars)");
-            log.warn("Text is too long (max. 200 chars)");
-            return;
-        }
-
         // Text empty
         if (sEntry.length() <= 0) {
             ErrorDialog eDialog = new ErrorDialog(apBackground, "Input field can not be empty!");
@@ -172,7 +163,6 @@ public class MainController implements Initializable {
 
         try {
             mJournalDAO.insert(newJournalEntry);
-            lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
             log.info("New entry added: " + newJournalEntry);
         } catch (Exception exception) {
@@ -318,7 +308,7 @@ public class MainController implements Initializable {
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
-    }*/
+    }
 
     public void onClickWeekBefore(ActionEvent actionEvent) {
         changeWeek(false);

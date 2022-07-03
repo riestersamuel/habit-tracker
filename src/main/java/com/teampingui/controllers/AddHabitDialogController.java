@@ -1,6 +1,5 @@
 package com.teampingui.controllers;
 
-import com.teampingui.dao.HabitDAO;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Day;
 import com.teampingui.models.ErrorDialog;
