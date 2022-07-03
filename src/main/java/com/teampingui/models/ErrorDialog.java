@@ -7,6 +7,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -47,22 +48,23 @@ public class ErrorDialog {
     }
 
     private void init() {
-        mVBox = new VBox();
+        ReadOnlyDoubleProperty width = Main.getInstance().getPrimaryStage().widthProperty();
+
+        mVBox = new VBox( );
         mVBox.setId("vbErrorContainer");
         mVBox.prefHeight(43);
-        mVBox.prefWidth(1066);
+        mVBox.prefWidthProperty().bind(width);
 
         mLabel = new Label();
         mLabel.setId("lErrorMsg");
         mLabel.setAlignment(Pos.CENTER);
-        mLabel.prefHeight(33);
-        mLabel.prefWidth(1066);
         mLabel.setTextFill(Color.RED);
+        mLabel.prefWidthProperty().bind(width);
         mVBox.getChildren().add(mLabel);
 
         mProgressBar = new ProgressBar();
         mProgressBar.setId("pbErrorDuration");
-        mProgressBar.prefWidth(1066);
+        mProgressBar.prefWidthProperty().bind(width);
         mProgressBar.setProgress(0.5);
         mProgressBar.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
         mVBox.getChildren().add(mProgressBar);
