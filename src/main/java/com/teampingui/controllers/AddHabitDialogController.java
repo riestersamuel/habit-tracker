@@ -76,7 +76,7 @@ public class AddHabitDialogController implements Initializable {
             }
         }
         if (!someSelected) {
-            ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day");
+            ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day!");
             eDialog.show();
             //showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");
