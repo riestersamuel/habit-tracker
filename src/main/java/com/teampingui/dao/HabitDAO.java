@@ -48,14 +48,12 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     private List<Habit> read() throws SQLException {
-        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         List<Habit> habitEntries = new ArrayList<>();
 
-        try {
-            connection = Database.connect();
+        try (Connection connection = Database.connect()){
 
             String getStringQuery =
                     "SELECT " + DB_TABLE_HABIT + "." + DB_COLUMN_ID + ", " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_HAVETODODAYS + ".weekday) AS weekdays " +
@@ -95,25 +93,19 @@ public class HabitDAO implements IDao<Habit> {
             if (null != statement) {
                 statement.close();
             }
-
-            if (null != connection) {
-                connection.close();
-            }
         }
 
         return habitEntries;
     }
 
     public void loadCheckedData(LocalDate date) throws SQLException, NotInDatabaseException { // TODO: cleanup function
-        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         String fromDate = date.with(DayOfWeek.MONDAY).toString();
         String toDate = date.with(DayOfWeek.SUNDAY).toString();
 
-        try {
-            connection = Database.connect();
+        try (Connection connection = Database.connect()) {
 
             String getStringQuery = "SELECT " + DB_TABLE_HABIT + ".id, " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_CHECKEDDAYS + ".entry_date) AS done_days " +
                     "FROM " + DB_TABLE_HABIT + ", " + DB_TABLE_CHECKEDDAYS +
@@ -150,7 +142,6 @@ public class HabitDAO implements IDao<Habit> {
                     int index = mosHabits.indexOf(rootHabit);
                     mosHabits.get(index).setCheckedDays(new boolean[7]);
                 }
-
             }
         } finally {
             if (null != resultSet) {
@@ -160,12 +151,7 @@ public class HabitDAO implements IDao<Habit> {
             if (null != statement) {
                 statement.close();
             }
-
-            if (null != connection) {
-                connection.close();
-            }
         }
-
     }
 
 
@@ -181,13 +167,11 @@ public class HabitDAO implements IDao<Habit> {
 
     @Override
     public int insert(Habit habit) throws Exception { // TODO: clean this mess up
-        Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int id = 0;
 
-        try {
-            connection = Database.connect();
+        try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
 
             String query = "INSERT INTO " + DB_TABLE_HABIT + " (" + DB_COLUMN_NAME + ", " + DB_COLUMN_REPS + ") VALUES (?,?)";
@@ -222,7 +206,6 @@ public class HabitDAO implements IDao<Habit> {
             }
         } catch (SQLException exception) {
             log.error("An error occurred while inserting a habit into the database." + exception.getMessage());
-            connection.rollback();
             throw new HabitDaoException(exception);
         } finally {
             if (null != resultSet) {
@@ -231,10 +214,6 @@ public class HabitDAO implements IDao<Habit> {
 
             if (null != statement) {
                 statement.close();
-            }
-
-            if (null != connection) {
-                connection.close();
             }
         }
 
@@ -247,19 +226,14 @@ public class HabitDAO implements IDao<Habit> {
 
     @Override
     public void delete(Habit habit) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            connection = Database.connect();
-            connection.setAutoCommit(false);
+        try (Connection connection = Database.connect()) {
 
             // Delete Habit from Database
             String query = "DELETE FROM " + DB_TABLE_HABIT + " WHERE id=?;";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, habit.getDBID());
             statement.executeUpdate();
-            connection.commit();
+            statement.close();
             log.info("Habit '" + habit + "' was successfully deleted from the database.");
         } catch (SQLException exception) {
             log.error("An error occurred while deleting a habit from the database." + exception.getMessage());
@@ -276,14 +250,11 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     public void setIsChecked(Habit habit, LocalDate date, boolean isChecked) {
-        PreparedStatement statement = null;
-
         String checkDate = date.toString();
 
         try (Connection connection = Database.connect()) {
-            connection.setAutoCommit(false);
 
-            String query = "";
+            String query;
 
             if (isChecked) {
                 query = "INSERT INTO " + DB_TABLE_CHECKEDDAYS + " (habit_id, entry_date, done) VALUES (?, date('" + checkDate + "'), 1);";
@@ -291,10 +262,11 @@ public class HabitDAO implements IDao<Habit> {
                 query = "DELETE FROM " + DB_TABLE_CHECKEDDAYS + " WHERE habit_id =? AND entry_date = date('" + checkDate + "');";
             }
 
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, habit.getDBID());
             statement.executeUpdate();
             connection.commit();
+            statement.close();
             mosHabits.get(indexOf(habit)).setChecked(date.getDayOfWeek().getValue() - 1, isChecked);
 
 

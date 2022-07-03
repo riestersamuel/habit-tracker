@@ -2,7 +2,7 @@ package com.teampingui.models;
 
 import java.util.prefs.Preferences;
 
-public class Settings { // TODO: static... singleton..., ...?
+public class Settings {
 
     private static final Preferences prefs;
 

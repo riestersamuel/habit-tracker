@@ -37,15 +37,14 @@ public class JournalDAO implements IDao<JournalEntry> {
     }
 
     private List<JournalEntry> read() throws SQLException {
-        Connection connection = null;
         PreparedStatement statement = null;
         List<JournalEntry> journalEntries = new ArrayList<>();
 
-        try {
-            connection = Database.connect();
+        try(Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
             String query = "SELECT * FROM " + DB_TABLE_NAME + " ORDER BY ID DESC";
             statement = connection.prepareStatement(query);
+            connection.commit();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 JournalEntry journalEntry = new JournalEntry(
@@ -58,14 +57,9 @@ public class JournalDAO implements IDao<JournalEntry> {
             }
         } catch (SQLException exception) {
             log.error("An error occurred while reading journal entries from database.", exception);
-            connection.close();
         } finally {
             if (null != statement) {
                 statement.close();
-            }
-
-            if (null != connection) {
-                connection.close();
             }
         }
 
@@ -82,14 +76,12 @@ public class JournalDAO implements IDao<JournalEntry> {
         return mosJournalEntries;
     }
 
-    public int insert(JournalEntry journalEntry) throws SQLException, JournalDaoException { // TODO: Need for returning inserted id..?
-        Connection connection = null;
+    public int insert(JournalEntry journalEntry) throws SQLException, JournalDaoException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int id = 0;
 
-        try {
-            connection = Database.connect();
+        try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
             String query = "INSERT INTO " + DB_TABLE_NAME + "(" + DB_COLUMN_DATE + ", " + DB_COLUMN_ENTRY + ") VALUES(?, ?)";
             statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -107,7 +99,6 @@ public class JournalDAO implements IDao<JournalEntry> {
             log.info("Successfully insert journal entry '" + journalEntry + "' into database.");
         } catch (SQLException exception) {
             log.error("An error occurred while inserting journal entry into database.", exception);
-            connection.rollback();
             throw new JournalDaoException(exception);
         } finally {
             if (null != resultSet) {
@@ -116,10 +107,6 @@ public class JournalDAO implements IDao<JournalEntry> {
 
             if (null != statement) {
                 statement.close();
-            }
-
-            if (null != connection) {
-                connection.close();
             }
         }
 
@@ -134,19 +121,17 @@ public class JournalDAO implements IDao<JournalEntry> {
     public void delete(JournalEntry journalEntry) {
         // This method is currently only used for a unit test
         // Delete Habit from Database
-        Connection connection = null;
-        PreparedStatement statement = null;
 
-        try {
-            connection = Database.connect();
+        try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
 
             // Delete Habit from Database
             String query = "DELETE FROM " + DB_TABLE_NAME + " WHERE id=?;";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, journalEntry.getID());
             statement.executeUpdate();
             connection.commit();
+            statement.close();
             log.info("Journal entry '" + journalEntry + "' was successfully deleted from the database.");
         } catch (SQLException exception) {
             log.error("An error occurred while deleting a journal entry  from the database." + exception.getMessage());
