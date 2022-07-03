@@ -33,7 +33,7 @@ In order to add a new entry, you need to enter some text into the text area and 
 In order to change the displayed name, you can navigate to the settings menu and enter your name there. After that you can hit the "Save changes" button and return to the main page.
 
 # Developers
-- Beutel, Julius (jb266) 
 - Bestvater, Tom (tb173)
+- Beutel, Julius (jb266)
 - Riester, Samuel (sr185)
 - Singer, Steffen (ss546)
