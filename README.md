@@ -15,7 +15,7 @@ Creating the .jar file:
 3) The jar file can be found in the subfolder ```target/```
 
 ## Starting the program
-After successful compiling you can run ```java -jar target/AddressDatabase-1.0.jar```.
+After successful compiling you can run ```java -jar target/habit-tracker.jar```.
 
 # Instructions
 ## How to track your habits
