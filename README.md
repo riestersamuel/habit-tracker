@@ -10,6 +10,7 @@ Note: In order to run the program you need Maven and Java installed on your comp
 1) Clone the project from [this GitLab page](https://gitlab.mi.hdm-stuttgart.de/ss546/habit-tracker) into a folder on your computer.
 2) Open the terminal in this folder and enter: ```mvn compile```
 3) After successful compiling enter the follwing command: ```mvn exec:java -Dexec.mainClass=com.teampingui.Main```
+4) The program should start now. In the future, you only need to open the terminal in this folder and enter the command from step 3.
 
 # Instructions
 ## How to track your habits
