@@ -110,8 +110,7 @@ public class HabitDAO implements IDao<Habit> {
             String getStringQuery = "SELECT " + DB_TABLE_HABIT + ".id, " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_CHECKEDDAYS + ".entry_date) AS done_days " +
                     "FROM " + DB_TABLE_HABIT + ", " + DB_TABLE_CHECKEDDAYS +
                     " WHERE " + DB_TABLE_HABIT + ".id = " + DB_TABLE_CHECKEDDAYS + "." + DB_COLUMN_HABITID +
-                    " AND " + DB_TABLE_CHECKEDDAYS + ".done = 1 " +
-                    "AND entry_date >= date('" + fromDate + "') AND entry_date <= date('" + toDate + "') " +
+                    " AND entry_date >= date('" + fromDate + "') AND entry_date <= date('" + toDate + "') " +
                     "GROUP BY habit.id;";
 
             statement = connection.prepareStatement(getStringQuery);
@@ -257,7 +256,7 @@ public class HabitDAO implements IDao<Habit> {
             String query;
 
             if (isChecked) {
-                query = "INSERT INTO " + DB_TABLE_CHECKEDDAYS + " (habit_id, entry_date, done) VALUES (?, date('" + checkDate + "'), 1);";
+                query = "INSERT INTO " + DB_TABLE_CHECKEDDAYS + " (habit_id, entry_date) VALUES (?, date('" + checkDate + "'));";
             } else {
                 query = "DELETE FROM " + DB_TABLE_CHECKEDDAYS + " WHERE habit_id =? AND entry_date = date('" + checkDate + "');";
             }
