@@ -73,7 +73,7 @@ public class ErrorDialog {
         } else if (mParent instanceof GridPane) {
             ((GridPane)mParent).getChildren().add(0, mVBox);
         } else {
-            System.out.println("Not supported yet");
+            log.info("Class-type not supported yet");
         }
     }
 
