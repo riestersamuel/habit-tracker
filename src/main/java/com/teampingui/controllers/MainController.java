@@ -173,7 +173,6 @@ public class MainController implements Initializable {
 
         try {
             mJournalDAO.insert(newJournalEntry);
-            lvJournal.getItems().add(0, newJournalEntry);
             taNewJournal.clear();
             log.info("New entry added: " + newJournalEntry);
         } catch (Exception exception) {

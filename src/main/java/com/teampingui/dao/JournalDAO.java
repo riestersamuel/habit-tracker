@@ -94,7 +94,7 @@ public class JournalDAO implements IDao<JournalEntry> {
             if (resultSet.next()) {
                 id = resultSet.getInt(1);
                 journalEntry.setID(id);
-                mosJournalEntries.add(journalEntry);
+                mosJournalEntries.add(0, journalEntry);
             }
             log.info("Successfully insert journal entry '" + journalEntry + "' into database.");
         } catch (SQLException exception) {
