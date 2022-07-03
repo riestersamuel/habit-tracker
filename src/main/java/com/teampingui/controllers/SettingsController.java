@@ -39,6 +39,7 @@ public class SettingsController implements Initializable {
     @FXML
     protected void saveChanges(ActionEvent e) {
         Settings.setUsername(tfName.getText().trim());
+        Main.getInstance().gotoMain();
         log.info("Settings saved");
     }
 }
