@@ -275,41 +275,6 @@ public class MainController implements Initializable {
         }
     }
 
-    /*public void showError(String msg) {
-        vbErrorContainer.setVisible(true);
-        lErrorMsg.setText(msg);
-
-        if (mTimeline != null) {
-            mTimeline.stop();
-        }
-
-        mDialogTime.set(ERROR_DIALOG_TIME * 100);
-        mTimeline = new Timeline();
-        mTimeline.getKeyFrames().add(
-                new KeyFrame(Duration.seconds(ERROR_DIALOG_TIME),
-                        new KeyValue(mDialogTime, 0))
-        );
-        mTimeline.playFromStart();
-
-        Runnable runnable = () -> {
-            log.debug("error message threat started");
-            try {
-                Thread.sleep(ERROR_DIALOG_TIME * 1000L);
-                Platform.runLater(() -> vbErrorContainer.setVisible(false));
-                log.debug("error message is now invisible");
-            } catch (InterruptedException e) {
-                log.debug("error message thread interrupted");
-            }
-        };
-
-        if (mThreadErrorMsg != null && mThreadErrorMsg.isAlive()) {
-            mThreadErrorMsg.interrupt();
-        }
-
-        mThreadErrorMsg = new Thread(runnable);
-        mThreadErrorMsg.start();
-    }
-
     public void onClickWeekBefore(ActionEvent actionEvent) {
         changeWeek(false);
     }
