@@ -48,15 +48,7 @@
             </columns-->
         </TableView>
 
-        <VBox fx:id="vbErrorContainer" layoutY="51.0" prefHeight="43.0" prefWidth="1066.0" visible="false">
-            <children>
-                <Label fx:id="lErrorMsg" alignment="CENTER" prefHeight="33.0" prefWidth="1066.0" text="Error"
-                       textFill="RED"/>
-                <ProgressBar fx:id="pbErrorDuration" prefWidth="1066.0" progress="0.5"/>
-            </children>
-        </VBox>
         <Label fx:id="lDate" layoutX="42.0" layoutY="372.0" prefHeight="16.0" prefWidth="242.0" text="Datum"/>
-
 
     </children>
 </AnchorPane>

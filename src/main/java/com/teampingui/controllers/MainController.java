@@ -23,6 +23,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -45,23 +46,16 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     private static final Logger log = LogManager.getLogger(MainController.class);
-    // Error Message
-    private static final Integer ERROR_DIALOG_TIME = 3;
-    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     // DAO
     private final IDao<JournalEntry> mJournalDAO = new JournalDAO();
     private final IDao<Habit> mHabitDAO = new HabitDAO();
+    @FXML
+    AnchorPane apBackground;
     //General Layout
     @FXML
     Label lWelcome;
     @FXML
     Label lMiniJournal;
-    @FXML
-    VBox vbErrorContainer;
-    @FXML
-    Label lErrorMsg;
-    @FXML
-    ProgressBar pbErrorDuration;
     //Journal
     @FXML
     TextArea taNewJournal; // Hier auslesen
@@ -88,8 +82,6 @@ public class MainController implements Initializable {
     private int doneCounter = 0;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
-    private Timeline mTimeline;
-    private Thread mThreadErrorMsg;
     private boolean mRemoveButtonsVisible = false;
     private LocalDate mDate = LocalDate.now();
 
@@ -103,10 +95,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // Bind Error Msg Time to Progress Bar
-        pbErrorDuration.progressProperty().bind(mDialogTime.divide(ERROR_DIALOG_TIME * 100.0));
-
         // Welcome Message
         lWelcome.setText(Settings.getUsername().isEmpty() ? "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
@@ -163,14 +151,18 @@ public class MainController implements Initializable {
 
         // Text too long
         if (sEntry.length() > 200) {
-            showError("Text is too long (max. 200 chars)");
+            ErrorDialog eDialog = new ErrorDialog(apBackground, "Text is too long (max. 200 chars)");
+            eDialog.show();
+            //showError("Text is too long (max. 200 chars)");
             log.warn("Text is too long (max. 200 chars)");
             return;
         }
 
         // Text empty
         if (sEntry.length() <= 0) {
-            showError("Input field can not be empty!");
+            ErrorDialog eDialog = new ErrorDialog(apBackground, "Input field can not be empty!");
+            eDialog.show();
+            //showError("Input field can not be empty!");
             log.warn("Input field can not be empty!");
             return;
         }
@@ -293,7 +285,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void showError(String msg) {
+    /*public void showError(String msg) {
         vbErrorContainer.setVisible(true);
         lErrorMsg.setText(msg);
 
@@ -326,7 +318,7 @@ public class MainController implements Initializable {
 
         mThreadErrorMsg = new Thread(runnable);
         mThreadErrorMsg.start();
-    }
+    }*/
 
     public void onClickWeekBefore(ActionEvent actionEvent) {
         changeWeek(false);
