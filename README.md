@@ -6,17 +6,10 @@ When you don’t want to remove a habit, just click on the “Remove Habit” bu
 On the right side of the screen is the “Daily Journal ''. Here you can write a short paragraph (no more than 200 Words) to keep track of your thoughts or things you’ve done over the day.
 
 # Installing and starting the program
-In order to run the program you need Maven and Java installed on your computer. You can find Java on [this page](https://www.oracle.com/java/technologies/javase-jre-downloads.html).
-Then you should clone the project from [this GitLab page](https://gitlab.mi.hdm-stuttgart.de/ss546/habit-tracker) into a folder on your computer.
-
-## Compiling the program
-Creating the ```.jar``` file:
-1) Move to the root folder of the project and open the terminal there
-2) Create the jar package by entering: ```mvn package```
-3) The jar file can be found in the subfolder ```target/```
-
-## Starting the program
-After successful compiling you can run ```java -jar target/habitTracker-1.0.jar```
+Note: In order to run the program you need Maven and Java installed on your computer.
+1) Clone the project from [this GitLab page](https://gitlab.mi.hdm-stuttgart.de/ss546/habit-tracker) into a folder on your computer.
+2) Open the terminal in this folder and enter: ```mvn compile```
+3) After successful compiling enter the follwing command: ```mvn exec:java -Dexec.mainClass=com.teampingui.Main```
 
 # Instructions
 ## How to track your habits
