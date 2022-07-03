@@ -258,11 +258,7 @@ public class MainController implements Initializable {
      * @param habit     the habit which belongs to the clicked checkbox (same row)
      * @param day       shows wich checkbox is clicked
      */
-    private void checkboxClicked(boolean isChecked, Habit habit, Day day) { // TODO: cleanup
-        // System.out.println("Checked: " + isChecked);
-        // System.out.println("Day: " + day);
-        // System.out.println("Habit: " + habit.repsProperty().getValue());
-        // habit.checkedDays(day); // TODO: use this instead of is Checked..?
+    private void checkboxClicked(boolean isChecked, Habit habit, Day day) {
         ((HabitDAO)mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked); // TODO: solve this without a cast
 
         if (habit.hasToBeDone(day)) {

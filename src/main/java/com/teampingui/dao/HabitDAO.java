@@ -98,7 +98,7 @@ public class HabitDAO implements IDao<Habit> {
         return habitEntries;
     }
 
-    public void loadCheckedData(LocalDate date) throws SQLException, NotInDatabaseException { // TODO: cleanup function
+    public void loadCheckedData(LocalDate date) throws SQLException, NotInDatabaseException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
@@ -165,7 +165,7 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     @Override
-    public int insert(Habit habit) throws Exception { // TODO: clean this mess up
+    public int insert(Habit habit) throws Exception {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         int id = 0;
