@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <DialogPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="280.0" xmlns="http://javafx.com/javafx/18"
-            fx:controller="com.teampingui.controllers.AddHabitDialogController">
+            fx:id="dpRoot" fx:controller="com.teampingui.controllers.AddHabitDialogController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                   prefHeight="480.0" prefWidth="280.0">
@@ -54,15 +54,6 @@
                 </GridPane.margin>
                 <VBox prefHeight="200.0" prefWidth="100.0"/>
             </Button>
-            <VBox fx:id="vbErrorContainer" visible="false">
-                <Label fx:id="lErrorMsgHabit" alignment="CENTER" prefHeight="33.0" prefWidth="1066.0" text="Error"
-                       textFill="RED">
-                    <font>
-                        <Font size="1.0"/>
-                    </font>
-                </Label>
-                <ProgressBar fx:id="pbErrorDuration" prefWidth="1066.0" progress="0.5"/>
-            </VBox>
         </GridPane>
     </content>
 </DialogPane>

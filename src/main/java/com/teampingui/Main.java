@@ -19,7 +19,7 @@ public class Main extends Application {
     private static final Logger log = LogManager.getLogger(Main.class);
     // Singleton
     private static Main instance;
-    private Stage stage;
+    private Stage mPrimaryStage;
 
     public Main() {
         instance = this;
@@ -37,7 +37,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         if (Database.isOK()) {
             try {
-                stage = primaryStage;
+                mPrimaryStage = primaryStage;
                 gotoMain();
                 primaryStage.show();
                 log.info(LocalDateTime.now() + ": Application started");
@@ -70,17 +70,17 @@ public class Main extends Application {
         FXMLLoader lloader = new FXMLLoader();
         lloader.setLocation(getClass().getResource("/fxml/" + fxml));
         Parent page = lloader.load();
-        Scene scene = stage.getScene();
+        Scene scene = mPrimaryStage.getScene();
         if (scene == null) {
             scene = new Scene(page);
             //Importing our own css sheet
             scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
-            stage.setScene(scene);
-            stage.setResizable(false);
+            mPrimaryStage.setScene(scene);
+            mPrimaryStage.setResizable(false);
         } else {
-            stage.getScene().setRoot(page);
+            mPrimaryStage.getScene().setRoot(page);
         }
-        stage.sizeToScene();
+        mPrimaryStage.sizeToScene();
         log.info(LocalDateTime.now() + ": Replaced current scene content with " + fxml);
     }
 
@@ -93,5 +93,9 @@ public class Main extends Application {
         } else {
             throw new IllegalStateException("Unexpected value: " + e.getSource());
         }
+    }
+
+    public Stage getPrimaryStage() {
+        return mPrimaryStage;
     }
 }
