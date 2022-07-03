@@ -201,6 +201,7 @@ public class MainController implements Initializable {
         if (mRemoveButtonsVisible) {
             TableColumn<Habit, Boolean> tcDelete = new TableColumn<>("");
             tcDelete.setPrefWidth(28);
+            tcDelete.setSortable(false);
 
             double newWidth = tvHabits.getColumns().get(8).getWidth() - 28;
             tvHabits.getColumns().get(8).setPrefWidth(newWidth);
@@ -241,6 +242,7 @@ public class MainController implements Initializable {
         for (final Day day : Day.values()) {
             TableColumn<Habit, Boolean> tc = new TableColumn<>(day.getShortDay());
             tc.setPrefWidth(60);
+            tc.setSortable(false);
             tc.setCellValueFactory(habitBooleanCellDataFeatures -> habitBooleanCellDataFeatures.getValue().checkedDays(day));
             tc.setCellFactory(checkbox -> new DayCell((isChecked, habit) -> checkboxClicked(isChecked, habit, day), day));
             alCheckboxes.add(tc);
@@ -258,6 +260,7 @@ public class MainController implements Initializable {
         cols.add(tcName);
         cols.addAll(alCheckboxes);
         cols.add(tcReps);
+
     }
 
     /**
