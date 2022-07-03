@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -31,7 +32,7 @@ public class AddHabitDialogController implements Initializable {
     private static final Logger log = LogManager.getLogger(MainController.class);
     private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     @FXML
-    DialogPane dpRoot;
+    GridPane bpDialog;
     @FXML
     ListView<CheckBox> lvWeekdays;
     @FXML
@@ -60,7 +61,7 @@ public class AddHabitDialogController implements Initializable {
     void addNewHabit(ActionEvent e) {
         String name = tfNewHabitName.getText().trim();
         if (name.length() == 0) {
-            ErrorDialog eDialog = new ErrorDialog(dpRoot, "Inputfield can not be empty!");
+            ErrorDialog eDialog = new ErrorDialog(bpDialog, "Inputfield can not be empty!");
             eDialog.show();
             //showError("Inputfield can not be empty!");
             log.warn("Inputfield can not be empty!");
@@ -75,7 +76,7 @@ public class AddHabitDialogController implements Initializable {
             }
         }
         if (!someSelected) {
-            ErrorDialog eDialog = new ErrorDialog(dpRoot, "You have to select at least one day");
+            ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day");
             eDialog.show();
             //showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");

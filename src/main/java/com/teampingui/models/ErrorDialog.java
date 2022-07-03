@@ -70,8 +70,8 @@ public class ErrorDialog {
         if (mParent instanceof AnchorPane) {
             mVBox.setLayoutY(51);
             ((AnchorPane)mParent).getChildren().add(mVBox);
-        } else if (mParent instanceof DialogPane) {
-            ((DialogPane)mParent).getChildren().add(mVBox);
+        } else if (mParent instanceof GridPane) {
+            ((GridPane)mParent).getChildren().add(0, mVBox);
         } else {
             System.out.println("Not supported yet");
         }

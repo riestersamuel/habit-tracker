@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <DialogPane xmlns:fx="http://javafx.com/fxml/1" prefWidth="280.0" xmlns="http://javafx.com/javafx/18"
-            fx:id="dpRoot" fx:controller="com.teampingui.controllers.AddHabitDialogController">
+           fx:controller="com.teampingui.controllers.AddHabitDialogController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  prefHeight="480.0" prefWidth="280.0">
+                  fx:id="bpDialog" prefHeight="480.0" prefWidth="280.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
             </columnConstraints>
