@@ -13,6 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JournalDAO implements IDao<JournalEntry> {
     private static final String DB_TABLE_NAME = "journal";
@@ -40,9 +41,9 @@ public class JournalDAO implements IDao<JournalEntry> {
         PreparedStatement statement = null;
         List<JournalEntry> journalEntries = new ArrayList<>();
 
-        try(Connection connection = Database.connect()) {
+        try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
-            String query = "SELECT * FROM " + DB_TABLE_NAME + " ORDER BY ID DESC";
+            String query = "SELECT * FROM " + DB_TABLE_NAME;
             statement = connection.prepareStatement(query);
             connection.commit();
             ResultSet resultSet = statement.executeQuery();
@@ -63,7 +64,10 @@ public class JournalDAO implements IDao<JournalEntry> {
             }
         }
 
-        return journalEntries;
+        // Sort before return (the latest entry on top of the list)
+        // Could also be done directly with SQL, but we need streams... :)
+        return journalEntries.stream().sorted((o2, o1) -> o1.getDate().compareTo(o2.getDate())).
+                collect(Collectors.toList());
     }
 
     @Override
