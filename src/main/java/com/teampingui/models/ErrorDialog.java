@@ -1,7 +1,6 @@
 package com.teampingui.models;
 
 import com.teampingui.Main;
-import com.teampingui.controllers.MainController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
