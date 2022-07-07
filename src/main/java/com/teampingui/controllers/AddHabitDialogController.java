@@ -1,9 +1,7 @@
 package com.teampingui.controllers;
 
 import com.teampingui.interfaces.IDao;
-import com.teampingui.models.Day;
-import com.teampingui.models.ErrorDialog;
-import com.teampingui.models.Habit;
+import com.teampingui.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,12 +28,17 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     TextField tfNewHabitName;
 
+    private ErrorDialog mErrorDialog;
+
     private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
 
     private IDao<Habit> mHabitDAO;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // ErrorDialog
+        mErrorDialog = DialogFactory.createDialog(DialogType.ERROR, bpDialog);
+
         //Add Checkboxes
         for (Day d : Day.values()) {
             checkBoxes.add(new CheckBox(d.getDay()));
@@ -52,8 +55,8 @@ public class AddHabitDialogController implements Initializable {
         String name = tfNewHabitName.getText().trim();
         lAddHabitHeading.toBack();
         if (name.length() == 0) {
-            ErrorDialog eDialog = new ErrorDialog(bpDialog, "Inputfield can not be empty!");
-            eDialog.show();
+            mErrorDialog.setMsg("Inputfield can not be empty!");
+            mErrorDialog.show();
             lAddHabitHeading.toBack();
             log.warn("Inputfield can not be empty!");
             return;
@@ -67,8 +70,8 @@ public class AddHabitDialogController implements Initializable {
             }
         }
         if (!someSelected) {
-            ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day!");
-            eDialog.show();
+            mErrorDialog.setMsg("You have to select at least one day!");
+            mErrorDialog.show();
             lAddHabitHeading.toBack();
             log.warn("You have to select at least 1 day");
             return;

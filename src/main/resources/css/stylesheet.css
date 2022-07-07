@@ -38,6 +38,11 @@
     -fx-background-color: #fff;
 }
 
+#dpHabit {
+    -fx-padding: 0;
+    -fx-start-margin: 0;
+}
+
 .text-area {
     -fx-background-color: #ffffff;
     -fx-border-color: #dadada;
@@ -66,8 +71,14 @@
     -fx-end-margin: 0;
 }
 
+#bpDialog {
+    -fx-padding: 0;
+    -fx-start-margin: 0;
+    -fx-end-margin: 0;
+}
+
 #vbErrorContainer {
-    -fx-background-color: #E3675B;
+    /*-fx-background-color: #E3675B;*/
     -fx-border-color: #E3675B;
     -fx-border-width: 2;
     -fx-text-fill: white;

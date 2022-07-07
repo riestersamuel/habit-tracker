@@ -70,12 +70,16 @@ public class MainController implements Initializable {
     private ProgressBar habitsProgress;
     @FXML
     private Label progressDisplay;
-    private int haveTodoCounter = 0;
-    private int doneCounter = 0;
     @FXML
     private TableView<Habit> tvHabits = new TableView<>();
+
+
+    private int haveTodoCounter = 0;
+    private int doneCounter = 0;
     private boolean mRemoveButtonsVisible = false;
     private LocalDate mDate = LocalDate.now();
+
+    private ErrorDialog mErrorDialog;
 
     public MainController() {
     }
@@ -94,6 +98,9 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // ErrorDialog
+        mErrorDialog = DialogFactory.createDialog(DialogType.ERROR, apBackground);
+
         // Welcome Message
         lWelcome.setText(Settings.getUsername().isEmpty() ? "Welcome!" : "Welcome " + Settings.getUsername() + "!");
 
@@ -150,8 +157,8 @@ public class MainController implements Initializable {
 
         // Text empty
         if (sEntry.length() <= 0) {
-            ErrorDialog eDialog = new ErrorDialog(apBackground, "Input field can not be empty!");
-            eDialog.show();
+            mErrorDialog.setMsg("You have to select at least one day!");
+            mErrorDialog.show();
             log.warn("Input field can not be empty!");
             return;
         }

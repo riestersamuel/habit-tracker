@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -35,10 +36,13 @@ public class ErrorDialog {
     private Thread mThreadErrorMsg;
 
     private String mMsg;
-    private Parent mParent;
+    private final Parent mParent;
+    private final String mHexBG;
+    private final String mHexBorderColor;
 
-    public ErrorDialog(Parent parent, String message) {
-        mMsg = message;
+    public ErrorDialog(Parent parent, String bgColor, String borderColor) {
+        mHexBG = bgColor;
+        mHexBorderColor = borderColor;
         mParent = parent;
         init();
     }
@@ -47,14 +51,18 @@ public class ErrorDialog {
         ReadOnlyDoubleProperty width = Main.getInstance().getPrimaryStage().widthProperty();
 
         mVBox = new VBox( );
+        mVBox.setVisible(false);
         mVBox.setId("vbErrorContainer");
         mVBox.prefHeight(43);
         mVBox.prefWidthProperty().bind(width);
+        //mVBox.setBackground();
+        mVBox.setStyle("" +
+                "-fx-background-color: " + mHexBG + ";" +
+                "-fx-border-color: " + mHexBorderColor + ";");
 
         mLabel = new Label();
         mLabel.setId("lErrorMsg");
         mLabel.setAlignment(Pos.CENTER);
-        mLabel.setTextFill(Color.RED);
         mLabel.prefWidthProperty().bind(width);
         mVBox.getChildren().add(mLabel);
 
@@ -75,17 +83,9 @@ public class ErrorDialog {
         }
     }
 
-    /*
-    <VBox fx:id="vbErrorContainer" visible="false">
-                <Label fx:id="lErrorMsgHabit" alignment="CENTER" prefHeight="33.0" prefWidth="1066.0" text="Error"
-                       textFill="RED">
-                    <font>
-                        <Font size="1.0"/>
-                    </font>
-                </Label>
-                <ProgressBar fx:id="pbErrorDuration" prefWidth="1066.0" progress="0.5"/>
-            </VBox>
-     */
+    public void setMsg(String msg) {
+        mMsg = msg;
+    }
 
     public void show() {
         mVBox.setVisible(true);
