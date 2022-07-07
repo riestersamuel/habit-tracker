@@ -13,10 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,7 +48,7 @@ public class ErrorDialog {
     private void init() {
         ReadOnlyDoubleProperty width = Main.getInstance().getPrimaryStage().widthProperty();
 
-        mVBox = new VBox( );
+        mVBox = new VBox();
         mVBox.setVisible(false);
         mVBox.setId("vbErrorContainer");
         mVBox.prefHeight(43);
@@ -75,9 +73,9 @@ public class ErrorDialog {
 
         if (mParent instanceof AnchorPane) {
             mVBox.setLayoutY(51);
-            ((AnchorPane)mParent).getChildren().add(mVBox);
+            ((AnchorPane) mParent).getChildren().add(mVBox);
         } else if (mParent instanceof GridPane) {
-            ((GridPane)mParent).getChildren().add(0, mVBox);
+            ((GridPane) mParent).getChildren().add(0, mVBox);
         } else {
             log.info("Class-type not supported yet");
         }

@@ -26,7 +26,6 @@ public class Database {
     }
 
     /**
-     *
      * @return when true -> Program is able to start. When false -> Program won't start and return an error message
      */
     private static boolean checkDrivers() {
@@ -69,7 +68,6 @@ public class Database {
     }
 
     /**
-     *
      * @return Connection Object to connect to the Database
      */
     protected static Connection connect() {

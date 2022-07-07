@@ -1,6 +1,5 @@
 package com.teampingui.interfaces;
 
-import com.teampingui.models.Habit;
 import javafx.collections.ObservableList;
 
 import java.util.Optional;

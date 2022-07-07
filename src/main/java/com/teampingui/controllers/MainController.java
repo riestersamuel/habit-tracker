@@ -92,9 +92,10 @@ public class MainController implements Initializable {
     /**
      * Needed, because this class implements Initializable
      * Called to initialize a controller after its root element has been completely processed.
-     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
-     * --> Both params are not used in this method.
+     *                       --> Both params are not used in this method.
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -274,7 +275,7 @@ public class MainController implements Initializable {
      * @param day       shows wich checkbox is clicked
      */
     private void checkboxClicked(boolean isChecked, Habit habit, Day day) {
-        ((HabitDAO)mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked);
+        ((HabitDAO) mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked);
 
         if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
@@ -301,10 +302,10 @@ public class MainController implements Initializable {
         try {
             if (nextWeek) {
                 mDate = mDate.plusDays(7);
-                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);
+                ((HabitDAO) mHabitDAO).loadCheckedData(mDate);
             } else {
                 mDate = mDate.minusDays(7);
-                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);
+                ((HabitDAO) mHabitDAO).loadCheckedData(mDate);
             }
             updateProgressBar();
             displayTableDate();

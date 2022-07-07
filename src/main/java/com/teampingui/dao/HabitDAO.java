@@ -48,7 +48,6 @@ public class HabitDAO implements IDao<Habit> {
     }
 
     /**
-     *
      * @return List of habit Entries from Database
      * @throws SQLException
      */
@@ -58,7 +57,7 @@ public class HabitDAO implements IDao<Habit> {
 
         List<Habit> habitEntries = new ArrayList<>();
 
-        try (Connection connection = Database.connect()){
+        try (Connection connection = Database.connect()) {
 
             String getStringQuery =
                     "SELECT " + DB_TABLE_HABIT + "." + DB_COLUMN_ID + ", " + DB_TABLE_HABIT + "." + DB_COLUMN_NAME + ", GROUP_CONCAT(" + DB_TABLE_HAVETODODAYS + ".weekday) AS weekdays " +

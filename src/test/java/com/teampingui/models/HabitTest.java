@@ -1,13 +1,9 @@
 package com.teampingui.models;
 
 import com.teampingui.exceptions.NotInDatabaseException;
-import javafx.beans.property.StringProperty;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HabitTest {
 

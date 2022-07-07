@@ -3,9 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <DialogPane fx:id="dpHabit" xmlns:fx="http://javafx.com/fxml/1" prefWidth="280.0" xmlns="http://javafx.com/javafx/18"
-           fx:controller="com.teampingui.controllers.AddHabitDialogController">
+            fx:controller="com.teampingui.controllers.AddHabitDialogController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                   fx:id="bpDialog" prefHeight="480.0" prefWidth="280.0">
