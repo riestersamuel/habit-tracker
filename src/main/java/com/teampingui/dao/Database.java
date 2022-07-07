@@ -15,7 +15,7 @@ public class Database {
     /**
      * Reuired Table for Programm to work
      */
-    private static final String REQUIRED_TABLE = "journal";
+    private static final String REQUIRED_TABLE = "habit";
     //Initializing the logger
     private static final Logger log = LogManager.getLogger(Database.class);
 
@@ -25,6 +25,10 @@ public class Database {
         return checkTables();
     }
 
+    /**
+     *
+     * @return when true -> Program is able to start. When false -> Program won't start and return an error message
+     */
     private static boolean checkDrivers() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -64,6 +68,10 @@ public class Database {
         return false;
     }
 
+    /**
+     *
+     * @return Connection Object to connect to the Database
+     */
     protected static Connection connect() {
         String dbPrefix = "jdbc:sqlite:";
         Connection connection;

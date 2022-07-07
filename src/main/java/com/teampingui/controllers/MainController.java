@@ -93,6 +93,13 @@ public class MainController implements Initializable {
         return lines.length;
     }
 
+    /**
+     * Needed, because this class implements Initializable
+     * Called to initialize a controller after its root element has been completely processed.
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     * --> Both params are not used in this method.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Welcome Message
@@ -185,6 +192,13 @@ public class MainController implements Initializable {
         stage.showAndWait();
     }
 
+    /**
+     * Adds a new Column to the tableview (tcDelete) with boolean type
+     * When selecting the Habit you want to remove, an alert window pops up
+     * When pressing "yes" -> Habit gets deleted from Database. "No" -> Action is cancelled
+     *
+     * @param actionEvent By clicking on the button, this action is called.
+     */
     @FXML
     public void removeHabit(ActionEvent actionEvent) {
         mRemoveButtonsVisible = !mRemoveButtonsVisible;
@@ -221,6 +235,10 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Dynamically adds the Columns to the tableview during runtime
+     * Columns: Name if Habit, Weeksdays (Mon - Sun), Repetitions
+     */
     private void dynamicallyAddTableCols() {
         // Column: habit name
         TableColumn<Habit, String> tcName = new TableColumn<>("Habit");

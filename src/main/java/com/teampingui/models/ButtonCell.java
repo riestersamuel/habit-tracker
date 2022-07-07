@@ -10,12 +10,7 @@ public class ButtonCell extends TableCell<Habit, Boolean> {
     final Button mCellButton = new Button("-");
 
     public ButtonCell(final IButtonClickListener clickListener) {
-        mCellButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                clickListener.onClick(getIndex());
-            }
-        });
+        mCellButton.setOnAction(t -> clickListener.onClick(getIndex()));
     }
 
     @Override

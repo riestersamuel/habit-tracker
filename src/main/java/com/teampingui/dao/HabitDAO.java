@@ -47,6 +47,11 @@ public class HabitDAO implements IDao<Habit> {
 
     }
 
+    /**
+     *
+     * @return List of habit Entries from Database
+     * @throws SQLException
+     */
     private List<Habit> read() throws SQLException {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
