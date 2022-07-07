@@ -274,7 +274,7 @@ public class MainController implements Initializable {
      * @param day       shows wich checkbox is clicked
      */
     private void checkboxClicked(boolean isChecked, Habit habit, Day day) {
-        ((HabitDAO)mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked); // TODO: solve this without a cast
+        ((HabitDAO)mHabitDAO).setIsChecked(habit, mDate.with(day.getDayOfWeek()), isChecked);
 
         if (habit.hasToBeDone(day)) {
             doneCounter += isChecked ? 1 : -1;
@@ -301,10 +301,10 @@ public class MainController implements Initializable {
         try {
             if (nextWeek) {
                 mDate = mDate.plusDays(7);
-                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);  // TODO: solve this without a cast
+                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);
             } else {
                 mDate = mDate.minusDays(7);
-                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);  // TODO: solve this without a cast
+                ((HabitDAO)mHabitDAO).loadCheckedData(mDate);
             }
             updateProgressBar();
             displayTableDate();
