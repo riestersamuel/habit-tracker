@@ -60,6 +60,7 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     void addNewHabit(ActionEvent e) {
         String name = tfNewHabitName.getText().trim();
+        lAddHabitHeading.toBack();
         if (name.length() == 0) {
             ErrorDialog eDialog = new ErrorDialog(bpDialog, "Inputfield can not be empty!");
             eDialog.show();
