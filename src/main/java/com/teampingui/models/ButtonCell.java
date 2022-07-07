@@ -1,8 +1,6 @@
 package com.teampingui.models;
 
 import com.teampingui.interfaces.IButtonClickListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 
