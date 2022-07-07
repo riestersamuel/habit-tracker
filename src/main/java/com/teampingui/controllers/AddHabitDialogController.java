@@ -63,6 +63,7 @@ public class AddHabitDialogController implements Initializable {
         if (name.length() == 0) {
             ErrorDialog eDialog = new ErrorDialog(bpDialog, "Inputfield can not be empty!");
             eDialog.show();
+            lAddHabitHeading.setVisible(false);
             //showError("Inputfield can not be empty!");
             log.warn("Inputfield can not be empty!");
             return;
@@ -78,6 +79,7 @@ public class AddHabitDialogController implements Initializable {
         if (!someSelected) {
             ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day!");
             eDialog.show();
+            lAddHabitHeading.setVisible(false);
             //showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");
             return;
