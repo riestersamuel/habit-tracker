@@ -24,6 +24,9 @@ public class DayCell extends TableCell<Habit, Boolean> {
         this.setEditable(true);
     }
 
+    /**
+     * changes colors for checkboxes in Habit Table
+     */
     private void switchStyle() {
         boolean hasTodo = getTableView().getItems().get(getIndex()).hasToBeDone(mDay);
         mCheckBox.getStyleClass().removeAll("cb-haveto", "cb-done", "cb-donthaveto");

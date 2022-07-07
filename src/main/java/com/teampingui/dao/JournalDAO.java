@@ -123,9 +123,6 @@ public class JournalDAO implements IDao<JournalEntry> {
 
     @Override
     public void delete(JournalEntry journalEntry) {
-        // This method is currently only used for a unit test
-        // Delete Habit from Database
-
         try (Connection connection = Database.connect()) {
             connection.setAutoCommit(false);
 

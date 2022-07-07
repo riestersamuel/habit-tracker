@@ -111,7 +111,7 @@ public class MainController implements Initializable {
         //journal wordCount
         wordCount.textProperty().bind(taNewJournal.textProperty().length().asString("%d/" + MAX_CHARS));
 
-        // Date
+        // Date for Habit Table
         displayTableDate();
 
         // Habits
@@ -152,11 +152,11 @@ public class MainController implements Initializable {
         if (sEntry.length() <= 0) {
             ErrorDialog eDialog = new ErrorDialog(apBackground, "Input field can not be empty!");
             eDialog.show();
-            //showError("Input field can not be empty!");
             log.warn("Input field can not be empty!");
             return;
         }
 
+        // Set current date for journal entry
         String sCurrentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
         JournalEntry newJournalEntry = new JournalEntry(sCurrentDate, sEntry);
 
@@ -188,8 +188,6 @@ public class MainController implements Initializable {
      * Adds a new Column to the tableview (tcDelete) with boolean type
      * When selecting the Habit you want to remove, an alert window pops up
      * When pressing "yes" -> Habit gets deleted from Database. "No" -> Action is cancelled
-     *
-     * @param actionEvent By clicking on the button, this action is called.
      */
     @FXML
     public void removeHabit() {
