@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
     private static final Logger log = LogManager.getLogger(MainController.class);
+    private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
     @FXML
     GridPane bpDialog;
     @FXML
@@ -27,11 +28,7 @@ public class AddHabitDialogController implements Initializable {
     Label lAddHabitHeading;
     @FXML
     TextField tfNewHabitName;
-
     private ErrorDialog mErrorDialog;
-
-    private final ObservableList<CheckBox> checkBoxes = FXCollections.observableArrayList();
-
     private IDao<Habit> mHabitDAO;
 
     @Override

@@ -25,18 +25,15 @@ public class ErrorDialog {
     // Error Message
     private static final Integer ERROR_DIALOG_TIME = 3;
     private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
-
-    private VBox mVBox;
-    private Label mLabel;
-    private ProgressBar mProgressBar;
-
-    private Timeline mTimeline;
-    private Thread mThreadErrorMsg;
-
-    private String mMsg;
     private final Parent mParent;
     private final String mHexBG;
     private final String mHexBorderColor;
+    private VBox mVBox;
+    private Label mLabel;
+    private ProgressBar mProgressBar;
+    private Timeline mTimeline;
+    private Thread mThreadErrorMsg;
+    private String mMsg;
 
     public ErrorDialog(Parent parent, String bgColor, String borderColor) {
         mHexBG = bgColor;

@@ -3,7 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<DialogPane fx:id="dpHabit" xmlns:fx="http://javafx.com/fxml/1" prefWidth="280.0" xmlns="http://javafx.com/javafx/18"
+<DialogPane xmlns:fx="http://javafx.com/fxml/1" fx:id="dpHabit" prefWidth="280.0" xmlns="http://javafx.com/javafx/18"
             fx:controller="com.teampingui.controllers.AddHabitDialogController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
