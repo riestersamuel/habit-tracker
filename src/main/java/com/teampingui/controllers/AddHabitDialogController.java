@@ -4,12 +4,6 @@ import com.teampingui.interfaces.IDao;
 import com.teampingui.models.Day;
 import com.teampingui.models.ErrorDialog;
 import com.teampingui.models.Habit;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,15 +20,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddHabitDialogController implements Initializable {
-    private static final Integer ERROR_DIALOG_TIME = 3;
     private static final Logger log = LogManager.getLogger(MainController.class);
-    private final IntegerProperty mDialogTime = new SimpleIntegerProperty(ERROR_DIALOG_TIME * 100);
     @FXML
     GridPane bpDialog;
     @FXML
     ListView<CheckBox> lvWeekdays;
     @FXML
-    Label lAddHabitHeading, lErrorMsgHabit;
+    Label lAddHabitHeading;
     @FXML
     TextField tfNewHabitName;
 
@@ -60,9 +50,11 @@ public class AddHabitDialogController implements Initializable {
     @FXML
     void addNewHabit(ActionEvent e) {
         String name = tfNewHabitName.getText().trim();
+        lAddHabitHeading.toBack();
         if (name.length() == 0) {
             ErrorDialog eDialog = new ErrorDialog(bpDialog, "Inputfield can not be empty!");
             eDialog.show();
+            lAddHabitHeading.toBack();
             //showError("Inputfield can not be empty!");
             log.warn("Inputfield can not be empty!");
             return;
@@ -78,6 +70,7 @@ public class AddHabitDialogController implements Initializable {
         if (!someSelected) {
             ErrorDialog eDialog = new ErrorDialog(bpDialog, "You have to select at least one day!");
             eDialog.show();
+            lAddHabitHeading.toBack();
             //showError("You have to select at least 1 day");
             log.warn("You have to select at least 1 day");
             return;

@@ -6,13 +6,7 @@ import com.teampingui.dao.JournalDAO;
 import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.interfaces.IDao;
 import com.teampingui.models.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,9 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -179,7 +171,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void openHabitDialog(ActionEvent e) throws IOException {
+    void openHabitDialog() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/AddHabitDialog.fxml"));
         Parent parent = fxmlLoader.load();
         AddHabitDialogController dialogController = fxmlLoader.getController();
@@ -200,7 +192,7 @@ public class MainController implements Initializable {
      * @param actionEvent By clicking on the button, this action is called.
      */
     @FXML
-    public void removeHabit(ActionEvent actionEvent) {
+    public void removeHabit() {
         mRemoveButtonsVisible = !mRemoveButtonsVisible;
         if (mRemoveButtonsVisible) {
             TableColumn<Habit, Boolean> tcDelete = new TableColumn<>("");
@@ -292,11 +284,11 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onClickWeekBefore(ActionEvent actionEvent) {
+    public void onClickWeekBefore() {
         changeWeek(false);
     }
 
-    public void onClickWeekNext(ActionEvent actionEvent) {
+    public void onClickWeekNext() {
         changeWeek(true);
     }
 
