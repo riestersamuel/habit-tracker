@@ -13,7 +13,7 @@ public class Database {
      */
     public static final String LOCATION = Main.class.getResource("/database/database.db").toExternalForm();
     /**
-     * Reuired Table for Programm to work
+     * Required Table for Programm to work
      */
     private static final String REQUIRED_TABLE = "journal";
     //Initializing the logger
