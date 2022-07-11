@@ -28,7 +28,7 @@ public class Habit {
         this.name = new SimpleStringProperty(name);
         int reps = 0;
         for (int i = 0; i < checkedDays.length; i++) {
-            reps += haveTodoDays[i] ? 1 : 0;
+                reps += haveTodoDays[i] ? 1 : 0;
             this.haveTodoDays[i] = haveTodoDays[i];
             this.checkedDays[i] = new SimpleBooleanProperty(false);
         }
