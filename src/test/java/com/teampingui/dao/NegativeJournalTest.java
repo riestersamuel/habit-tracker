@@ -1,24 +1,26 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
+import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.models.JournalEntry;
 import org.junit.Test;
 
 import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class NegativeJournalTest {
     JournalDAO journalDAO = new JournalDAO();
     JournalEntry journalEntry = new JournalEntry("05.05.1999", null);
 
-    //We assume that a runtime exception is thrown when the entry is null
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testInsertJournalEntry() {
         try {
             journalDAO.insert(journalEntry);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } catch (JournalDaoException e) {
-            throw new RuntimeException(e);
+            System.out.println("Right exception thrown (JournalDaoException)");
+        } catch (Exception e) {
+            fail("Unexpected exception call in testInsertJournalEntry. Expected JournalDaoException");
         }
     }
 

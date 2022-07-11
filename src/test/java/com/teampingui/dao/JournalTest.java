@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.sql.SQLException;
 
 class JournalTest {
@@ -16,10 +18,8 @@ class JournalTest {
     public void testInsertJournalEntry() {
         try {
             journalDAO.insert(journalEntry);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (JournalDaoException e) {
-            throw new RuntimeException(e);
+        } catch (JournalDaoException | SQLException e) {
+            fail("Insert journal was not successfully in testInsertJournalEntry", e);
         }
     }
 
