@@ -6,17 +6,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class JournalEntryTest {
-
     JournalEntry journalEntry;
 
     @BeforeEach
     void setUp() {
-        journalEntry = new JournalEntry(999, "20.07.2020", "This is a test entry for UnitTests");
+        journalEntry = new JournalEntry(901, "20.07.2020", "This entry should work fine");
     }
 
     @Test
     void getDate() {
         Assertions.assertEquals("20.07.2020", journalEntry.getDate());
+
+
     }
 
     @Test
@@ -27,7 +28,7 @@ class JournalEntryTest {
 
     @Test
     void getContent() {
-        Assertions.assertEquals("This is a test entry for UnitTests", journalEntry.getContent());
+        Assertions.assertEquals("This entry should work fine", journalEntry.getContent());
     }
 
     @Test
@@ -38,7 +39,7 @@ class JournalEntryTest {
 
     @Test
     void getID() throws NotInDatabaseException {
-        Assertions.assertEquals(999, journalEntry.getID());
+        Assertions.assertEquals(901, journalEntry.getID());
     }
 
     @Test

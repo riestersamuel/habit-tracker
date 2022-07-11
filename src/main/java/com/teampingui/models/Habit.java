@@ -85,8 +85,8 @@ public class Habit {
     @Override
     public String toString() {
         return "Habit: " +
-                "name=" + name +
-                ", reps=" + reps +
+                "name=" + name.getValue() +
+                ", reps=" + reps.getValue() +
                 ", checkedDays=" + Arrays.toString(checkedDays) +
                 ", haveTodoDays=" + Arrays.toString(haveTodoDays) +
                 ", id=" + mDB_ID;
