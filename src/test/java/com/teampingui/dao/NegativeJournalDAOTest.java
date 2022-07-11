@@ -1,15 +1,12 @@
 package com.teampingui.dao;
 
 import com.teampingui.exceptions.JournalDaoException;
-import com.teampingui.exceptions.NotInDatabaseException;
 import com.teampingui.models.JournalEntry;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class NegativeJournalTest {
+public class NegativeJournalDAOTest {
     JournalDAO journalDAO = new JournalDAO();
     JournalEntry journalEntry = new JournalEntry("05.05.1999", null);
 

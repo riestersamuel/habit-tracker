@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.SQLException;
 
-class JournalTest {
+class JournalDAOTest {
     JournalDAO journalDAO = new JournalDAO();
-    JournalEntry journalEntry = new JournalEntry("01.01.2020", "This text came from JournalTest.java");
+    JournalEntry journalEntry = new JournalEntry("01.01.2020", "This text came from JournalDAOTest.java");
 
     @Test
     public void testInsertJournalEntry() {

@@ -2,14 +2,13 @@ package com.teampingui.dao;
 
 import com.teampingui.models.Habit;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-class HabitTest {
+class HabitDAOTest {
     HabitDAO habitDAO = new HabitDAO();
     Habit mHabit;
 

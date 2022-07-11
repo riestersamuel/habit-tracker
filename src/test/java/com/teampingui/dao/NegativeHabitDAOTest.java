@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.fail;
 
-public class NegativeHabitTest {
+public class NegativeHabitDAOTest {
 
     Habit invalidIDHabit = new Habit("TestHabit", new boolean[7]);
 
